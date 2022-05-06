@@ -13,6 +13,12 @@ TextureImporter:
     second: Proto_Creature_1
   - first:
       213: 2013423851452389822
+    second: Proto_CursorMarker
+  - first:
+      213: 291743680117361882
+    second: Proto_PathMarker
+  - first:
+      213: 1525669841859284
     second: Proto_SelectionMarker
   externalObjects: {}
   serializedVersion: 11
@@ -178,11 +184,53 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Proto_SelectionMarker
+      name: Proto_CursorMarker
       rect:
         serializedVersion: 2
         x: 16
         y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb95e18435e11fb10800000000000000
+      internalID: 2013423851452389822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PathMarker
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 38
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adc4cd2d45b7c0400800000000000000
+      internalID: 291743680117361882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_SelectionMarker
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -192,8 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb95e18435e11fb10800000000000000
-      internalID: 2013423851452389822
+      spriteID: 4d2f7f0b69b650000800000000000000
+      internalID: 1525669841859284
       vertices: []
       indices: 
       edges: []

@@ -36,3 +36,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 ProjectSettings/ProjectVersion.txt
+
+# My stuff
+
+NOTAS.md
