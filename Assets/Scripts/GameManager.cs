@@ -4,59 +4,43 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject creaturePrfb;
+    public static GameManager current;
 
     public TextAsset mapData;
 
+    private Master[] masters;
+    private int turnIndex;
+
     void Start()
     {
+        current = this;
+
         Map map = Map.CreateWithStringData(this.mapData.text);
 
         MapDisplay display = GameObject.FindObjectOfType<MapDisplay>();
         display.RenderMapData(map);
 
-        this.SpawnRandomCreatures(3, map, display);
+        this.masters = new Master[] {
+            this.GetComponentInChildren<HumanMaster>(),
+            this.GetComponentInChildren<AIMaster>(),
+        };
+
+        foreach (var master in this.masters)
+        {
+            master.Configure(map);
+        }
+
+        this.turnIndex = -1;
+        this.NextTurn();
     }
 
-    private void SpawnRandomCreatures(int count, Map map, MapDisplay display)
+    public void NextTurn()
     {
-        int creatureCount = count;
-        int attempts = 0;
+        this.turnIndex = (this.turnIndex + 1) % this.masters.Length;
 
-        List<Vector2Int> usedPositions = new List<Vector2Int>();
+        Master currentMaster = this.masters[this.turnIndex];
+        TurnUI.current.SetCurrentTurnLabel(currentMaster.masterName);
 
-        while (creatureCount > 0 && attempts < 100)
-        {
-            attempts++;
-
-            int x = Random.Range(0, map.width);
-            int y = Random.Range(0, map.height);
-
-            if (map.GetTileType(x, y) != TileType.GROUND)
-                continue;
-
-            bool positionUsed = false;
-
-            foreach (var pos in usedPositions)
-            {
-                if (pos.x == x && pos.y == y)
-                {
-                    positionUsed = true;
-                    break;
-                }
-            }
-
-            if (positionUsed)
-                continue;
-
-            Vector2Int spawnPoint = new Vector2Int(x, y);
-            usedPositions.Add(spawnPoint);
-
-            GameObject go = Instantiate(this.creaturePrfb);
-            Creature creature = go.GetComponent<Creature>();
-            display.EmplaceCreature(creature, spawnPoint);
-
-            creatureCount--;
-        }
+        currentMaster.BeginTurn();
     }
 }

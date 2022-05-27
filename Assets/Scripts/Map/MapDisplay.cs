@@ -22,17 +22,17 @@ public class MapDisplay : MonoBehaviour
     private MapPathFinder pathFinder;
 
     private Creature selectedCreature;
-    private List<Creature> creatures;
+    private List<Creature> creatures = new List<Creature>();
 
-    // Marcadores de ruta
+    // Marcadores de ruta.
     public GameObject pathMarkerPrfb;
-    private List<GameObject> pathMarkers;
+    private List<MapPathMarker> pathMarkers;
 
     public Transform pathMarkerHolder;
 
     void Awake()
     {
-        this.pathMarkers = new List<GameObject>();
+        this.pathMarkers = new List<MapPathMarker>();
     }
 
     public void RenderMapData(Map mapdata)
@@ -57,11 +57,6 @@ public class MapDisplay : MonoBehaviour
 
     public void EmplaceCreature(Creature creature, Vector2Int localPosition)
     {
-        if (this.creatures == null)
-        {
-            this.creatures = new List<Creature>();
-        }
-
         Vector3 worldPosition = this.LocalToWorld(localPosition);
 
         creature.localPosition = localPosition;
@@ -105,14 +100,7 @@ public class MapDisplay : MonoBehaviour
                 List<Vector2Int> path = this.pathFinder.GetPath(start.x, start.y, local.x, local.y);
 
                 this.HideAllPathMarkers();
-
-                for (int i = 0; i < path.Count; i++)
-                {
-                    Vector3 worldPoint = this.LocalToWorld(path[i]);
-                    GameObject marker = this.GetMarkerByIndex(i);
-
-                    marker.transform.position = worldPoint;
-                }
+                this.DisplayPredictedPath(path);
             }
         }
 
@@ -143,19 +131,43 @@ public class MapDisplay : MonoBehaviour
             Vector2Int localStart = this.selectedCreature.localPosition;
             List<Vector2Int> path = this.pathFinder.GetPath(localStart.x, localStart.y, localTarget.x, localTarget.y);
 
+            this.HideAllPathMarkers();
             if (path.Count != 0)
             {
-                this.selectedCreature.localPosition = localTarget;
-
-                Vector3[] worldPath = new Vector3[path.Count];
-                for (int i = 0; i < path.Count; i++)
-                {
-                    worldPath[i] = this.LocalToWorld(path[i]);
-                }
-
-                this.selectedCreature.FollowPath(worldPath);
+                this.SetSelectedCreaturePath(path);
             }
+        }
+    }
 
+    private void SetSelectedCreaturePath(List<Vector2Int> path)
+    {
+        int maxSteps = Mathf.Min(this.selectedCreature.CurrentMaxDistance(), path.Count);
+        if (maxSteps == 0) return;
+
+        this.selectedCreature.localPosition = path[maxSteps - 1];
+
+        Vector3[] worldPath = new Vector3[maxSteps];
+        for (int i = 0; i < maxSteps; i++)
+        {
+            worldPath[i] = this.LocalToWorld(path[i]);
+        }
+
+        this.selectedCreature.FollowPath(worldPath);
+    }
+
+    private void DisplayPredictedPath(List<Vector2Int> path)
+    {
+        int mathMaxSteps = Mathf.Min(this.selectedCreature.CurrentMaxDistance(), path.Count);
+
+        for (int i = 0; i < mathMaxSteps; i++)
+        {
+            Vector3 worldPoint = this.LocalToWorld(path[i]);
+            MapPathMarker marker = this.GetMarkerByIndex(i);
+
+            int cost = this.selectedCreature.GetEnergyCostForPathLength(i + 1);
+            marker.SetColourUsingPathCost(cost);
+
+            marker.transform.position = worldPoint;
         }
     }
 
@@ -163,21 +175,21 @@ public class MapDisplay : MonoBehaviour
     {
         foreach (var marker in this.pathMarkers)
         {
-            marker.SetActive(false);
+            marker.Hide();
         }
     }
 
-    public GameObject GetMarkerByIndex(int index)
+    public MapPathMarker GetMarkerByIndex(int index)
     {
         if (this.pathMarkers.Count > index)
         {
-            GameObject marker = this.pathMarkers[index];
+            MapPathMarker marker = this.pathMarkers[index];
 
-            marker.SetActive(true);
             return marker;
         }
 
-        GameObject newMarker = Instantiate(this.pathMarkerPrfb);
+        GameObject go = Instantiate(this.pathMarkerPrfb);
+        MapPathMarker newMarker = go.GetComponent<MapPathMarker>();
         this.pathMarkers.Add(newMarker);
 
         newMarker.transform.SetParent(this.pathMarkerHolder);

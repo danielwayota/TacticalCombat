@@ -16,10 +16,13 @@ TextureImporter:
     second: Proto_CursorMarker
   - first:
       213: 291743680117361882
-    second: Proto_PathMarker
+    second: Proto_PathMarker_1
   - first:
       213: 1525669841859284
     second: Proto_SelectionMarker
+  - first:
+      213: 8795404345415233777
+    second: Proto_PathMarker_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -205,11 +208,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Proto_PathMarker
+      name: Proto_PathMarker_1
       rect:
         serializedVersion: 2
-        x: 38
-        y: 38
+        x: 33
+        y: 43
         width: 4
         height: 4
       alignment: 0
@@ -234,7 +237,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -242,6 +245,27 @@ TextureImporter:
       bones: []
       spriteID: 4d2f7f0b69b650000800000000000000
       internalID: 1525669841859284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PathMarker_2
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 43
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f0f660f6ad8f0a70800000000000000
+      internalID: 8795404345415233777
       vertices: []
       indices: 
       edges: []

@@ -124,6 +124,8 @@ public class MapPathFinder
     {
         Vector2Int currentLocalTile = localStart;
 
+        bool first = true;
+
         bool working = true;
         while (working)
         {
@@ -136,7 +138,14 @@ public class MapPathFinder
                 return;
             }
 
-            path.Add(currentLocalTile);
+            if (!first)
+            {
+                path.Add(currentLocalTile);
+            }
+            else
+            {
+                first = false;
+            }
 
             working = false;
             if (this.distanceMap[x, y + 1] < d && this.distanceMap[x, y + 1] != -1)
