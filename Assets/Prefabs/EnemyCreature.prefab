@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7177174006884615079, guid: 7be472b9d2a62974c82be6fbe1ad1d02, type: 3}
+  m_Sprite: {fileID: -4884244848013221136, guid: 7be472b9d2a62974c82be6fbe1ad1d02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 3986026104071346452}
   - component: {fileID: 3796874467487629246}
   m_Layer: 0
-  m_Name: Creature
+  m_Name: EnemyCreature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,6 +218,6 @@ MonoBehaviour:
     maxhp: 100
     energy: 2
     maxEnergy: 2
-    attack: 2
-    defense: 3
-    speed: 4
+    attack: 1
+    defense: 2
+    speed: 3

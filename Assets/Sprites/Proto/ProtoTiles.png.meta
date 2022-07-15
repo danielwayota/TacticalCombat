@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: 8795404345415233777
     second: Proto_PathMarker_2
+  - first:
+      213: -4884244848013221136
+    second: Proto_Creature_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -258,7 +261,7 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -266,6 +269,27 @@ TextureImporter:
       bones: []
       spriteID: 1f0f660f6ad8f0a70800000000000000
       internalID: 8795404345415233777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Creature_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 18
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f2e326403da73cb0800000000000000
+      internalID: -4884244848013221136
       vertices: []
       indices: 
       edges: []

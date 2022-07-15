@@ -11,11 +11,9 @@ public class Creature : MonoBehaviour
 
     private bool isSelected = false;
 
-    // stats
-    public int speed = 4;
+    public Master master;
 
-    public int maxEnergy = 2;
-    private int energy;
+    public Stats stats;
 
     void Start()
     {
@@ -26,17 +24,17 @@ public class Creature : MonoBehaviour
 
     public void Recharge()
     {
-        this.UpdateEnergy(this.maxEnergy);
+        this.UpdateEnergy(this.stats.maxEnergy);
     }
 
     public int CurrentMaxDistance()
     {
-        return this.speed * this.energy;
+        return this.stats.speed * this.stats.energy;
     }
 
     private void UpdateEnergy(int e)
     {
-        this.energy = e;
+        this.stats.energy = e;
         CreatureUI.current.DisplayEnergy(e);
     }
 
@@ -49,7 +47,7 @@ public class Creature : MonoBehaviour
         if (this.isSelected)
         {
             CreatureUI.current.Show();
-            CreatureUI.current.DisplayEnergy(this.energy);
+            CreatureUI.current.DisplayStats(this.stats);
         }
         else
         {
@@ -68,7 +66,7 @@ public class Creature : MonoBehaviour
         int pathLength = Mathf.Min(this.CurrentMaxDistance(), worldPath.Length);
         int cost = this.GetEnergyCostForPathLength(pathLength);
 
-        this.UpdateEnergy(this.energy - cost);
+        this.UpdateEnergy(this.stats.energy - cost);
 
         for (int i = 0; i < pathLength; i++)
         {
@@ -96,7 +94,7 @@ public class Creature : MonoBehaviour
         // 2 / 4 = 0.5 -> ceil 1
         // 5 / 4 = 1.25   -> ceil 2
 
-        int cost = Mathf.CeilToInt(length / (float)this.speed);
+        int cost = Mathf.CeilToInt(length / (float)this.stats.speed);
 
         return cost;
     }
