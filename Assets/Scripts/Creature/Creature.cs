@@ -22,6 +22,19 @@ public class Creature : MonoBehaviour
         this.SetSelectionStatus(false);
     }
 
+    public Stats GetCurrentStats()
+    {
+        // TODO: Aplicar powerups y demás historia
+        return this.stats;
+    }
+
+    public void ModifyHealth(int amount)
+    {
+        int newHP = this.stats.hp + amount;
+
+        this.stats.hp = Mathf.Clamp(newHP, 0, this.stats.maxhp);
+    }
+
     public void Recharge()
     {
         this.UpdateEnergy(this.stats.maxEnergy);
@@ -36,6 +49,16 @@ public class Creature : MonoBehaviour
     {
         this.stats.energy = e;
         CreatureUI.current.DisplayEnergy(e);
+    }
+
+    public bool CanExecuteSkill(Skill skill)
+    {
+        return this.stats.energy >= skill.cost;
+    }
+
+    public void ConsumeEnergyFor(Skill skill)
+    {
+        this.UpdateEnergy(this.stats.energy - skill.cost);
     }
 
     public void SetSelectionStatus(bool isSelected)

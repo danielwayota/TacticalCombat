@@ -82,6 +82,24 @@ public class GameManager : MonoBehaviour
         creature.FollowPath(path.ToArray());
     }
 
+    public void TryToPerformSkill(Creature emitter, Creature receiver, Skill skill)
+    {
+        if (this.IsOwnerOnTurn(emitter) == false)
+        {
+            Debug.LogError("It's not your turn!");
+            return;
+        }
+
+        if (emitter.CanExecuteSkill(skill) == false)
+        {
+            Debug.LogError("Can't execute skill. No energy.");
+            return;
+        }
+
+        emitter.ConsumeEnergyFor(skill);
+        skill.Resolve(emitter, receiver);
+    }
+
     public bool IsOwnerOnTurn(Creature creature)
     {
         Master currentMaster = this.masters[this.turnIndex];

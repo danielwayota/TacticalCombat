@@ -26,6 +26,9 @@ TextureImporter:
   - first:
       213: -4884244848013221136
     second: Proto_Creature_2
+  - first:
+      213: 6494507935530175778
+    second: Proto_PunchEffect
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -290,6 +293,27 @@ TextureImporter:
       bones: []
       spriteID: 0f2e326403da73cb0800000000000000
       internalID: -4884244848013221136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PunchEffect
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 23
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22d4b38de80212a50800000000000000
+      internalID: 6494507935530175778
       vertices: []
       indices: 
       edges: []

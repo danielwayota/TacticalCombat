@@ -76,7 +76,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75, y: 0.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -214,8 +214,9 @@ MonoBehaviour:
   movementSpeed: 4
   master: {fileID: 0}
   stats:
-    hp: 100
-    maxhp: 100
+    level: 1
+    hp: 15
+    maxhp: 15
     energy: 2
     maxEnergy: 2
     attack: 1

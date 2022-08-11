@@ -3,6 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public class Stats
 {
+    public int level = 1;
+
     [Header("HP/Energy")]
     public int hp = 100;
     public int maxhp = 100;
