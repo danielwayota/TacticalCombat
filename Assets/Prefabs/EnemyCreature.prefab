@@ -214,11 +214,14 @@ MonoBehaviour:
   movementSpeed: 4
   master: {fileID: 0}
   stats:
+    elementalType: 3
     level: 1
     hp: 15
     maxhp: 15
     energy: 2
     maxEnergy: 2
     attack: 1
-    defense: 2
+    defense: 4
+    elemAttack: 1
+    elemDefense: 2
     speed: 3

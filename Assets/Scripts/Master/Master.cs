@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Master : MonoBehaviour
 {
-    public GameObject creaturePrfb;
+    public GameObject[] creatureTeamPrfbs;
 
     public string masterName = "";
 
@@ -12,9 +11,16 @@ public abstract class Master : MonoBehaviour
 
     public void SpawnCreatures(List<Vector3> spawnPoints)
     {
-        foreach (var point in spawnPoints)
+        for (int i = 0; i < this.creatureTeamPrfbs.Length; i++)
         {
-            this.CreateCreature(this.creaturePrfb, point);
+            if (i >= spawnPoints.Count)
+            {
+                Debug.Log("No more spawn points!");
+                break;
+            }
+
+            GameObject prfb = this.creatureTeamPrfbs[i];
+            this.CreateCreature(prfb, spawnPoints[i]);
         }
     }
 

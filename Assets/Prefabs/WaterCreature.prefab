@@ -71,12 +71,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7177174006884615079, guid: 7be472b9d2a62974c82be6fbe1ad1d02, type: 3}
+  m_Sprite: {fileID: -2808367294464624078, guid: 7be472b9d2a62974c82be6fbe1ad1d02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75, y: 0.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 3986026104071346452}
   - component: {fileID: 3796874467487629246}
   m_Layer: 0
-  m_Name: Creature
+  m_Name: WaterCreature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,6 @@ Transform:
   m_Children:
   - {fileID: 1466108894086583103}
   - {fileID: 1443301532593522039}
-  - {fileID: 7138906817276741088}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -215,172 +214,14 @@ MonoBehaviour:
   movementSpeed: 4
   master: {fileID: 0}
   stats:
-    elementalType: 1
+    elementalType: 2
     level: 1
-    hp: 20
-    maxhp: 20
+    hp: 15
+    maxhp: 15
     energy: 2
     maxEnergy: 2
-    attack: 2
-    defense: 3
+    attack: 1
+    defense: 4
     elemAttack: 2
     elemDefense: 3
-    speed: 4
---- !u!1 &4323810646680021936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7138906817276741088}
-  m_Layer: 0
-  m_Name: Skills
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7138906817276741088
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4323810646680021936}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 3515273614774143814}
-  - {fileID: 6186886257510618149}
-  m_Father: {fileID: 3986026104071346452}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8558141703260021322
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3515273614774143814}
-  - component: {fileID: 862905774484462717}
-  - component: {fileID: 1471638647816083197}
-  m_Layer: 0
-  m_Name: Punch
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3515273614774143814
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8558141703260021322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7138906817276741088}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &862905774484462717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8558141703260021322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4571f4a647033284a852b3698e84f58c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 1.5
-  cost: 1
-  skillName: Punch
-  vfx: {fileID: 5025897193779781036, guid: 137d4fe29bf82a6428300b672f091cc8, type: 3}
---- !u!114 &1471638647816083197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8558141703260021322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4537749c25bc2448b144573b038daf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageType: 0
-  elementalType: 0
-  power: 35
---- !u!1 &8943085596852675237
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6186886257510618149}
-  - component: {fileID: 1291652140819436437}
-  - component: {fileID: 7377023291652036812}
-  m_Layer: 0
-  m_Name: Ember
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6186886257510618149
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943085596852675237}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7138906817276741088}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1291652140819436437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943085596852675237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4571f4a647033284a852b3698e84f58c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 1.5
-  cost: 1
-  skillName: Ember
-  vfx: {fileID: 5695461411125134771, guid: 9ad260c1a44a4f04ea3ee7b4a6e21726, type: 3}
---- !u!114 &7377023291652036812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943085596852675237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4537749c25bc2448b144573b038daf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageType: 1
-  elementalType: 1
-  power: 40
+    speed: 3

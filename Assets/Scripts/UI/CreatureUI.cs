@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CreatureUI : MonoBehaviour
@@ -9,13 +10,16 @@ public class CreatureUI : MonoBehaviour
 
     public Slider healthSlider;
 
-    public Text atkLabel;
-    public Text defLabel;
-    public Text spdLabel;
+    public DynamicItemUIList dynButtonList;
+    public DynamicItemUIList dynStatList;
 
     void Awake()
     {
         current = this;
+
+        this.dynButtonList.ConfigureAndHide();
+        this.dynStatList.ConfigureAndHide();
+
         this.Hide();
     }
 
@@ -25,9 +29,11 @@ public class CreatureUI : MonoBehaviour
 
         this.healthSlider.value = stats.hp / (float)stats.maxhp;
 
-        this.atkLabel.text = stats.attack.ToString();
-        this.defLabel.text = stats.defense.ToString();
-        this.spdLabel.text = stats.speed.ToString();
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Atk", stats.attack);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Def", stats.defense);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Spd", stats.speed);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", stats.elemAttack);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", stats.elemDefense);
     }
 
     public void DisplayEnergy(int energy)
@@ -43,6 +49,12 @@ public class CreatureUI : MonoBehaviour
         }
     }
 
+    public void AddSkillButtton(string skillName, UnityAction onClick)
+    {
+        SkillButton btn = this.dynButtonList.GetNextItemAndActivate<SkillButton>();
+        btn.Configure(skillName, onClick);
+    }
+
     public void Show()
     {
         this.gameObject.SetActive(true);
@@ -51,5 +63,8 @@ public class CreatureUI : MonoBehaviour
     public void Hide()
     {
         this.gameObject.SetActive(false);
+
+        this.dynButtonList.HideAll();
+        this.dynStatList.HideAll();
     }
 }

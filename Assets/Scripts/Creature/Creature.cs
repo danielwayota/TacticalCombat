@@ -64,18 +64,7 @@ public class Creature : MonoBehaviour
     public void SetSelectionStatus(bool isSelected)
     {
         this.selectionIndicator.SetActive(isSelected);
-
         this.isSelected = isSelected;
-
-        if (this.isSelected)
-        {
-            CreatureUI.current.Show();
-            CreatureUI.current.DisplayStats(this.stats);
-        }
-        else
-        {
-            CreatureUI.current.Hide();
-        }
     }
 
     public void FollowPath(Vector3[] worldPath)
@@ -120,5 +109,10 @@ public class Creature : MonoBehaviour
         int cost = Mathf.CeilToInt(length / (float)this.stats.speed);
 
         return cost;
+    }
+
+    public Skill[] GetSkills()
+    {
+        return this.GetComponentsInChildren<Skill>();
     }
 }
