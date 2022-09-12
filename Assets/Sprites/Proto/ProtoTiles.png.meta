@@ -63,6 +63,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -424,6 +425,20 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Proto_Flame_2: 1409786280003251077
+      Proto_CursorMarker: 2013423851452389822
+      Proto_PathMarker_1: 291743680117361882
+      Proto_Creature_2: -4884244848013221136
+      Proto_Creature_3: -2808367294464624078
+      Proto_Flame_1: -4582015197886014480
+      Proto_Ground: 2775053982691718161
+      Proto_PunchEffect: 6494507935530175778
+      Proto_Creature_1: -7177174006884615079
+      Proto_SelectionMarker: 1525669841859284
+      Proto_Obstacle: -2662078057157203537
+      Proto_Flame_0: 8146388372775729220
+      Proto_PathMarker_2: 8795404345415233777
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
