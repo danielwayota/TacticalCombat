@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
         ai.SpawnCreatures(this.mapManager.aiSpawnPoints);
 
         this.turnIndex = -1;
-        this.NextTurn();
+
+        Invoke("NextTurn", .5f);
     }
 
     public void EmplaceCreature(Creature creature, Vector3 worldPosition)
@@ -50,9 +51,9 @@ public class GameManager : MonoBehaviour
         this.turnIndex = (this.turnIndex + 1) % this.masters.Length;
 
         Master currentMaster = this.masters[this.turnIndex];
-        TurnUI.current.SetCurrentTurnLabel(currentMaster.masterName);
-
         currentMaster.BeginTurn();
+
+        MessageManager.current.Send(new NextTurnMessage(currentMaster));
     }
 
     public Creature GetCreatureAtPosition(Vector3 worldPosition)

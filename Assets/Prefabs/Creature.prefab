@@ -228,6 +228,8 @@ MonoBehaviour:
     maxEnergy: 2
     attack: 4
     defense: 3
+    accuracy: 10
+    evasion: 5
     elemAttack: 2
     elemDefense: 3
     speed: 4
@@ -311,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 1.5
   cost: 1
+  distancePenalizationMultiplier: 0.1
   skillName: Punch
   vfx: {fileID: 5025897193779781036, guid: 137d4fe29bf82a6428300b672f091cc8, type: 3}
 --- !u!114 &1471638647816083197
@@ -375,6 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 1.5
   cost: 1
+  distancePenalizationMultiplier: 0.1
   skillName: Ember
   vfx: {fileID: 5695461411125134771, guid: 9ad260c1a44a4f04ea3ee7b4a6e21726, type: 3}
 --- !u!114 &7377023291652036812

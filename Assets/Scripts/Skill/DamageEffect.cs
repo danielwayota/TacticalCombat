@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum DamageType
@@ -18,8 +16,20 @@ public class DamageEffect : MonoBehaviour, IEffect
 
     public void Resolve(Creature emitter, Creature receiver)
     {
-        int damage = this.CalculateDamage(emitter.GetCurrentStats(), receiver.GetCurrentStats());
+        Skill parentSkill = this.GetComponent<Skill>();
 
+        Stats eStats = emitter.GetCurrentStats();
+        Stats rStats = receiver.GetCurrentStats();
+
+        int damage = this.CalculateDamage(eStats, rStats);
+
+        bool isCritical = this.IsCritical(eStats, rStats, parentSkill.currentDistancePenalization);
+        if (isCritical)
+        {
+            damage *= 2;
+        }
+
+        MessageManager.current.Send(new SkillDamageMessage(parentSkill, receiver, damage, isCritical));
         receiver.ModifyHealth(-damage);
     }
 
@@ -71,5 +81,15 @@ public class DamageEffect : MonoBehaviour, IEffect
         multiplier *= ElementalWeaknessDB.GetWeaknessMultiplier(skillType, receiverType);
 
         return multiplier;
+    }
+
+    protected bool IsCritical(Stats eStats, Stats rStats, float distancePenalization)
+    {
+        float critChance = Mathf.Max(eStats.accuracy - rStats.evasion, 0) / (float)eStats.accuracy;
+        critChance += distancePenalization;
+
+        float dice = Random.Range(0f, 1f);
+
+        return dice < critChance;
     }
 }

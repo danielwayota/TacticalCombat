@@ -1,19 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnUI : MonoBehaviour
+public class TurnUI : MonoBehaviour, IMessageListener
 {
-    public static TurnUI current;
-
     public Text currentTurnLabel;
 
-    void Awake()
+    public GameObject nextTurnBtn;
+
+    void Start()
     {
-        current = this;
+        MessageManager.current.AddListener(MessageTag.NEXT_TURN, this);
     }
 
-    public void SetCurrentTurnLabel(string name)
+    public void Receive(Message msg)
     {
-        this.currentTurnLabel.text = name;
+        NextTurnMessage ntm = msg as NextTurnMessage;
+        this.currentTurnLabel.text = ntm.currentTurnMaster.masterName;
+
+        if (ntm.currentTurnMaster is HumanMaster)
+        {
+            this.nextTurnBtn.SetActive(true);
+        }
+        else
+        {
+            this.nextTurnBtn.SetActive(false);
+        }
     }
 }

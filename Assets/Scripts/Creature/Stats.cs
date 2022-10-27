@@ -18,6 +18,9 @@ public class Stats
     public int attack = 1;
     public int defense = 1;
 
+    public int accuracy = 1;
+    public int evasion = 1;
+
     public int elemAttack = 1;
     public int elemDefense = 1;
 
