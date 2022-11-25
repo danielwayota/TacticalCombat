@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Creature : MonoBehaviour
@@ -15,17 +16,23 @@ public class Creature : MonoBehaviour
 
     public Stats stats;
 
+    private List<StatusCondition> conditions = new List<StatusCondition>();
+
     void Start()
     {
-        this.Recharge();
-
         this.SetSelectionStatus(false);
     }
 
     public Stats GetCurrentStats()
     {
-        // TODO: Aplicar powerups y demás historia
-        return this.stats;
+        Stats modedStats = this.stats.Clone();
+
+        foreach (var cond in this.conditions)
+        {
+            cond.ApplyStatsModifiers(modedStats);
+        }
+
+        return modedStats;
     }
 
     public void ModifyHealth(int amount)
@@ -35,9 +42,33 @@ public class Creature : MonoBehaviour
         this.stats.hp = Mathf.Clamp(newHP, 0, this.stats.maxhp);
     }
 
-    public void Recharge()
+    public void BeginTurn()
     {
         this.UpdateEnergy(this.stats.maxEnergy);
+
+        for (int i = 0; i < this.conditions.Count; i++)
+        {
+            StatusCondition cond = this.conditions[i];
+            cond.ConsumeOneTurn();
+
+            if (cond.isDepleted)
+            {
+                this.conditions.RemoveAt(i);
+            }
+        }
+
+        foreach (var cond in this.conditions)
+        {
+            cond.ApplyOnTurnStart(this.stats);
+        }
+    }
+
+    public void AddStatusCondition(StatusCondition condition)
+    {
+        this.conditions.Add(condition);
+
+        condition.transform.position = this.transform.position;
+        condition.transform.SetParent(this.transform);
     }
 
     public int CurrentMaxDistance()
@@ -48,7 +79,7 @@ public class Creature : MonoBehaviour
     private void UpdateEnergy(int e)
     {
         this.stats.energy = e;
-        CreatureUI.current.DisplayEnergy(e);
+        MessageManager.current.Send(new CreatureUpdatedMessage(this));
     }
 
     public bool CanExecuteSkill(Skill skill)

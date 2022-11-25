@@ -7,7 +7,7 @@ public enum HumanCombatStatus
     MOVE, SKILL
 }
 
-public class HumanMaster : Master
+public class HumanMaster : Master, IMessageListener
 {
     public HumanCombatStatus status { get; protected set; }
 
@@ -19,10 +19,16 @@ public class HumanMaster : Master
 
     public Skill selectedSkill { get; protected set; }
 
+    void Start()
+    {
+        MessageManager.current.AddListener(MessageTag.ACTION_CREATURE_MOVE, this);
+        MessageManager.current.AddListener(MessageTag.ACTION_CREATURE_SKILL, this);
+    }
+
     public override void BeginTurn()
     {
         this.GoToMoveMode();
-        this.RechargeAllCreatures();
+        this.BeginTurnToAllCreatures();
     }
 
     public void OnSelectionRequested(Vector3 worldPos)
@@ -33,7 +39,6 @@ public class HumanMaster : Master
 
         if (this.hasCreatureSelected)
         {
-            CreatureUI.current.Hide();
             this.selectedCreature.SetSelectionStatus(false);
         }
 
@@ -41,15 +46,9 @@ public class HumanMaster : Master
         if (this.hasCreatureSelected)
         {
             this.selectedCreature.SetSelectionStatus(true);
-
-            CreatureUI.current.Show();
-            CreatureUI.current.DisplayStats(this.selectedCreature.GetCurrentStats());
-
-            if (GameManager.current.IsOwnerOnTurn(this.selectedCreature))
-            {
-                this.ConfigureSkillButtons();
-            }
         }
+
+        MessageManager.current.Send(new CreatureSelectedMessage(this.selectedCreature));
     }
 
     public void OnMoveOrSkillRequested(Vector3 worldPos)
@@ -97,15 +96,17 @@ public class HumanMaster : Master
         }
     }
 
-    protected void ConfigureSkillButtons()
+    public void Receive(Message msg)
     {
-        Skill[] skills = this.selectedCreature.GetSkills();
-
-        CreatureUI.current.AddSkillButtton("Move", () => this.GoToMoveMode());
-
-        foreach (var skill in skills)
+        if (msg is CreatureActionMoveMessage)
         {
-            CreatureUI.current.AddSkillButtton(skill.skillName, () => this.GoToSkillMode(skill));
+            this.GoToMoveMode();
+        }
+
+        if (msg is CreatureActionSkillMessage)
+        {
+            CreatureActionSkillMessage casm = msg as CreatureActionSkillMessage;
+            this.GoToSkillMode(casm.skill);
         }
     }
 

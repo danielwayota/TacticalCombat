@@ -26,4 +26,25 @@ public class Stats
 
     [Header("Movement")]
     public int speed = 4;
+
+    public Stats Clone()
+    {
+        Stats clone = new Stats();
+
+        clone.elementalType = this.elementalType;
+        clone.level = this.level;
+        clone.hp = this.hp;
+        clone.maxhp = this.maxhp;
+        clone.energy = this.energy;
+        clone.maxEnergy = this.maxEnergy;
+        clone.attack = this.attack;
+        clone.defense = this.defense;
+        clone.accuracy = this.accuracy;
+        clone.evasion = this.evasion;
+        clone.elemAttack = this.elemAttack;
+        clone.elemDefense = this.elemDefense;
+        clone.speed = this.speed;
+
+        return clone;
+    }
 }

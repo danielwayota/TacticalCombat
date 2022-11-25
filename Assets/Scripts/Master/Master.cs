@@ -24,11 +24,11 @@ public abstract class Master : MonoBehaviour
         }
     }
 
-    protected void RechargeAllCreatures()
+    protected void BeginTurnToAllCreatures()
     {
         foreach (var creature in this.creatures)
         {
-            creature.Recharge();
+            creature.BeginTurn();
         }
     }
 

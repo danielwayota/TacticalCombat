@@ -189,9 +189,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 33
+        y: 32
         width: 10
-        height: 14
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,9 +294,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 18
+        y: 16
         width: 12
-        height: 13
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -314,8 +314,8 @@ TextureImporter:
       name: Proto_PunchEffect
       rect:
         serializedVersion: 2
-        x: 33
-        y: 23
+        x: 1
+        y: 7
         width: 10
         height: 8
       alignment: 0
@@ -399,11 +399,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 18
-        y: 33
+        y: 32
         width: 12
-        height: 14
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -411,6 +411,279 @@ TextureImporter:
       bones: []
       spriteID: 23a7c9633dca609d0800000000000000
       internalID: -2808367294464624078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Creature_4
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 16
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcb89be67ffdc9447b452053a236c81f
+      internalID: 152514313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Poison_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 41
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ee6733a7ad5c14d9f4159819518e1f
+      internalID: 1105113986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Poison_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 42
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687445677309c864e817508667398478
+      internalID: 727128409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Poison_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 36
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c60412896b6d9e347b4ee177383ef2e2
+      internalID: 1030538866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Poison_3
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 37
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88bcda8551274bf4c98d088b408c042a
+      internalID: 708322437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PoisonAttack_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 1
+        width: 11
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 080d977a18e68054c8e9be0063816530
+      internalID: 1928398011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PoisonAttack_1
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1
+        width: 11
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43191dbfb06edeb44b8e64f7f33ad740
+      internalID: -607868844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_PoisonAttack_2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 1
+        width: 11
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 383e2551a4aaaf7468dc9f57f773eaa2
+      internalID: -1549513028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Fury_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 18
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5be683516fc464e4fb0025e2dfcca495
+      internalID: 1264257705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Fury_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 18
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b11cd13d7c3ef440a04a3f4b559b914
+      internalID: 734673652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Paralyse_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 2
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b37fc1ee57f50e41813cdabf85c1cfb
+      internalID: -644552424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Paralyse_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 2
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f35a318619d09b488d15bfe036b2b8f
+      internalID: 1449177450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Proto_Paralyse_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 2
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0066b4b141194e47a2e6224bde4ec52
+      internalID: 1628760347
       vertices: []
       indices: 
       edges: []
@@ -426,19 +699,32 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Proto_Poison_0: 1105113986
+      Proto_PoisonAttack_1: -607868844
+      Proto_Fury_1: 734673652
       Proto_Flame_2: 1409786280003251077
       Proto_CursorMarker: 2013423851452389822
       Proto_PathMarker_1: 291743680117361882
       Proto_Creature_2: -4884244848013221136
       Proto_Creature_3: -2808367294464624078
+      Proto_Paralyse_2: 1628760347
+      Proto_Paralyse_0: -644552424
       Proto_Flame_1: -4582015197886014480
       Proto_Ground: 2775053982691718161
+      Proto_PoisonAttack_2: -1549513028
+      Proto_Paralyse_1: 1449177450
       Proto_PunchEffect: 6494507935530175778
+      Proto_Poison_2: 1030538866
       Proto_Creature_1: -7177174006884615079
       Proto_SelectionMarker: 1525669841859284
+      Proto_Poison_1: 727128409
       Proto_Obstacle: -2662078057157203537
+      Proto_Creature_4: 152514313
+      Proto_Poison_3: 708322437
+      Proto_PoisonAttack_0: 1928398011
       Proto_Flame_0: 8146388372775729220
       Proto_PathMarker_2: 8795404345415233777
+      Proto_Fury_0: 1264257705
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

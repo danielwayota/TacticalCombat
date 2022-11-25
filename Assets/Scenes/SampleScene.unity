@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creatureTeamPrfbs:
   - {fileID: 2521753971046226797, guid: c836fb483e784c744b89800010ad3c61, type: 3}
-  - {fileID: 2521753971046226797, guid: c836fb483e784c744b89800010ad3c61, type: 3}
+  - {fileID: 2521753971046226797, guid: c5e9bf1be4508a8498c62af865fbd460, type: 3}
   masterName: Human
 --- !u!1 &963449468
 GameObject:

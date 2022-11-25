@@ -6,7 +6,7 @@ public class AIMaster : Master
 {
     public override void BeginTurn()
     {
-        this.RechargeAllCreatures();
+        this.BeginTurnToAllCreatures();
         StartCoroutine(this.TurnRutine());
     }
 

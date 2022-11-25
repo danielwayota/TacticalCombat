@@ -2,10 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class CreatureUI : MonoBehaviour
+public class CreatureUI : MonoBehaviour, IMessageListener
 {
-    public static CreatureUI current;
-
     public GameObject[] energyBlocks;
 
     public Slider healthSlider;
@@ -13,9 +11,12 @@ public class CreatureUI : MonoBehaviour
     public DynamicItemUIList dynButtonList;
     public DynamicItemUIList dynStatList;
 
-    void Awake()
+    protected Creature selectedCreature;
+
+    void Start()
     {
-        current = this;
+        MessageManager.current.AddListener(MessageTag.CREATURE_SELECTED, this);
+        MessageManager.current.AddListener(MessageTag.CREATURE_UPDATED, this);
 
         this.dynButtonList.ConfigureAndHide();
         this.dynStatList.ConfigureAndHide();
@@ -69,5 +70,61 @@ public class CreatureUI : MonoBehaviour
 
         this.dynButtonList.HideAll();
         this.dynStatList.HideAll();
+    }
+
+    public void Receive(Message msg)
+    {
+        if (msg is CreatureSelectedMessage)
+        {
+            CreatureSelectedMessage csm = msg as CreatureSelectedMessage;
+
+            this.dynButtonList.HideAll();
+            this.dynStatList.HideAll();
+
+            this.selectedCreature = csm.creature;
+            if (this.selectedCreature != null)
+            {
+                this.Show();
+                this.DisplayStats(this.selectedCreature.GetCurrentStats());
+
+                if (this.selectedCreature.master is HumanMaster)
+                {
+                    Skill[] skills = this.selectedCreature.GetSkills();
+
+                    this.AddSkillButtton("Move", () =>
+                    {
+                        MessageManager.current.Send(
+                            new CreatureActionMoveMessage(this.selectedCreature)
+                        );
+                    });
+
+                    foreach (var skill in skills)
+                    {
+                        this.AddSkillButtton(skill.name, () =>
+                        {
+                            MessageManager.current.Send(
+                                new CreatureActionSkillMessage(this.selectedCreature, skill)
+                            );
+                        });
+                    }
+                }
+            }
+            else
+            {
+                this.Hide();
+            }
+        }
+
+
+        if (msg is CreatureUpdatedMessage)
+        {
+            CreatureUpdatedMessage cm = msg as CreatureUpdatedMessage;
+
+            if (this.selectedCreature == cm.creature)
+            {
+                this.dynStatList.HideAll();
+                this.DisplayStats(this.selectedCreature.GetCurrentStats());
+            }
+        }
     }
 }
