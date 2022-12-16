@@ -82,15 +82,12 @@ public class HumanMaster : Master, IMessageListener
                     return;
                 }
 
-                Creature posibleTarget = GameManager.current.GetCreatureAtPosition(targetPos);
+                List<Vector3> effectArea = GameManager.current.mapManager.PredictAreaFor(
+                    targetPos,
+                    this.selectedSkill.area
+                );
 
-                if (posibleTarget == null)
-                {
-                    Debug.LogError("Can't attack. There is no target.");
-                    return;
-                }
-
-                GameManager.current.TryToPerformSkill(this.selectedCreature, posibleTarget, this.selectedSkill);
+                GameManager.current.TryToPerformSkillInArea(this.selectedCreature, this.selectedSkill, effectArea);
                 this.GoToMoveMode();
                 break;
         }

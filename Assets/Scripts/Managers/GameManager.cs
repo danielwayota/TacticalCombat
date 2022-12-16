@@ -51,9 +51,19 @@ public class GameManager : MonoBehaviour
         this.turnIndex = (this.turnIndex + 1) % this.masters.Length;
 
         Master currentMaster = this.masters[this.turnIndex];
-        currentMaster.BeginTurn();
+
+        this.mapManager.dynamicObstacles.Clear();
+
+        foreach (var creature in this.gameCreatures)
+        {
+            if (creature.master != currentMaster)
+            {
+                this.mapManager.dynamicObstacles.Add(creature.transform.position);
+            }
+        }
 
         MessageManager.current.Send(new NextTurnMessage(currentMaster));
+        currentMaster.BeginTurn();
     }
 
     public Creature GetCreatureAtPosition(Vector3 worldPosition)
@@ -79,11 +89,30 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Creature creatureAtLocation = this.GetCreatureAtPosition(worldTarget);
+        if (creatureAtLocation != null)
+        {
+            Debug.Log("Tile already occupied.");
+            return;
+        }
+
         List<Vector3> path = this.mapManager.PredictWorldPathFor(creature.transform.position, worldTarget);
         creature.FollowPath(path.ToArray());
     }
 
-    public void TryToPerformSkill(Creature emitter, Creature receiver, Skill skill)
+    public bool ThereIsTargetInArea(List<Vector3> area)
+    {
+        foreach (var point in area)
+        {
+            Creature creature = this.GetCreatureAtPosition(point);
+            if (creature != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    public void TryToPerformSkillInArea(Creature emitter, Skill skill, List<Vector3> area)
     {
         if (this.IsOwnerOnTurn(emitter) == false)
         {
@@ -97,8 +126,22 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (this.ThereIsTargetInArea(area) == false)
+        {
+            Debug.Log("There is no target to execute Skill");
+            return;
+        }
+
         emitter.ConsumeEnergyFor(skill);
-        skill.Resolve(emitter, receiver);
+
+        foreach (var point in area)
+        {
+            Creature receiver = this.GetCreatureAtPosition(point);
+            if (receiver != null)
+            {
+                skill.Resolve(emitter, receiver);
+            }
+        }
     }
 
     public bool IsOwnerOnTurn(Creature creature)

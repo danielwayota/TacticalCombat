@@ -228,7 +228,7 @@ MonoBehaviour:
     maxEnergy: 2
     attack: 4
     defense: 3
-    accuracy: 10
+    accuracy: 12
     evasion: 5
     elemAttack: 2
     elemDefense: 3
@@ -263,9 +263,76 @@ Transform:
   m_Children:
   - {fileID: 3515273614774143814}
   - {fileID: 6186886257510618149}
+  - {fileID: 4386811584821034009}
   m_Father: {fileID: 3986026104071346452}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6216228639538697497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4386811584821034009}
+  - component: {fileID: 1493681339373647952}
+  - component: {fileID: 2018904140034151091}
+  m_Layer: 0
+  m_Name: Flamethrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4386811584821034009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216228639538697497}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7138906817276741088}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493681339373647952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216228639538697497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4571f4a647033284a852b3698e84f58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 3
+  area: 1.5
+  cost: 2
+  distancePenalizationMultiplier: 0.05
+  skillName: Flamethrow
+  vfx: {fileID: 5695461411125134771, guid: 9ad260c1a44a4f04ea3ee7b4a6e21726, type: 3}
+--- !u!114 &2018904140034151091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216228639538697497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4537749c25bc2448b144573b038daf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: 1
+  elementalType: 1
+  power: 20
 --- !u!1 &8558141703260021322
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 1.5
+  area: 0
   cost: 1
   distancePenalizationMultiplier: 0.1
   skillName: Punch
@@ -377,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 1.5
+  area: 0
   cost: 1
   distancePenalizationMultiplier: 0.1
   skillName: Ember

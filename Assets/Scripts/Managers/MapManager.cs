@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
     public List<Vector3> humanSpawnPoints;
     public List<Vector3> aiSpawnPoints;
 
+    public List<Vector3> dynamicObstacles;
+
     public void Configure()
     {
         this.humanSpawnPoints = new List<Vector3>();
@@ -24,6 +26,8 @@ public class MapManager : MonoBehaviour
 
         this.worldPathBuffer = new List<Vector3>();
         this.areaBuffer = new List<Vector3>();
+
+        this.dynamicObstacles = new List<Vector3>();
 
         this.display = GameObject.FindObjectOfType<MapDisplay>();
 
@@ -99,6 +103,12 @@ public class MapManager : MonoBehaviour
 
     public List<Vector3> PredictWorldPathFor(Vector3 worldStart, Vector3 worldTarget)
     {
+        foreach (var obstacle in this.dynamicObstacles)
+        {
+            Vector2Int local = this.WorldToLocal(obstacle);
+            this.pathFinder.PutObstacle(local);
+        }
+
         Vector2Int localStart = this.WorldToLocal(worldStart);
         Vector2Int localTarget = this.WorldToLocal(worldTarget);
 
@@ -108,6 +118,12 @@ public class MapManager : MonoBehaviour
         foreach (var point in path)
         {
             this.worldPathBuffer.Add(this.LocalToWorld(point));
+        }
+
+        foreach (var obstacle in this.dynamicObstacles)
+        {
+            Vector2Int local = this.WorldToLocal(obstacle);
+            this.pathFinder.RemoveObstacle(local);
         }
 
         return this.worldPathBuffer;
@@ -125,6 +141,21 @@ public class MapManager : MonoBehaviour
         }
 
         return this.areaBuffer;
+    }
+
+    public bool IsInsideArea(List<Vector3> area, Vector3 world)
+    {
+        Vector3 worldTile = this.SnapToTile(world);
+
+        foreach (var point in area)
+        {
+            if (worldTile == point)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Vector2Int WorldToLocal(Vector3 world)

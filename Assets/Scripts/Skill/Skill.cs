@@ -3,6 +3,8 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     public float range = 1.5f;
+    public float area = 0;
+
     public int cost = 1;
 
     public float distancePenalizationMultiplier = 0.1f;

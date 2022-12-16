@@ -91,12 +91,23 @@ public class MapDisplay : MonoBehaviour
                         this.DisplayPredictedPath(path);
                         break;
                     case HumanCombatStatus.SKILL:
-                        List<Vector3> area = GameManager.current.mapManager.PredictAreaFor(
+                        List<Vector3> reachArea = GameManager.current.mapManager.PredictAreaFor(
                             this.humanMaster.selectedCreature.transform.position,
                             this.humanMaster.selectedSkill.range
                         );
 
-                        this.DisplayPredictedArea(area);
+                        this.DisplayPredictedArea(reachArea);
+
+                        if (GameManager.current.mapManager.IsInsideArea(reachArea, world))
+                        {
+                            List<Vector3> skillEffectArea = GameManager.current.mapManager.PredictAreaFor(
+                                world,
+                                this.humanMaster.selectedSkill.area
+                            );
+
+                            this.DisplayPredictedArea(skillEffectArea, 2);
+                        }
+
                         break;
                 }
 
@@ -128,7 +139,7 @@ public class MapDisplay : MonoBehaviour
 
         for (int i = 0; i < mathMaxSteps; i++)
         {
-            MapPathMarker marker = this.GetMarkerByIndex(i);
+            MapPathMarker marker = this.GetNextMarker();
 
             int cost = selected.GetEnergyCostForPathLength(i + 1);
             marker.SetColourUsingPathCost(cost);
@@ -137,13 +148,13 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
-    private void DisplayPredictedArea(List<Vector3> area)
+    private void DisplayPredictedArea(List<Vector3> area, int pseudoCost = 1)
     {
         for (int i = 0; i < area.Count; i++)
         {
-            MapPathMarker marker = this.GetMarkerByIndex(i);
+            MapPathMarker marker = this.GetNextMarker();
 
-            marker.SetColourUsingPathCost(1);
+            marker.SetColourUsingPathCost(pseudoCost);
 
             marker.transform.position = area[i];
         }
@@ -157,13 +168,14 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
-    public MapPathMarker GetMarkerByIndex(int index)
+    public MapPathMarker GetNextMarker()
     {
-        if (this.pathMarkers.Count > index)
+        foreach (var marker in this.pathMarkers)
         {
-            MapPathMarker marker = this.pathMarkers[index];
-
-            return marker;
+            if (marker.visible == false)
+            {
+                return marker;
+            }
         }
 
         GameObject go = Instantiate(this.pathMarkerPrfb);

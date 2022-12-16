@@ -4,6 +4,8 @@ public class MapPathMarker : MonoBehaviour
 {
     public GameObject[] markerSprites;
 
+    public bool visible { get; protected set; }
+
     void Awake()
     {
         this.Hide();
@@ -14,6 +16,8 @@ public class MapPathMarker : MonoBehaviour
         this.Hide();
 
         this.markerSprites[cost % this.markerSprites.Length].SetActive(true);
+
+        this.visible = true;
     }
 
     public void Hide()
@@ -22,5 +26,7 @@ public class MapPathMarker : MonoBehaviour
         {
             spr.SetActive(false);
         }
+
+        this.visible = false;
     }
 }
