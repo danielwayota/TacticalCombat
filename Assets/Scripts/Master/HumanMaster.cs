@@ -53,41 +53,13 @@ public class HumanMaster : Master, IMessageListener
 
     public void OnMoveOrSkillRequested(Vector3 worldPos)
     {
-        Vector3 targetPos = GameManager.current.mapManager.SnapToTile(worldPos);
-
         switch (this.status)
         {
             case HumanCombatStatus.MOVE:
-                GameManager.current.MoveCreatureTo(this.selectedCreature, targetPos);
+                GameManager.current.MoveCreatureTo(this.selectedCreature, worldPos);
                 break;
             case HumanCombatStatus.SKILL:
-                List<Vector3> area = GameManager.current.mapManager.PredictAreaFor(
-                    this.selectedCreature.transform.position,
-                    this.selectedSkill.range
-                );
-
-                bool isInArea = false;
-                foreach (var point in area)
-                {
-                    if (point == targetPos)
-                    {
-                        isInArea = true;
-                        break;
-                    }
-                }
-
-                if (isInArea == false)
-                {
-                    Debug.LogError("Can't attack. Target is not in range.");
-                    return;
-                }
-
-                List<Vector3> effectArea = GameManager.current.mapManager.PredictAreaFor(
-                    targetPos,
-                    this.selectedSkill.area
-                );
-
-                GameManager.current.TryToPerformSkillInArea(this.selectedCreature, this.selectedSkill, effectArea);
+                GameManager.current.TryToPerformSkillAtPoint(this.selectedCreature, this.selectedSkill, worldPos);
                 this.GoToMoveMode();
                 break;
         }

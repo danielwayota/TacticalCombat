@@ -9,15 +9,11 @@ public class PoisonStatusCondition : StatusCondition
     {
         int damage = Mathf.RoundToInt(this.damagePercent * (float)targetStats.maxhp);
 
-        int targetHp = Mathf.Clamp(targetStats.hp - damage, 1, targetStats.maxhp);
-
-        int damageTaken = targetStats.hp - targetHp;
+        int damageTaken = this.targetCreature.DamageWithClamp(damage);
         if (damageTaken != 0)
         {
             MessageManager.current.Send(new SkillDamageMessage(null, this.targetCreature, damageTaken, false));
         }
-
-        targetStats.hp = targetHp;
 
         if (this.onApplyVfx != null)
         {

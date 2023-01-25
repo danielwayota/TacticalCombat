@@ -4,42 +4,107 @@ using System.Collections.Generic;
 
 public class AIMaster : Master
 {
+    protected Creature lastTarget;
+
     public override void BeginTurn()
     {
+        this.lastTarget = null;
+
         this.BeginTurnToAllCreatures();
         StartCoroutine(this.TurnRutine());
+    }
+
+    private Vector3 GenerateCreatureTarget(Creature creature)
+    {
+        Stats stats = creature.GetCurrentStats();
+        List<Vector3> reachArea = GameManager.current.mapManager.PredictAreaFor(
+            creature.transform.position,
+            stats.speed
+        );
+        List<Creature> enemies = GameManager.current.GetEnemyCreaturesInArea(
+            reachArea,
+            this
+        );
+
+        if (enemies.Count != 0)
+        {
+            // Obtenemos el enemigo más cercano
+            Creature nearest = enemies[0];
+            float lastDistance = 9999;
+
+            foreach (var enemy in enemies)
+            {
+                float distance = Vector3.Distance(enemy.transform.position, creature.transform.position);
+                if (distance < lastDistance)
+                {
+                    lastDistance = distance;
+                    nearest = enemy;
+                }
+            }
+
+            this.lastTarget = nearest;
+        }
+
+        if (this.lastTarget != null)
+        {
+            return this.GenerateRandomTargetInArea(creature, this.lastTarget.transform.position, 1f);
+        }
+
+        return this.GenerateRandomTargetInArea(creature, creature.transform.position, stats.speed);
+    }
+
+    private Vector3 GenerateRandomTargetInArea(Creature creature, Vector3 center, float distance)
+    {
+        int attempts = 0;
+
+        while (attempts < 32)
+        {
+            attempts++;
+
+            var offset = new Vector3(
+                Random.Range(-distance, distance),
+                Random.Range(-distance, distance)
+            );
+
+            Vector3 target = center + offset;
+
+            if (GameManager.current.CanMoveCreatureTo(creature, target))
+            {
+                return target;
+            }
+        }
+
+        // No nos movemos.
+        return center;
     }
 
     private IEnumerator TurnRutine()
     {
         foreach (var creature in this.creatures)
         {
-            int attempts = 0;
+            Vector3 target = this.GenerateCreatureTarget(creature);
 
-            while (attempts < 32)
+            GameManager.current.MoveCreatureTo(creature, target);
+
+            while (creature.isMoving)
             {
-                attempts++;
+                yield return null;
+            }
 
-                var offset = new Vector3(
-                    Random.Range(-5, 5),
-                    Random.Range(-5, 5)
-                );
+            yield return new WaitForSeconds(0.5f);
 
-                Vector3 target = creature.transform.position + offset;
+            if (this.lastTarget != null)
+            {
+                Skill[] skills = creature.GetSkills();
+                int rndIndex = Random.Range(0, skills.Length);
+                Skill selectedSkill = skills[rndIndex];
 
-                if (GameManager.current.mapManager.IsAGroundTile(target) == false)
-                {
-                    continue;
-                }
-
-                GameManager.current.MoveCreatureTo(creature, target);
-                break;
+                GameManager.current.TryToPerformSkillAtPoint(creature, selectedSkill, this.lastTarget.transform.position);
             }
 
             yield return new WaitForSeconds(0.5f);
         }
 
-        yield return new WaitForSeconds(1);
         GameManager.current.NextTurn();
     }
 }

@@ -12,12 +12,20 @@ public class GameManager : MonoBehaviour
     public MapManager mapManager { get; protected set; }
 
     protected List<Creature> gameCreatures;
+    protected List<Creature> graveyard;
+
+    protected bool isBattleOver;
+
+    protected List<Creature> returnBuffer;
 
     void Start()
     {
         current = this;
 
         this.gameCreatures = new List<Creature>();
+        this.graveyard = new List<Creature>();
+
+        this.returnBuffer = new List<Creature>();
 
         this.mapManager = GetComponent<MapManager>();
         this.mapManager.Configure();
@@ -31,6 +39,7 @@ public class GameManager : MonoBehaviour
         ai.SpawnCreatures(this.mapManager.aiSpawnPoints);
 
         this.turnIndex = -1;
+        this.isBattleOver = false;
 
         Invoke("NextTurn", .5f);
     }
@@ -46,8 +55,23 @@ public class GameManager : MonoBehaviour
         this.gameCreatures.Add(creature);
     }
 
+    public void OnCreatureDeath(Creature creature)
+    {
+        this.gameCreatures.Remove(creature);
+        creature.gameObject.SetActive(false);
+
+        this.graveyard.Add(creature);
+
+        this.CheckForBattleOver();
+    }
+
     public void NextTurn()
     {
+        if (this.isBattleOver)
+        {
+            return;
+        }
+
         this.turnIndex = (this.turnIndex + 1) % this.masters.Length;
 
         Master currentMaster = this.masters[this.turnIndex];
@@ -66,6 +90,31 @@ public class GameManager : MonoBehaviour
         currentMaster.BeginTurn();
     }
 
+    protected void CheckForBattleOver()
+    {
+        int creatureCount = this.gameCreatures.Count;
+        if (creatureCount == 0)
+        {
+            Debug.LogWarning("Empate!!  ??");
+            this.isBattleOver = true;
+        }
+
+        Master human = this.masters[0];
+        Master ai = this.masters[1];
+
+        if (human.HasAliveCreatures() && ai.HasAliveCreatures() == false)
+        {
+            this.isBattleOver = true;
+            MessageManager.current.Send(new BattleOverMessage(human, ai));
+        }
+
+        if (ai.HasAliveCreatures() && human.HasAliveCreatures() == false)
+        {
+            this.isBattleOver = true;
+            MessageManager.current.Send(new BattleOverMessage(ai, human));
+        }
+    }
+
     public Creature GetCreatureAtPosition(Vector3 worldPosition)
     {
         foreach (var creature in this.gameCreatures)
@@ -81,22 +130,70 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public void MoveCreatureTo(Creature creature, Vector3 worldTarget)
+    public List<Creature> GetEnemyCreaturesInArea(List<Vector3> area, Master currentMaster)
     {
-        if (this.IsOwnerOnTurn(creature) == false)
+        this.returnBuffer.Clear();
+
+        foreach (var point in area)
         {
-            Debug.LogError("Cannot move this creature.");
-            return;
+            Creature posibleCreature = this.GetCreatureAtPosition(point);
+            if (posibleCreature == null)
+            {
+                continue;
+            }
+
+            if (posibleCreature.master == currentMaster)
+            {
+                continue;
+            }
+
+            this.returnBuffer.Add(posibleCreature);
         }
 
-        Creature creatureAtLocation = this.GetCreatureAtPosition(worldTarget);
+        return this.returnBuffer;
+    }
+
+    public bool CanMoveCreatureTo(Creature creature, Vector3 worldTarget)
+    {
+        Vector3 targetPos = this.mapManager.SnapToTile(worldTarget);
+
+        if (this.IsOwnerOnTurn(creature) == false)
+        {
+            Debug.LogWarning("Cannot move this creature.");
+            return false;
+        }
+
+        if (GameManager.current.mapManager.IsAGroundTile(targetPos) == false)
+        {
+            Debug.LogWarning("Not a ground tile.");
+            return false;
+        }
+
+        Creature creatureAtLocation = this.GetCreatureAtPosition(targetPos);
         if (creatureAtLocation != null)
         {
             Debug.Log("Tile already occupied.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void MoveCreatureTo(Creature creature, Vector3 worldTarget)
+    {
+        if (this.isBattleOver)
+        {
             return;
         }
 
-        List<Vector3> path = this.mapManager.PredictWorldPathFor(creature.transform.position, worldTarget);
+        Vector3 targetPos = this.mapManager.SnapToTile(worldTarget);
+
+        if (this.CanMoveCreatureTo(creature, worldTarget) == false)
+        {
+            return;
+        }
+
+        List<Vector3> path = this.mapManager.PredictWorldPathFor(creature.transform.position, targetPos);
         creature.FollowPath(path.ToArray());
     }
 
@@ -112,17 +209,55 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void TryToPerformSkillAtPoint(Creature emitter, Skill skill, Vector3 point)
+    {
+        Vector3 targetPos = this.mapManager.SnapToTile(point);
+
+        List<Vector3> reachArea = this.mapManager.PredictAreaFor(
+            emitter.transform.position,
+            skill.range
+        );
+
+        bool isInArea = false;
+        foreach (var pos in reachArea)
+        {
+            if (pos == targetPos)
+            {
+                isInArea = true;
+                break;
+            }
+        }
+
+        if (isInArea == false)
+        {
+            Debug.Log("Can't attack. Target is not in range.");
+            return;
+        }
+
+        List<Vector3> effectArea = this.mapManager.PredictAreaFor(
+            targetPos,
+            skill.area
+        );
+
+        this.TryToPerformSkillInArea(emitter, skill, effectArea);
+    }
+
     public void TryToPerformSkillInArea(Creature emitter, Skill skill, List<Vector3> area)
     {
+        if (this.isBattleOver)
+        {
+            return;
+        }
+
         if (this.IsOwnerOnTurn(emitter) == false)
         {
-            Debug.LogError("It's not your turn!");
+            Debug.LogWarning("It's not your turn!");
             return;
         }
 
         if (emitter.CanExecuteSkill(skill) == false)
         {
-            Debug.LogError("Can't execute skill. No energy.");
+            Debug.LogWarning("Can't execute skill. No energy.");
             return;
         }
 

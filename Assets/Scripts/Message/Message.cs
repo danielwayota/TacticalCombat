@@ -8,7 +8,9 @@ public enum MessageTag
     CREATURE_UPDATED,
 
     ACTION_CREATURE_MOVE,
-    ACTION_CREATURE_SKILL
+    ACTION_CREATURE_SKILL,
+
+    BATTLE_OVER
 }
 
 public abstract class Message

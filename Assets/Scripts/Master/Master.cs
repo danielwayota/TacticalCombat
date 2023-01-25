@@ -43,5 +43,17 @@ public abstract class Master : MonoBehaviour
         this.creatures.Add(creature);
     }
 
+    public void OnCreatureDeath(Creature creature)
+    {
+        this.creatures.Remove(creature);
+
+        GameManager.current.OnCreatureDeath(creature);
+    }
+
+    public bool HasAliveCreatures()
+    {
+        return this.creatures.Count != 0;
+    }
+
     public abstract void BeginTurn();
 }

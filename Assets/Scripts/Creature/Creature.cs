@@ -18,8 +18,11 @@ public class Creature : MonoBehaviour
 
     private List<StatusCondition> conditions = new List<StatusCondition>();
 
+    public bool isMoving { get; protected set; }
+
     void Start()
     {
+        this.isMoving = false;
         this.SetSelectionStatus(false);
     }
 
@@ -40,6 +43,21 @@ public class Creature : MonoBehaviour
         int newHP = this.stats.hp + amount;
 
         this.stats.hp = Mathf.Clamp(newHP, 0, this.stats.maxhp);
+
+        if (this.stats.hp == 0)
+        {
+            this.master.OnCreatureDeath(this);
+        }
+    }
+
+    public int DamageWithClamp(int amount)
+    {
+        int targetHp = Mathf.Clamp(this.stats.hp - amount, 1, this.stats.maxhp);
+        int damageTaken = this.stats.hp - targetHp;
+
+        this.stats.hp = targetHp;
+
+        return damageTaken;
     }
 
     public void BeginTurn()
@@ -106,6 +124,8 @@ public class Creature : MonoBehaviour
 
     private IEnumerator FollowPathRutine(Vector3[] worldPath)
     {
+        this.isMoving = true;
+
         int pathLength = Mathf.Min(this.CurrentMaxDistance(), worldPath.Length);
         int cost = this.GetEnergyCostForPathLength(pathLength);
 
@@ -129,6 +149,8 @@ public class Creature : MonoBehaviour
 
             this.transform.position = target;
         }
+
+        this.isMoving = false;
     }
 
     public int GetEnergyCostForPathLength(int length)
