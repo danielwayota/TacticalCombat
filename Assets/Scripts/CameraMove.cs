@@ -31,9 +31,12 @@ public class CameraMove : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             float zoomDelta = (Input.mouseScrollDelta.y * (-1)) * this.zoomSpeed * Time.deltaTime;
-
-            float nextZoom = this.cameraComp.orthographicSize + zoomDelta;
-            this.cameraComp.orthographicSize = Mathf.Clamp(nextZoom, this.minZoom, this.maxZoom);
+            this.SetZoom(this.cameraComp.orthographicSize + zoomDelta);
         }
+    }
+
+    public void SetZoom(float nextZoom)
+    {
+        this.cameraComp.orthographicSize = Mathf.Clamp(nextZoom, this.minZoom, this.maxZoom);
     }
 }

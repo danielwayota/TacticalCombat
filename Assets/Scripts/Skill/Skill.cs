@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using System.Collections.Generic;
+
 public class Skill : MonoBehaviour
 {
     public float range = 1.5f;
@@ -17,12 +19,16 @@ public class Skill : MonoBehaviour
 
     public float currentDistancePenalization { get; protected set; }
 
+    protected SpawnEffect spawnEffect;
+    public bool isSpawner = false;
+
     void Awake()
     {
         this.effects = this.GetComponents<IEffect>();
+        this.spawnEffect = this.GetComponent<SpawnEffect>();
     }
 
-    public void Resolve(Creature emitter, Creature receiver)
+    public void ResolveForReceiver(Creature emitter, Creature receiver)
     {
         float tileDistance = Vector3.Distance(emitter.transform.position, receiver.transform.position);
         this.currentDistancePenalization = (-tileDistance + 2) * this.distancePenalizationMultiplier;
@@ -50,6 +56,20 @@ public class Skill : MonoBehaviour
         {
             GameObject go = Instantiate(this.vfx, receiver.transform.position, Quaternion.identity);
             Destroy(go, 2f);
+        }
+    }
+
+    public void ResolveAsSpawner(Creature emitter, List<Vector3> area)
+    {
+        foreach (var point in area)
+        {
+            this.spawnEffect.ResolveAtPoint(emitter, point);
+
+            if (this.vfx != null)
+            {
+                GameObject go = Instantiate(this.vfx, point, Quaternion.identity);
+                Destroy(go, 2f);
+            }
         }
     }
 

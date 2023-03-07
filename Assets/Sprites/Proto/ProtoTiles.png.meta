@@ -105,7 +105,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,6 +129,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 64
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
@@ -688,6 +700,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: RockCreature_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d09cf049235c45b4b9bb70d5b518f361
+      internalID: 1507413551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RockCreatureSpawn
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 64
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb6012b88fe3fad4cbf7379a24722f5b
+      internalID: 71539258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -699,6 +753,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      RockCreatureSpawn: 71539258
       Proto_Poison_0: 1105113986
       Proto_PoisonAttack_1: -607868844
       Proto_Fury_1: 734673652
@@ -723,6 +778,7 @@ TextureImporter:
       Proto_Poison_3: 708322437
       Proto_PoisonAttack_0: 1928398011
       Proto_Flame_0: 8146388372775729220
+      RockCreature_0: 1507413551
       Proto_PathMarker_2: 8795404345415233777
       Proto_Fury_0: 1264257705
   spritePackingTag: 

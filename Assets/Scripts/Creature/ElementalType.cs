@@ -4,5 +4,6 @@ public enum ElementalType
     FIRE,
     WATER,
     GRASS,
-    GROUND
+    GROUND,
+    POISON
 }

@@ -186,4 +186,12 @@ public class MapManager : MonoBehaviour
         var local = this.WorldToLocal(worldPoint);
         return this.LocalToWorld(local);
     }
+
+    public bool AreSameTile(Vector3 a, Vector3 b)
+    {
+        Vector2Int aa = this.WorldToLocal(a);
+        Vector2Int bb = this.WorldToLocal(b);
+
+        return aa == bb;
+    }
 }

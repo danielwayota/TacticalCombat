@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class ParalysisStatusCondition : StatusCondition
 {
-    public override void ApplyOnTurnStart(Stats targetStats)
+    protected override void ExecuteOnTurnStart(Stats targetStats)
     {
         int impediment = Random.Range(0, 2);
         targetStats.energy -= impediment;
     }
 
-    public override void ApplyStatsModifiers(Stats targetStats)
+    protected override void ExecuteStatsModifiers(Stats targetStats)
     { }
 }

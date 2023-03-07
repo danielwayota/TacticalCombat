@@ -5,7 +5,7 @@ public class PoisonStatusCondition : StatusCondition
     public float damagePercent = 0.2f;
     public GameObject onApplyVfx;
 
-    public override void ApplyOnTurnStart(Stats targetStats)
+    protected override void ExecuteOnTurnStart(Stats targetStats)
     {
         int damage = Mathf.RoundToInt(this.damagePercent * (float)targetStats.maxhp);
 
@@ -22,7 +22,7 @@ public class PoisonStatusCondition : StatusCondition
         }
     }
 
-    public override void ApplyStatsModifiers(Stats targetStats)
+    protected override void ExecuteStatsModifiers(Stats targetStats)
     {
 
     }

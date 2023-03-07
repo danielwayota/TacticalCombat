@@ -903,7 +903,7 @@ MonoBehaviour:
   moveSpeed: 6
   zoomSpeed: 32
   maxZoom: 16
-  minZoom: 4
+  minZoom: 5
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1617,6 +1617,7 @@ MonoBehaviour:
   creatureTeamPrfbs:
   - {fileID: 2521753971046226797, guid: c836fb483e784c744b89800010ad3c61, type: 3}
   - {fileID: 2521753971046226797, guid: c5e9bf1be4508a8498c62af865fbd460, type: 3}
+  - {fileID: 2521753971046226797, guid: ec1d5be507f47de4dbfc645d43a6e7df, type: 3}
   masterName: Human
 --- !u!1 &884576185
 GameObject:
@@ -2566,6 +2567,7 @@ GameObject:
   - component: {fileID: 1676316502}
   - component: {fileID: 1676316503}
   - component: {fileID: 1676316504}
+  - component: {fileID: 1676316505}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2614,7 +2616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a97522d46d1f44842511826893206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapData: {fileID: 4900000, guid: ca64e553ac7d5044f9021a96de6aec94, type: 3}
+  mapData: {fileID: 4900000, guid: 0ffc2f5947d18164ca86267d00a84d5b, type: 3}
   humanSpawnPoints: []
   aiSpawnPoints: []
   dynamicObstacles: []
@@ -2640,6 +2642,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79155d17253c11040a4b0405b3e2db8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1676316505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676316499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2620c856ab43e8b41b75969adb3b84b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1763976223

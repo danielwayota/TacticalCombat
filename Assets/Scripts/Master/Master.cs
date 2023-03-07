@@ -36,11 +36,18 @@ public abstract class Master : MonoBehaviour
     {
         GameObject go = Instantiate(creaturePrfb);
         Creature creature = go.GetComponent<Creature>();
+
+        creature.transform.position = worldPosition;
+
+        this.AdoptCreature(creature);
+    }
+
+    public void AdoptCreature(Creature creature)
+    {
         creature.master = this;
-
-        GameManager.current.EmplaceCreature(creature, worldPosition);
-
         this.creatures.Add(creature);
+
+        GameManager.current.EmplaceCreature(creature, creature.transform.position);
     }
 
     public void OnCreatureDeath(Creature creature)

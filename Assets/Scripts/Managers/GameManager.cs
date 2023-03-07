@@ -261,6 +261,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (skill.isSpawner)
+        {
+            emitter.ConsumeEnergyFor(skill);
+            skill.ResolveAsSpawner(emitter, area);
+            return;
+        }
+
         if (this.ThereIsTargetInArea(area) == false)
         {
             Debug.Log("There is no target to execute Skill");
@@ -274,7 +281,7 @@ public class GameManager : MonoBehaviour
             Creature receiver = this.GetCreatureAtPosition(point);
             if (receiver != null)
             {
-                skill.Resolve(emitter, receiver);
+                skill.ResolveForReceiver(emitter, receiver);
             }
         }
     }

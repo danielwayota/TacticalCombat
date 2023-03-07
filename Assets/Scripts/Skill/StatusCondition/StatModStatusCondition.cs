@@ -10,10 +10,10 @@ public class StatModStatusCondition : StatusCondition
     public int elemDefense = 0;
     public int speed = 0;
 
-    public override void ApplyOnTurnStart(Stats targetStats)
+    protected override void ExecuteOnTurnStart(Stats targetStats)
     { }
 
-    public override void ApplyStatsModifiers(Stats targetStats)
+    protected override void ExecuteStatsModifiers(Stats targetStats)
     {
         targetStats.attack += this.attack;
         targetStats.defense += this.defense;

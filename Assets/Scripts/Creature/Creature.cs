@@ -67,17 +67,14 @@ public class Creature : MonoBehaviour
         for (int i = 0; i < this.conditions.Count; i++)
         {
             StatusCondition cond = this.conditions[i];
+
+            cond.ApplyOnTurnStart(this.stats);
             cond.ConsumeOneTurn();
 
             if (cond.isDepleted)
             {
                 this.conditions.RemoveAt(i);
             }
-        }
-
-        foreach (var cond in this.conditions)
-        {
-            cond.ApplyOnTurnStart(this.stats);
         }
     }
 
@@ -148,6 +145,7 @@ public class Creature : MonoBehaviour
             }
 
             this.transform.position = target;
+            MessageManager.current.Send(new CreatureMovedMessage(this));
         }
 
         this.isMoving = false;

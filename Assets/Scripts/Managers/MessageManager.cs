@@ -23,11 +23,21 @@ public class MessageManager : MonoBehaviour
         this.listenerDict[tag].Add(listener);
     }
 
+    public void RemoveListener(MessageTag tag, IMessageListener listener)
+    {
+        if (this.listenerDict.ContainsKey(tag) == false)
+        {
+            return;
+        }
+
+        this.listenerDict[tag].Remove(listener);
+    }
+
     public void Send(Message msg)
     {
         if (this.listenerDict.ContainsKey(msg.tag) == false)
         {
-            Debug.Log($"Message with unregistered tag: {msg.tag}");
+            // Debug.Log($"Message with unregistered tag: {msg.tag}");
             return;
         }
 

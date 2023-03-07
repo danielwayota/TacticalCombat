@@ -44,6 +44,14 @@ public class MapDisplay : MonoBehaviour
                 this.targetTilemap.SetTile(new Vector3Int(x, -y, 0), tile);
             }
         }
+
+        this.gameCamera.transform.position = new Vector3(
+            this.transform.position.x + (mapdata.width / 2f),
+            this.transform.position.y - (mapdata.height / 2f - 1),
+            this.gameCamera.transform.position.z
+        );
+
+        this.gameCamera.GetComponent<CameraMove>().SetZoom(mapdata.width / 3f);
     }
 
     private Tile GetTileForType(TileType type)
