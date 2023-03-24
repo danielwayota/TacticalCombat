@@ -28,5 +28,4 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
         this.uiPanel.SetActive(true);
         this.winnerLabel.text = bom.winner.masterName + " wins!";
     }
-
 }

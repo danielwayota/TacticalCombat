@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Map
+    uniqueID: 4209588795
+    locked: 0
+  - name: Creatures
+    uniqueID: 2922788361
+    locked: 0
+  - name: Effects
+    uniqueID: 1811514875
+    locked: 0
+  - name: UI
+    uniqueID: 3977211181
+    locked: 0

@@ -3,14 +3,15 @@ using UnityEngine.UI;
 
 public class SkillFeedbackUI : MonoBehaviour
 {
-    public Text damageLabel;
+    public Text healthModLabel;
     public Text missLabel;
 
     public Color regularColor = new Color(1, 1, 1);
+    public Color healColor = new Color(1, 1, 1);
     public Color criticalColor = new Color(1, 1, 1);
 
     public bool isHidden { get; protected set; }
-    private int damageSum = 0;
+    private int healthSum = 0;
 
     public float moveSpeed = .5f;
     public Vector3 offset = new Vector3(.5f, .5f, 0);
@@ -26,7 +27,7 @@ public class SkillFeedbackUI : MonoBehaviour
     {
         this.receiver = receiver;
 
-        this.damageLabel.gameObject.SetActive(false);
+        this.healthModLabel.gameObject.SetActive(false);
         this.missLabel.gameObject.SetActive(true);
 
         this.transform.position = this.receiver.transform.position + offset;
@@ -35,23 +36,37 @@ public class SkillFeedbackUI : MonoBehaviour
         Invoke("Hide", 2f);
     }
 
-    public void ConfigureForDamage(Creature receiver, int damageAmount, bool isCritical)
+    public void ConfigureForHealthMod(Creature receiver, int healthAmount, bool isCritical)
     {
         this.receiver = receiver;
 
-        this.damageLabel.gameObject.SetActive(true);
+        this.healthModLabel.gameObject.SetActive(true);
         this.missLabel.gameObject.SetActive(false);
 
-        this.damageSum += damageAmount;
+        this.healthSum += healthAmount;
 
         this.transform.position = this.receiver.transform.position + this.offset;
 
-        this.damageLabel.text = damageSum.ToString();
+        this.healthModLabel.text = healthSum.ToString();
 
-        if (isCritical)
-            this.damageLabel.color = this.criticalColor;
-        else
-            this.damageLabel.color = this.regularColor;
+        if (this.healthSum == 0)
+        {
+            this.Hide();
+            return;
+        }
+
+        if (this.healthSum > 0)
+        {
+            this.healthModLabel.color = this.healColor;
+            this.healthModLabel.text = "+" + this.healthModLabel.text;
+        }
+        else if (this.healthSum < 0)
+        {
+            if (isCritical)
+                this.healthModLabel.color = this.criticalColor;
+            else
+                this.healthModLabel.color = this.regularColor;
+        }
 
         if (this.isHidden)
         {
@@ -68,7 +83,7 @@ public class SkillFeedbackUI : MonoBehaviour
 
     public void Hide()
     {
-        this.damageSum = 0;
+        this.healthSum = 0;
         this.isHidden = true;
         this.gameObject.SetActive(false);
     }

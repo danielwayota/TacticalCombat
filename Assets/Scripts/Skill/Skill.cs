@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Skill : MonoBehaviour
 {
+    public ElementalType elementalType;
+
     public float range = 1.5f;
     public float area = 0;
 

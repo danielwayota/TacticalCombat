@@ -4,6 +4,9 @@ public class StatusConditionEffect : MonoBehaviour, IEffect
 {
     protected StatusCondition[] conditions;
 
+    [Range(0f, 1f)]
+    public float successChance = 1f;
+
     void Awake()
     {
         this.conditions = this.GetComponentsInChildren<StatusCondition>();
@@ -19,6 +22,11 @@ public class StatusConditionEffect : MonoBehaviour, IEffect
 
     public void Resolve(Creature emitter, Creature receiver)
     {
+        if (this.HasSucceeded() == false)
+        {
+            return;
+        }
+
         foreach (var cond in this.conditions)
         {
             // Clonamos el objeto con la condicion de estado
@@ -29,5 +37,17 @@ public class StatusConditionEffect : MonoBehaviour, IEffect
 
             receiver.AddStatusCondition(condition);
         }
+    }
+
+    private bool HasSucceeded()
+    {
+        if (this.successChance == 1f)
+        {
+            return true;
+        }
+
+        float dice = Random.Range(0f, 1f);
+
+        return dice < this.successChance;
     }
 }

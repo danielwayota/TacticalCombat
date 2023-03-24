@@ -10,6 +10,8 @@ public static class ElementalWeaknessDB
 
         db.Add((ElementalType.FIRE, ElementalType.GRASS), 1.5f);
         db.Add((ElementalType.FIRE, ElementalType.WATER), 0.5f);
+        db.Add((ElementalType.FIRE, ElementalType.GROUND), 0.75f);
+        db.Add((ElementalType.FIRE, ElementalType.FIRE), 0.25f);
 
         db.Add((ElementalType.WATER, ElementalType.FIRE), 1.5f);
         db.Add((ElementalType.WATER, ElementalType.GROUND), 1.5f);

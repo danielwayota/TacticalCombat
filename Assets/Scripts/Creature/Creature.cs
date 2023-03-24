@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    public Vector2Int localPosition;
-
+    public GameObject isHumanCreatureIndicator;
     public GameObject selectionIndicator;
 
     public float movementSpeed = 4f;
@@ -24,6 +23,16 @@ public class Creature : MonoBehaviour
     {
         this.isMoving = false;
         this.SetSelectionStatus(false);
+
+        if (this.isHumanCreatureIndicator != null)
+        {
+            this.isHumanCreatureIndicator.SetActive(this.master is HumanMaster);
+        }
+    }
+
+    public Stats GetBaseStats()
+    {
+        return this.stats.Clone();
     }
 
     public Stats GetCurrentStats()
@@ -36,6 +45,11 @@ public class Creature : MonoBehaviour
         }
 
         return modedStats;
+    }
+
+    public StatusCondition[] GetCurrentStatusConditions()
+    {
+        return this.conditions.ToArray();
     }
 
     public void ModifyHealth(int amount)
@@ -58,6 +72,16 @@ public class Creature : MonoBehaviour
         this.stats.hp = targetHp;
 
         return damageTaken;
+    }
+
+    public int Heal(int amount)
+    {
+        int targetHp = Mathf.Clamp(this.stats.hp + amount, 1, this.stats.maxhp);
+        int healed = targetHp - this.stats.hp;
+
+        this.stats.hp = targetHp;
+
+        return healed;
     }
 
     public void BeginTurn()

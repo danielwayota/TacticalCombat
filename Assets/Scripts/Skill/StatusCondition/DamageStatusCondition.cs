@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PoisonStatusCondition : StatusCondition
+public class DamageStatusCondition : StatusCondition
 {
     public float damagePercent = 0.2f;
     public GameObject onApplyVfx;
@@ -12,7 +12,7 @@ public class PoisonStatusCondition : StatusCondition
         int damageTaken = this.targetCreature.DamageWithClamp(damage);
         if (damageTaken != 0)
         {
-            MessageManager.current.Send(new SkillDamageMessage(null, this.targetCreature, damageTaken, false));
+            MessageManager.current.Send(new SkillHealthModMessage(null, this.targetCreature, -damageTaken, false));
         }
 
         if (this.onApplyVfx != null)

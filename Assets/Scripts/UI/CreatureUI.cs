@@ -6,10 +6,14 @@ public class CreatureUI : MonoBehaviour, IMessageListener
 {
     public GameObject[] energyBlocks;
 
-    public Slider healthSlider;
+    public HealthBarUI healthBar;
+
+    public Text elementalTypeLabel;
 
     public DynamicItemUIList dynButtonList;
     public DynamicItemUIList dynStatList;
+
+    public StatusConditionListUI statusConditionListUI;
 
     protected Creature selectedCreature;
 
@@ -24,20 +28,21 @@ public class CreatureUI : MonoBehaviour, IMessageListener
         this.Hide();
     }
 
-    public void DisplayStats(Stats stats)
+    public void DisplayStats(Stats baseStats, Stats currentStats)
     {
-        this.DisplayEnergy(stats.energy);
+        this.elementalTypeLabel.text = baseStats.elementalType.ToString();
 
-        this.healthSlider.value = stats.hp / (float)stats.maxhp;
+        this.DisplayEnergy(currentStats.energy);
 
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Atk", stats.attack);
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Def", stats.defense);
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Spd", stats.speed);
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", stats.elemAttack);
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", stats.elemDefense);
+        this.healthBar.SetHealth(currentStats.hp, currentStats.maxhp);
 
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Acc", stats.accuracy);
-        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Eva", stats.evasion);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Atk", baseStats.attack, currentStats.attack);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Def", baseStats.defense, currentStats.defense);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Spd", baseStats.speed, currentStats.speed);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", baseStats.elemAttack, currentStats.elemAttack);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("EAtk", baseStats.elemDefense, currentStats.elemDefense);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Acc", baseStats.accuracy, currentStats.accuracy);
+        this.dynStatList.GetNextItemAndActivate<SingleStatUI>().Configure("Eva", baseStats.evasion, currentStats.evasion);
     }
 
     public void DisplayEnergy(int energy)
@@ -53,10 +58,10 @@ public class CreatureUI : MonoBehaviour, IMessageListener
         }
     }
 
-    public void AddSkillButtton(string skillName, UnityAction onClick)
+    public void AddSkillButtton(string skillName, Skill skill, UnityAction onClick)
     {
         SkillButton btn = this.dynButtonList.GetNextItemAndActivate<SkillButton>();
-        btn.Configure(skillName, onClick);
+        btn.Configure(skillName, onClick, skill);
     }
 
     public void Show()
@@ -85,13 +90,14 @@ public class CreatureUI : MonoBehaviour, IMessageListener
             if (this.selectedCreature != null)
             {
                 this.Show();
-                this.DisplayStats(this.selectedCreature.GetCurrentStats());
+                this.DisplayStats(this.selectedCreature.GetBaseStats(), this.selectedCreature.GetCurrentStats());
+                this.statusConditionListUI.DisplayStatusConditions(this.selectedCreature.GetCurrentStatusConditions());
 
                 if (this.selectedCreature.master is HumanMaster)
                 {
                     Skill[] skills = this.selectedCreature.GetSkills();
 
-                    this.AddSkillButtton("Move", () =>
+                    this.AddSkillButtton("Move", null, () =>
                     {
                         MessageManager.current.Send(
                             new CreatureActionMoveMessage(this.selectedCreature)
@@ -100,7 +106,7 @@ public class CreatureUI : MonoBehaviour, IMessageListener
 
                     foreach (var skill in skills)
                     {
-                        this.AddSkillButtton(skill.name, () =>
+                        this.AddSkillButtton(skill.name, skill, () =>
                         {
                             MessageManager.current.Send(
                                 new CreatureActionSkillMessage(this.selectedCreature, skill)
@@ -123,7 +129,8 @@ public class CreatureUI : MonoBehaviour, IMessageListener
             if (this.selectedCreature == cm.creature)
             {
                 this.dynStatList.HideAll();
-                this.DisplayStats(this.selectedCreature.GetCurrentStats());
+                this.DisplayStats(this.selectedCreature.GetBaseStats(), this.selectedCreature.GetCurrentStats());
+                this.statusConditionListUI.DisplayStatusConditions(this.selectedCreature.GetCurrentStatusConditions());
             }
         }
     }

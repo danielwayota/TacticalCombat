@@ -1,24 +1,24 @@
-public class SkillDamageMessage : Message
+public class SkillHealthModMessage : Message
 {
-    public override MessageTag tag => MessageTag.SKILL_DAMAGE;
+    public override MessageTag tag => MessageTag.SKILL_HEALTH_MOD;
 
     public Skill skill { get; protected set; }
     public Creature receiver { get; protected set; }
 
-    public int damage { get; protected set; }
+    public int healthModAmount { get; protected set; }
     public bool critical { get; protected set; }
 
-    public SkillDamageMessage(Skill skill, Creature receiver, int damage, bool crit)
+    public SkillHealthModMessage(Skill skill, Creature receiver, int healthModAmount, bool crit)
     {
         this.skill = skill;
         this.receiver = receiver;
-        this.damage = damage;
+        this.healthModAmount = healthModAmount;
         this.critical = crit;
     }
 
     public override string ToString()
     {
         string critText = this.critical ? "CRIT" : "";
-        return $"{this.skill.skillName} to {this.receiver.name} with {this.damage} {critText}";
+        return $"{this.skill.skillName} to {this.receiver.name} with {this.healthModAmount} {critText}";
     }
 }

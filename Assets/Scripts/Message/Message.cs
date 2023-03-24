@@ -2,7 +2,7 @@ public enum MessageTag
 {
     NEXT_TURN,
     SKILL_MISS,
-    SKILL_DAMAGE,
+    SKILL_HEALTH_MOD,
 
     CREATURE_SELECTED,
     CREATURE_UPDATED,

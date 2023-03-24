@@ -20,7 +20,7 @@ public class MapDisplay : MonoBehaviour
 
     // Marcadores de ruta.
     public GameObject pathMarkerPrfb;
-    private List<MapPathMarker> pathMarkers = new List<MapPathMarker>();
+    private List<MapActionMarker> pathMarkers = new List<MapActionMarker>();
 
     public Transform pathMarkerHolder;
 
@@ -113,7 +113,7 @@ public class MapDisplay : MonoBehaviour
                                 this.humanMaster.selectedSkill.area
                             );
 
-                            this.DisplayPredictedArea(skillEffectArea, 2);
+                            this.DisplayPredictedArea(skillEffectArea, true);
                         }
 
                         break;
@@ -147,22 +147,29 @@ public class MapDisplay : MonoBehaviour
 
         for (int i = 0; i < mathMaxSteps; i++)
         {
-            MapPathMarker marker = this.GetNextMarker();
+            MapActionMarker marker = this.GetNextMarker();
 
             int cost = selected.GetEnergyCostForPathLength(i + 1);
-            marker.SetColourUsingPathCost(cost);
+            marker.ShowForPathUsingCost(cost);
 
             marker.transform.position = path[i];
         }
     }
 
-    private void DisplayPredictedArea(List<Vector3> area, int pseudoCost = 1)
+    private void DisplayPredictedArea(List<Vector3> area, bool isAction = false)
     {
         for (int i = 0; i < area.Count; i++)
         {
-            MapPathMarker marker = this.GetNextMarker();
+            MapActionMarker marker = this.GetNextMarker();
 
-            marker.SetColourUsingPathCost(pseudoCost);
+            if (isAction)
+            {
+                marker.ShowForSkillAction();
+            }
+            else
+            {
+                marker.ShowForSkillReach();
+            }
 
             marker.transform.position = area[i];
         }
@@ -176,7 +183,7 @@ public class MapDisplay : MonoBehaviour
         }
     }
 
-    public MapPathMarker GetNextMarker()
+    public MapActionMarker GetNextMarker()
     {
         foreach (var marker in this.pathMarkers)
         {
@@ -187,7 +194,7 @@ public class MapDisplay : MonoBehaviour
         }
 
         GameObject go = Instantiate(this.pathMarkerPrfb);
-        MapPathMarker newMarker = go.GetComponent<MapPathMarker>();
+        MapActionMarker newMarker = go.GetComponent<MapActionMarker>();
         this.pathMarkers.Add(newMarker);
 
         newMarker.transform.SetParent(this.pathMarkerHolder);

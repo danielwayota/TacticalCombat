@@ -10,14 +10,26 @@ public abstract class StatusCondition : MonoBehaviour
 {
     public bool isDepleted { get => this.remainingTurns <= 0; }
 
+    public string conditionName = "NO_NAME";
+
+    public GameObject gfx;
+
     [Header("Immunities")]
     public StatusConditionFilterType filterType = StatusConditionFilterType.ARE_IMMUNE;
     public ElementalType[] typesFilter;
 
     public int turnCount = 1;
-    protected int remainingTurns;
+    public int remainingTurns { get; protected set; }
 
     protected Creature targetCreature;
+
+    void Awake()
+    {
+        if (this.gfx != null)
+        {
+            this.gfx.SetActive(false);
+        }
+    }
 
     public void Configure(Creature targetCreature)
     {
@@ -27,6 +39,13 @@ public abstract class StatusCondition : MonoBehaviour
         if (this.IsCreatureImmune())
         {
             this.remainingTurns = 0;
+        }
+        else
+        {
+            if (this.gfx != null)
+            {
+                this.gfx.SetActive(true);
+            }
         }
     }
 

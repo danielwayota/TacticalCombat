@@ -10,7 +10,6 @@ public enum DamageType
 public class DamageEffect : MonoBehaviour, IEffect
 {
     public DamageType damageType;
-    public ElementalType elementalType;
 
     public int power = 20;
 
@@ -21,7 +20,7 @@ public class DamageEffect : MonoBehaviour, IEffect
         Stats eStats = emitter.GetCurrentStats();
         Stats rStats = receiver.GetCurrentStats();
 
-        int damage = this.CalculateDamage(eStats, rStats);
+        int damage = this.CalculateDamage(eStats, rStats, parentSkill.elementalType);
 
         bool isCritical = this.IsCritical(eStats, rStats, parentSkill.currentDistancePenalization);
         if (isCritical)
@@ -29,18 +28,18 @@ public class DamageEffect : MonoBehaviour, IEffect
             damage *= 2;
         }
 
-        MessageManager.current.Send(new SkillDamageMessage(parentSkill, receiver, damage, isCritical));
+        MessageManager.current.Send(new SkillHealthModMessage(parentSkill, receiver, -damage, isCritical));
         receiver.ModifyHealth(-damage);
     }
 
-    protected int CalculateDamage(Stats emitterStats, Stats receiverStats)
+    protected int CalculateDamage(Stats emitterStats, Stats receiverStats, ElementalType skillElementalType)
     {
         // Fórmula: https://bulbapedia.bulbagarden.net/wiki/Damage
         float AD = this.CalculateAD(emitterStats, receiverStats);
         float rawDamage = (((2 * emitterStats.level) / 5) + 2) * this.power * AD;
         rawDamage = (rawDamage / 50) + 2;
 
-        rawDamage *= this.GetElementalMultiplier(emitterStats.elementalType, this.elementalType, receiverStats.elementalType);
+        rawDamage *= this.GetElementalMultiplier(emitterStats.elementalType, skillElementalType, receiverStats.elementalType);
 
         return Mathf.RoundToInt(rawDamage);
     }
