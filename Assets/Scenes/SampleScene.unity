@@ -2037,8 +2037,9 @@ MonoBehaviour:
   creatureTeamPrfbs:
   - {fileID: 2521753971046226797, guid: 8892353af3f8f7345bb60b2ec82574f0, type: 3}
   - {fileID: 2521753971046226797, guid: f556cfd5ec3204e488e132fc83fedc6a, type: 3}
-  - {fileID: 2521753971046226797, guid: ec1d5be507f47de4dbfc645d43a6e7df, type: 3}
+  - {fileID: 2521753971046226797, guid: a1eea45f994d1c044aa6503ea8a85ce1, type: 3}
   - {fileID: 2521753971046226797, guid: 398dd3747382b264fbcc9187bbb6f773, type: 3}
+  - {fileID: 2521753971046226797, guid: e3a5a3943fe2831459e94d3d982141f5, type: 3}
   masterName: Human
 --- !u!1 &884576185
 GameObject:
@@ -2899,8 +2900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureTeamPrfbs:
-  - {fileID: 2521753971046226797, guid: 7195759573bffb649afd26e7a40950e9, type: 3}
-  - {fileID: 2521753971046226797, guid: d2db994a89fd7284685f4dcfca5cfae9, type: 3}
+  - {fileID: 2521753971046226797, guid: 398dd3747382b264fbcc9187bbb6f773, type: 3}
+  - {fileID: 2521753971046226797, guid: e3a5a3943fe2831459e94d3d982141f5, type: 3}
   masterName: AI
 --- !u!1 &1276338444
 GameObject:

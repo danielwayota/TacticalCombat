@@ -15,13 +15,18 @@ public static class ElementalWeaknessDB
 
         db.Add((ElementalType.WATER, ElementalType.FIRE), 1.5f);
         db.Add((ElementalType.WATER, ElementalType.GROUND), 1.5f);
+        db.Add((ElementalType.WATER, ElementalType.GRASS), 0.5f);
+        db.Add((ElementalType.WATER, ElementalType.WATER), 0.5f);
 
         db.Add((ElementalType.GROUND, ElementalType.FIRE), 1.5f);
+        db.Add((ElementalType.GROUND, ElementalType.POISON), 1.5f);
         db.Add((ElementalType.GROUND, ElementalType.WATER), 0.5f);
+        db.Add((ElementalType.GROUND, ElementalType.GROUND), 0.5f);
 
         db.Add((ElementalType.GRASS, ElementalType.WATER), 1.5f);
         db.Add((ElementalType.GRASS, ElementalType.GROUND), 1.5f);
         db.Add((ElementalType.GRASS, ElementalType.FIRE), 0.5f);
+        db.Add((ElementalType.GRASS, ElementalType.GRASS), 0.5f);
     }
 
     public static float GetWeaknessMultiplier(ElementalType skillType, ElementalType receiverType)
