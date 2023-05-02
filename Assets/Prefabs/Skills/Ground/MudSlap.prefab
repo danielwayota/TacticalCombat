@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4571f4a647033284a852b3698e84f58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementalType: 5
+  elementalType: 4
   range: 1.5
   area: 0
   cost: 1
@@ -222,4 +222,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c029701eb0de44f96f266b10f0c8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  successChance: 1
+  successChance: 0.9

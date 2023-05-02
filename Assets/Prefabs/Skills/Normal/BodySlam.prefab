@@ -102,7 +102,7 @@ MonoBehaviour:
   area: 0
   cost: 1
   distancePenalizationMultiplier: 0.1
-  skillName: Body Slam
+  skillName: Body slam
   vfx: {fileID: 7220835315789341705, guid: d306db2d55493274391ccf0966e5bbc0, type: 3}
   isSpawner: 0
 --- !u!114 &1103925614089018457
