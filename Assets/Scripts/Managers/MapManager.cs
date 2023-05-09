@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    public TextAsset mapData;
-
     public Map map { get; protected set; }
     private MapPathFinder pathFinder;
 
@@ -19,7 +17,7 @@ public class MapManager : MonoBehaviour
 
     public List<Vector3> dynamicObstacles;
 
-    public void Configure()
+    public void Configure(string mapData)
     {
         this.humanSpawnPoints = new List<Vector3>();
         this.aiSpawnPoints = new List<Vector3>();
@@ -31,7 +29,7 @@ public class MapManager : MonoBehaviour
 
         this.display = GameObject.FindObjectOfType<MapDisplay>();
 
-        this.map = this.CreateMapWithStringData(this.mapData.text);
+        this.map = this.CreateMapWithStringData(mapData);
         this.display.RenderMapData(this.map);
 
         this.pathFinder = new MapPathFinder();

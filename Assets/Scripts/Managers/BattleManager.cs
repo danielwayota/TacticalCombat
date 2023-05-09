@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
-    public static GameManager current;
+    public static BattleManager current;
 
     private Master[] masters;
     private int turnIndex;
@@ -18,30 +18,40 @@ public class GameManager : MonoBehaviour
 
     protected List<Creature> returnBuffer;
 
-    void Start()
+    void Awake()
     {
         current = this;
+    }
 
+    public void StartBattle(string mapData, GameObject[] humanCreaturePrfbs, GameObject[] aiCreaturePrfbs)
+    {
         this.gameCreatures = new List<Creature>();
         this.graveyard = new List<Creature>();
 
         this.returnBuffer = new List<Creature>();
 
         this.mapManager = GetComponent<MapManager>();
-        this.mapManager.Configure();
+        this.mapManager.Configure(mapData);
 
         Master human = this.GetComponentInChildren<HumanMaster>();
         Master ai = this.GetComponentInChildren<AIMaster>();
 
         this.masters = new Master[] { human, ai };
 
-        human.SpawnCreatures(this.mapManager.humanSpawnPoints);
-        ai.SpawnCreatures(this.mapManager.aiSpawnPoints);
+        human.SpawnCreatures(this.mapManager.humanSpawnPoints, humanCreaturePrfbs);
+        ai.SpawnCreatures(this.mapManager.aiSpawnPoints, aiCreaturePrfbs);
 
         this.turnIndex = -1;
         this.isBattleOver = false;
 
         Invoke("NextTurn", .5f);
+    }
+
+    public void EndBattle()
+    {
+        // NOTA: En el futuro aquí irán más cosas. CREO.
+
+        OverworldManager.current.EndBattle();
     }
 
     public void EmplaceCreature(Creature creature, Vector3 worldPosition)
@@ -163,7 +173,7 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
-        if (GameManager.current.mapManager.IsAGroundTile(targetPos) == false)
+        if (BattleManager.current.mapManager.IsAGroundTile(targetPos) == false)
         {
             Debug.LogWarning("Not a ground tile.");
             return false;

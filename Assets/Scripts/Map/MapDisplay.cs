@@ -72,10 +72,10 @@ public class MapDisplay : MonoBehaviour
         {
             Vector3 world = this.gameCamera.ScreenToWorldPoint(Input.mousePosition);
 
-            if (GameManager.current.mapManager.IsAGroundTile(world))
+            if (BattleManager.current.mapManager.IsAGroundTile(world))
             {
                 this.cursor.gameObject.SetActive(true);
-                this.cursor.position = GameManager.current.mapManager.SnapToTile(world);
+                this.cursor.position = BattleManager.current.mapManager.SnapToTile(world);
             }
             else
             {
@@ -84,7 +84,7 @@ public class MapDisplay : MonoBehaviour
 
             if (
                 this.humanMaster.hasCreatureSelected &&
-                GameManager.current.IsOwnerOnTurn(this.humanMaster.selectedCreature)
+                BattleManager.current.IsOwnerOnTurn(this.humanMaster.selectedCreature)
             )
             {
                 this.HideAllPathMarkers();
@@ -92,23 +92,23 @@ public class MapDisplay : MonoBehaviour
                 switch (this.humanMaster.status)
                 {
                     case HumanCombatStatus.MOVE:
-                        List<Vector3> path = GameManager.current.mapManager.PredictWorldPathFor(
+                        List<Vector3> path = BattleManager.current.mapManager.PredictWorldPathFor(
                             this.humanMaster.selectedCreature.transform.position, world
                         );
 
                         this.DisplayPredictedPath(path);
                         break;
                     case HumanCombatStatus.SKILL:
-                        List<Vector3> reachArea = GameManager.current.mapManager.PredictAreaFor(
+                        List<Vector3> reachArea = BattleManager.current.mapManager.PredictAreaFor(
                             this.humanMaster.selectedCreature.transform.position,
                             this.humanMaster.selectedSkill.range
                         );
 
                         this.DisplayPredictedArea(reachArea);
 
-                        if (GameManager.current.mapManager.IsInsideArea(reachArea, world))
+                        if (BattleManager.current.mapManager.IsInsideArea(reachArea, world))
                         {
-                            List<Vector3> skillEffectArea = GameManager.current.mapManager.PredictAreaFor(
+                            List<Vector3> skillEffectArea = BattleManager.current.mapManager.PredictAreaFor(
                                 world,
                                 this.humanMaster.selectedSkill.area
                             );

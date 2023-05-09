@@ -3,15 +3,13 @@ using UnityEngine;
 
 public abstract class Master : MonoBehaviour
 {
-    public GameObject[] creatureTeamPrfbs;
-
     public string masterName = "";
 
     protected List<Creature> creatures = new List<Creature>();
 
-    public void SpawnCreatures(List<Vector3> spawnPoints)
+    public void SpawnCreatures(List<Vector3> spawnPoints, GameObject[] creaturePrfbs)
     {
-        for (int i = 0; i < this.creatureTeamPrfbs.Length; i++)
+        for (int i = 0; i < creaturePrfbs.Length; i++)
         {
             if (i >= spawnPoints.Count)
             {
@@ -19,7 +17,7 @@ public abstract class Master : MonoBehaviour
                 break;
             }
 
-            GameObject prfb = this.creatureTeamPrfbs[i];
+            GameObject prfb = creaturePrfbs[i];
             this.CreateCreature(prfb, spawnPoints[i]);
         }
     }
@@ -47,14 +45,14 @@ public abstract class Master : MonoBehaviour
         creature.master = this;
         this.creatures.Add(creature);
 
-        GameManager.current.EmplaceCreature(creature, creature.transform.position);
+        BattleManager.current.EmplaceCreature(creature, creature.transform.position);
     }
 
     public void OnCreatureDeath(Creature creature)
     {
         this.creatures.Remove(creature);
 
-        GameManager.current.OnCreatureDeath(creature);
+        BattleManager.current.OnCreatureDeath(creature);
     }
 
     public bool HasAliveCreatures()

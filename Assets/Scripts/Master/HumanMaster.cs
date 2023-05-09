@@ -35,14 +35,14 @@ public class HumanMaster : Master, IMessageListener
     {
         this.GoToMoveMode();
 
-        Vector3 targetPos = GameManager.current.mapManager.SnapToTile(worldPos);
+        Vector3 targetPos = BattleManager.current.mapManager.SnapToTile(worldPos);
 
         if (this.hasCreatureSelected)
         {
             this.selectedCreature.SetSelectionStatus(false);
         }
 
-        this.selectedCreature = GameManager.current.GetCreatureAtPosition(targetPos);
+        this.selectedCreature = BattleManager.current.GetCreatureAtPosition(targetPos);
         if (this.hasCreatureSelected)
         {
             this.selectedCreature.SetSelectionStatus(true);
@@ -56,10 +56,10 @@ public class HumanMaster : Master, IMessageListener
         switch (this.status)
         {
             case HumanCombatStatus.MOVE:
-                GameManager.current.MoveCreatureTo(this.selectedCreature, worldPos);
+                BattleManager.current.MoveCreatureTo(this.selectedCreature, worldPos);
                 break;
             case HumanCombatStatus.SKILL:
-                GameManager.current.TryToPerformSkillAtPoint(this.selectedCreature, this.selectedSkill, worldPos);
+                BattleManager.current.TryToPerformSkillAtPoint(this.selectedCreature, this.selectedSkill, worldPos);
                 this.GoToMoveMode();
                 break;
         }

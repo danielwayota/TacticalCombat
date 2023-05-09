@@ -11,7 +11,7 @@ public class SpawnEffect : MonoBehaviour
     {
         if (this.requiresEmptySpace)
         {
-            Creature posibleCreature = GameManager.current.GetCreatureAtPosition(point);
+            Creature posibleCreature = BattleManager.current.GetCreatureAtPosition(point);
             if (posibleCreature != null)
             {
                 return;

@@ -17,11 +17,11 @@ public class AIMaster : Master
     private Vector3 GenerateCreatureTarget(Creature creature)
     {
         Stats stats = creature.GetCurrentStats();
-        List<Vector3> reachArea = GameManager.current.mapManager.PredictAreaFor(
+        List<Vector3> reachArea = BattleManager.current.mapManager.PredictAreaFor(
             creature.transform.position,
             stats.speed
         );
-        List<Creature> enemies = GameManager.current.GetEnemyCreaturesInArea(
+        List<Creature> enemies = BattleManager.current.GetEnemyCreaturesInArea(
             reachArea,
             this
         );
@@ -68,7 +68,7 @@ public class AIMaster : Master
 
             Vector3 target = center + offset;
 
-            if (GameManager.current.CanMoveCreatureTo(creature, target))
+            if (BattleManager.current.CanMoveCreatureTo(creature, target))
             {
                 return target;
             }
@@ -84,7 +84,7 @@ public class AIMaster : Master
         {
             Vector3 target = this.GenerateCreatureTarget(creature);
 
-            GameManager.current.MoveCreatureTo(creature, target);
+            BattleManager.current.MoveCreatureTo(creature, target);
 
             while (creature.isMoving)
             {
@@ -99,12 +99,12 @@ public class AIMaster : Master
                 int rndIndex = Random.Range(0, skills.Length);
                 Skill selectedSkill = skills[rndIndex];
 
-                GameManager.current.TryToPerformSkillAtPoint(creature, selectedSkill, this.lastTarget.transform.position);
+                BattleManager.current.TryToPerformSkillAtPoint(creature, selectedSkill, this.lastTarget.transform.position);
             }
 
             yield return new WaitForSeconds(0.5f);
         }
 
-        GameManager.current.NextTurn();
+        BattleManager.current.NextTurn();
     }
 }

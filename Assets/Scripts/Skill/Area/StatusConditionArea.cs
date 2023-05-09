@@ -36,7 +36,7 @@ public class StatusConditionArea : StatusConditionEffect, IMessageListener
 
     public void TryToResolveArea()
     {
-        Creature posibleCreature = GameManager.current.GetCreatureAtPosition(this.transform.position);
+        Creature posibleCreature = BattleManager.current.GetCreatureAtPosition(this.transform.position);
         if (posibleCreature != null)
         {
             this.ResolveArea(posibleCreature);
@@ -53,7 +53,7 @@ public class StatusConditionArea : StatusConditionEffect, IMessageListener
     {
         CreatureMovedMessage cmm = msg as CreatureMovedMessage;
 
-        bool intersectPosition = GameManager.current.mapManager.AreSameTile(
+        bool intersectPosition = BattleManager.current.mapManager.AreSameTile(
             cmm.creature.transform.position,
             this.transform.position
         );

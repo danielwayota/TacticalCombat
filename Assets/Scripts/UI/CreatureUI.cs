@@ -106,7 +106,7 @@ public class CreatureUI : MonoBehaviour, IMessageListener
 
                     foreach (var skill in skills)
                     {
-                        this.AddSkillButtton(skill.name, skill, () =>
+                        this.AddSkillButtton(skill.skillName, skill, () =>
                         {
                             MessageManager.current.Send(
                                 new CreatureActionSkillMessage(this.selectedCreature, skill)

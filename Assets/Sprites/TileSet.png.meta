@@ -119,8 +119,8 @@ TextureImporter:
       name: Map_Ground
       rect:
         serializedVersion: 2
-        x: 0
-        y: 168
+        x: 144
+        y: 0
         width: 24
         height: 24
       alignment: 0
@@ -140,8 +140,8 @@ TextureImporter:
       name: Map_Wall
       rect:
         serializedVersion: 2
-        x: 24
-        y: 168
+        x: 168
+        y: 0
         width: 24
         height: 24
       alignment: 0
@@ -766,6 +766,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Map_Ground_Cursed
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6e837d798a348145950d9d457d0f869
+      internalID: -1219491266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tamer_0
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 146
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8e328b4f7565a8489566519a522b76c
+      internalID: -1771912119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -801,6 +843,8 @@ TextureImporter:
       Fire_Effect_0: 1924430277
       Stat_Inc_Effect_0: -605296881
       Water_Effect_1: -251472075
+      Tamer_0: -1771912119
+      Map_Ground_Cursed: -1219491266
       Map_Skill_Action_Marker: 178800744
       Poison_Effect_1: 601573819
       Map_Wall: 1843638455
