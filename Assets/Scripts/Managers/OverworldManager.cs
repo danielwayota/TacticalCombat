@@ -7,17 +7,29 @@ public class OverworldManager : MonoBehaviour
 {
     public static OverworldManager current;
 
-    public GameObject[] humanCreaturesPrfbs;
+    public CreatureProfile[] humanCreatureProfiles;
+    private CreatureData[] humanCreatures;
 
+    // Esto es temporal
+    public int[] humanCreatureLevels;
+
+    [Header("Scene names")]
     public string overworldSceneName = "Overworld";
     public string battleSceneName = "Battle";
 
     void Awake()
     {
         current = this;
+
+        this.humanCreatures = new CreatureData[this.humanCreatureProfiles.Length];
+        for (int i = 0; i < this.humanCreatureProfiles.Length; i++)
+        {
+            int targetLevel = this.humanCreatureLevels[i];
+            this.humanCreatures[i] = this.humanCreatureProfiles[i].GenerateDataForLevel(targetLevel);
+        }
     }
 
-    private IEnumerator LoadBattle(string mapData, GameObject[] aiCreaturePrfbs)
+    private IEnumerator LoadBattle(string mapData, CreatureData[] aiCreatures)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(this.battleSceneName, LoadSceneMode.Additive);
 
@@ -29,11 +41,11 @@ public class OverworldManager : MonoBehaviour
         Scene battleScene = SceneManager.GetSceneByName(this.battleSceneName);
         SceneManager.SetActiveScene(battleScene);
 
-        BattleManager.current.StartBattle(mapData, this.humanCreaturesPrfbs, aiCreaturePrfbs);
+        BattleManager.current.StartBattle(mapData, this.humanCreatures, aiCreatures);
         this.gameObject.SetActive(false);
     }
 
-    public void StartBattle(string mapData, GameObject[] aiCreatures)
+    public void StartBattle(string mapData, CreatureData[] aiCreatures)
     {
         StartCoroutine(this.LoadBattle(mapData, aiCreatures));
     }
@@ -45,5 +57,22 @@ public class OverworldManager : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(this.battleSceneName);
         this.gameObject.SetActive(true);
+    }
+
+    public void StoreResultingCreatureData(CreatureData[] afterBattleData)
+    {
+        foreach (var data in afterBattleData)
+        {
+            CreatureData newData = data.Clone();
+            newData.stats.Restore();
+
+            foreach (var creatureData in this.humanCreatures)
+            {
+                if (creatureData.id == newData.id)
+                {
+                    creatureData.stats = newData.stats;
+                }
+            }
+        }
     }
 }

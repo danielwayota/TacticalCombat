@@ -4,7 +4,12 @@ public class BattleArea : MonoBehaviour
 {
     public TextAsset mapData;
 
-    public GameObject[] aiCreaturesPfbs;
+    [Header("Level ranges")]
+    public int minLevel = 3;
+    public int maxLevel = 5;
+
+    [Header("Profiles")]
+    public CreatureProfile[] aiCreatureProfiles;
 
     private float coolDownTime = 0;
 
@@ -24,8 +29,15 @@ public class BattleArea : MonoBehaviour
             return;
         }
 
+        CreatureData[] aiCreatures = new CreatureData[this.aiCreatureProfiles.Length];
+        for (int i = 0; i < this.aiCreatureProfiles.Length; i++)
+        {
+            int targetLevel = Random.Range(this.minLevel, this.maxLevel);
+            aiCreatures[i] = this.aiCreatureProfiles[i].GenerateDataForLevel(targetLevel);
+        }
+
         // Desactivamos durante 1 segundo.
         this.coolDownTime = 1f;
-        OverworldManager.current.StartBattle(this.mapData.text, this.aiCreaturesPfbs);
+        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures);
     }
 }

@@ -13,7 +13,10 @@ public class Creature : MonoBehaviour
 
     public Master master;
 
-    public Stats stats;
+    public bool belongToHuman { get => this.master is HumanMaster; }
+
+    public CreatureData innerData { get; protected set; }
+    private Stats stats { get => this.innerData.stats; }
 
     private List<StatusCondition> conditions = new List<StatusCondition>();
 
@@ -28,6 +31,11 @@ public class Creature : MonoBehaviour
         {
             this.isHumanCreatureIndicator.SetActive(this.master is HumanMaster);
         }
+    }
+
+    public void AddInnerData(CreatureData data)
+    {
+        this.innerData = data;
     }
 
     public Stats GetBaseStats()

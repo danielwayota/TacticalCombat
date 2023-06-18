@@ -9,6 +9,7 @@ public class CreatureUI : MonoBehaviour, IMessageListener
     public HealthBarUI healthBar;
 
     public Text elementalTypeLabel;
+    public Text levelLabel;
 
     public DynamicItemUIList dynButtonList;
     public DynamicItemUIList dynStatList;
@@ -31,6 +32,7 @@ public class CreatureUI : MonoBehaviour, IMessageListener
     public void DisplayStats(Stats baseStats, Stats currentStats)
     {
         this.elementalTypeLabel.text = baseStats.elementalType.ToString();
+        this.levelLabel.text = "Lv. " + currentStats.level;
 
         this.DisplayEnergy(currentStats.energy);
 

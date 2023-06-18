@@ -2231,9 +2231,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapData: {fileID: 4900000, guid: c69c284db2153224388cd0cdf57d5922, type: 3}
-  aiCreaturesPfbs:
-  - {fileID: 2521753971046226797, guid: 398dd3747382b264fbcc9187bbb6f773, type: 3}
-  - {fileID: 2521753971046226797, guid: 398dd3747382b264fbcc9187bbb6f773, type: 3}
+  minLevel: 20
+  maxLevel: 30
+  aiCreatureProfiles:
+  - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
+  - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
 --- !u!1 &639898924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,9 +2428,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapData: {fileID: 4900000, guid: ca64e553ac7d5044f9021a96de6aec94, type: 3}
-  aiCreaturesPfbs:
-  - {fileID: 2521753971046226797, guid: a1eea45f994d1c044aa6503ea8a85ce1, type: 3}
-  - {fileID: 2521753971046226797, guid: a1eea45f994d1c044aa6503ea8a85ce1, type: 3}
+  minLevel: 3
+  maxLevel: 5
+  aiCreatureProfiles:
+  - {fileID: 11400000, guid: 38e9ed6517001c74cb52a628d7eac2da, type: 2}
+  - {fileID: 11400000, guid: 38e9ed6517001c74cb52a628d7eac2da, type: 2}
 --- !u!1 &1054143372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,8 +2526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c818f7a1498d2bc40a7c3cda917f8791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanCreaturesPrfbs:
-  - {fileID: 2521753971046226797, guid: 8892353af3f8f7345bb60b2ec82574f0, type: 3}
+  humanCreatureProfiles:
+  - {fileID: 11400000, guid: a9c387b6cf114fa4dbe9836910c795ea, type: 2}
+  humanCreatureLevels: 05000000
   overworldSceneName: Overworld
   battleSceneName: Battle
 --- !u!1 &1517806838
@@ -2598,9 +2603,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapData: {fileID: 4900000, guid: 264e0662465ff8a4ba1088ea883761e5, type: 3}
-  aiCreaturesPfbs:
-  - {fileID: 2521753971046226797, guid: e3a5a3943fe2831459e94d3d982141f5, type: 3}
-  - {fileID: 2521753971046226797, guid: e3a5a3943fe2831459e94d3d982141f5, type: 3}
+  minLevel: 3
+  maxLevel: 5
+  aiCreatureProfiles:
+  - {fileID: 11400000, guid: 5e0eda3a75bea7142827bfbcbb19668c, type: 2}
+  - {fileID: 11400000, guid: 5e0eda3a75bea7142827bfbcbb19668c, type: 2}
 --- !u!1 &1633902223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,6 +2764,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapData: {fileID: 4900000, guid: 0ffc2f5947d18164ca86267d00a84d5b, type: 3}
-  aiCreaturesPfbs:
-  - {fileID: 2521753971046226797, guid: f556cfd5ec3204e488e132fc83fedc6a, type: 3}
-  - {fileID: 2521753971046226797, guid: f556cfd5ec3204e488e132fc83fedc6a, type: 3}
+  minLevel: 3
+  maxLevel: 5
+  aiCreatureProfiles:
+  - {fileID: 11400000, guid: e9d7bcee65653cb42a3690a62374d389, type: 2}
+  - {fileID: 11400000, guid: e9d7bcee65653cb42a3690a62374d389, type: 2}

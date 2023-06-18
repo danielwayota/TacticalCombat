@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
         current = this;
     }
 
-    public void StartBattle(string mapData, GameObject[] humanCreaturePrfbs, GameObject[] aiCreaturePrfbs)
+    public void StartBattle(string mapData, CreatureData[] humanCreatures, CreatureData[] aiCreatures)
     {
         this.gameCreatures = new List<Creature>();
         this.graveyard = new List<Creature>();
@@ -38,8 +38,8 @@ public class BattleManager : MonoBehaviour
 
         this.masters = new Master[] { human, ai };
 
-        human.SpawnCreatures(this.mapManager.humanSpawnPoints, humanCreaturePrfbs);
-        ai.SpawnCreatures(this.mapManager.aiSpawnPoints, aiCreaturePrfbs);
+        human.SpawnCreatures(this.mapManager.humanSpawnPoints, humanCreatures);
+        ai.SpawnCreatures(this.mapManager.aiSpawnPoints, aiCreatures);
 
         this.turnIndex = -1;
         this.isBattleOver = false;
@@ -49,8 +49,23 @@ public class BattleManager : MonoBehaviour
 
     public void EndBattle()
     {
-        // NOTA: En el futuro aquí irán más cosas. CREO.
+        List<CreatureData> humanCreatureData = new List<CreatureData>();
+        HumanMaster human = this.masters[0] as HumanMaster;
 
+        foreach (var creature in human.creatures)
+        {
+            humanCreatureData.Add(creature.innerData);
+        }
+
+        foreach (var deadCreature in this.graveyard)
+        {
+            if (deadCreature.belongToHuman)
+            {
+                humanCreatureData.Add(deadCreature.innerData);
+            }
+        }
+
+        OverworldManager.current.StoreResultingCreatureData(humanCreatureData.ToArray());
         OverworldManager.current.EndBattle();
     }
 

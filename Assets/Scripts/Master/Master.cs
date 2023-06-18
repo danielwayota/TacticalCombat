@@ -5,11 +5,11 @@ public abstract class Master : MonoBehaviour
 {
     public string masterName = "";
 
-    protected List<Creature> creatures = new List<Creature>();
+    public List<Creature> creatures { get; protected set; } = new List<Creature>();
 
-    public void SpawnCreatures(List<Vector3> spawnPoints, GameObject[] creaturePrfbs)
+    public void SpawnCreatures(List<Vector3> spawnPoints, CreatureData[] creatures)
     {
-        for (int i = 0; i < creaturePrfbs.Length; i++)
+        for (int i = 0; i < creatures.Length; i++)
         {
             if (i >= spawnPoints.Count)
             {
@@ -17,8 +17,8 @@ public abstract class Master : MonoBehaviour
                 break;
             }
 
-            GameObject prfb = creaturePrfbs[i];
-            this.CreateCreature(prfb, spawnPoints[i]);
+            CreatureData data = creatures[i];
+            this.CreateCreature(data, spawnPoints[i]);
         }
     }
 
@@ -30,13 +30,14 @@ public abstract class Master : MonoBehaviour
         }
     }
 
-    protected void CreateCreature(GameObject creaturePrfb, Vector3 worldPosition)
+    protected void CreateCreature(CreatureData creatureData, Vector3 worldPosition)
     {
-        GameObject go = Instantiate(creaturePrfb);
+        GameObject go = Instantiate(creatureData.prefab);
         Creature creature = go.GetComponent<Creature>();
 
         creature.transform.position = worldPosition;
 
+        creature.AddInnerData(creatureData);
         this.AdoptCreature(creature);
     }
 
