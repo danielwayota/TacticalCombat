@@ -12,7 +12,9 @@ public class DamageStatusCondition : StatusCondition
         int damageTaken = this.targetCreature.DamageWithClamp(damage);
         if (damageTaken != 0)
         {
-            MessageManager.current.Send(new SkillHealthModMessage(null, this.targetCreature, -damageTaken, false));
+            MessageManager.current.Send(new SkillHealthModMessage(
+                null, null, this.targetCreature, -damageTaken, false, DamageType.OTHER
+            ));
         }
 
         if (this.onApplyVfx != null)

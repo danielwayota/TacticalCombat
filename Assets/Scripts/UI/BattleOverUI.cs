@@ -8,6 +8,8 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
     public Text winnerLabel;
     public GameObject uiPanel;
 
+    public DynamicItemUIList experienceGainSummaryUI;
+
     void Start()
     {
         MessageManager.current.AddListener(MessageTag.BATTLE_OVER, this);
@@ -27,5 +29,11 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
 
         this.uiPanel.SetActive(true);
         this.winnerLabel.text = bom.winner.masterName + " wins!";
+
+        this.experienceGainSummaryUI.ConfigureAndHide();
+        foreach (var data in bom.creatureBattleOverData)
+        {
+            this.experienceGainSummaryUI.GetNextItemAndActivate<ExperienceGainUI>().Display(data);
+        }
     }
 }

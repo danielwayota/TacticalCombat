@@ -4,7 +4,9 @@ public enum DamageType
 {
     PHYSICAL,
     ELEMENTAL,
-    MIXED
+    MIXED,
+    // Ésto está aquí para el daño de las condiciones de estado
+    OTHER,
 }
 
 public class DamageEffect : MonoBehaviour, IEffect
@@ -28,8 +30,13 @@ public class DamageEffect : MonoBehaviour, IEffect
             damage *= 2;
         }
 
-        MessageManager.current.Send(new SkillHealthModMessage(parentSkill, receiver, -damage, isCritical));
+        MessageManager.current.Send(new SkillHealthModMessage(parentSkill, emitter, receiver, -damage, isCritical, this.damageType));
         receiver.ModifyHealth(-damage);
+
+        if (receiver.isDefeated)
+        {
+            MessageManager.current.Send(new CreatureDefeatedMessage(emitter, receiver, parentSkill));
+        }
     }
 
     protected int CalculateDamage(Stats emitterStats, Stats receiverStats, ElementalType skillElementalType)

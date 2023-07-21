@@ -24,10 +24,12 @@ public class CreatureProfile : ScriptableObject
             this.LevelUp(data);
         }
 
+        data.SetParentProfile(this);
+
         return data;
     }
 
-    public void LevelUp(CreatureData data)
+    protected void LevelUp(CreatureData data)
     {
         ShadowStats shadow = data.stats.GetShadow();
 
@@ -40,8 +42,25 @@ public class CreatureProfile : ScriptableObject
         shadow.elemDefense += Random.Range(this.elemDefense.x, this.elemDefense.y);
         shadow.speed += Random.Range(this.speed.x, this.speed.y);
 
+        if (shadow.experience >= 100)
+        {
+            shadow.experience -= 100;
+        }
+
         shadow.level++;
 
-        data.stats.SetShadow(shadow);
+        data.stats.ApplyShadow(shadow);
+    }
+
+    public CreatureData LevelUpIfItShould(CreatureData data)
+    {
+        CreatureData result = data.Clone();
+
+        while (result.experience > 100)
+        {
+            this.LevelUp(result);
+        }
+
+        return result;
     }
 }

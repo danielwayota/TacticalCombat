@@ -18,6 +18,8 @@ public class Creature : MonoBehaviour
     public CreatureData innerData { get; protected set; }
     private Stats stats { get => this.innerData.stats; }
 
+    public bool isDefeated { get => this.stats.hp <= 0; }
+
     private List<StatusCondition> conditions = new List<StatusCondition>();
 
     public bool isMoving { get; protected set; }
@@ -70,6 +72,8 @@ public class Creature : MonoBehaviour
         {
             this.master.OnCreatureDeath(this);
         }
+
+        MessageManager.current.Send(new CreatureUpdatedMessage(this));
     }
 
     public int DamageWithClamp(int amount)
@@ -77,7 +81,7 @@ public class Creature : MonoBehaviour
         int targetHp = Mathf.Clamp(this.stats.hp - amount, 1, this.stats.maxhp);
         int damageTaken = this.stats.hp - targetHp;
 
-        this.stats.hp = targetHp;
+        this.ModifyHealth(-damageTaken);
 
         return damageTaken;
     }
@@ -87,7 +91,7 @@ public class Creature : MonoBehaviour
         int targetHp = Mathf.Clamp(this.stats.hp + amount, 1, this.stats.maxhp);
         int healed = targetHp - this.stats.hp;
 
-        this.stats.hp = targetHp;
+        this.ModifyHealth(healed);
 
         return healed;
     }
@@ -177,7 +181,7 @@ public class Creature : MonoBehaviour
             }
 
             this.transform.position = target;
-            MessageManager.current.Send(new CreatureMovedMessage(this));
+            MessageManager.current.Send(new CreatureMovedMessage(this, pathLength));
         }
 
         this.isMoving = false;

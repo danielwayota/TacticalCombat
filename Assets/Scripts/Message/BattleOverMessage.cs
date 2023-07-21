@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class BattleOverMessage : Message
 {
     public override MessageTag tag => MessageTag.BATTLE_OVER;
@@ -5,9 +7,19 @@ public class BattleOverMessage : Message
     public Master winner { get; protected set; }
     public Master losser { get; protected set; }
 
+    public List<BattleOverCreatureData> creatureBattleOverData { get; protected set; }
+
     public BattleOverMessage(Master winner, Master losser)
     {
         this.winner = winner;
         this.losser = losser;
+        this.creatureBattleOverData = new List<BattleOverCreatureData>();
+    }
+
+    public BattleOverMessage(Master winner, Master losser, List<BattleOverCreatureData> creatureFinalData)
+    {
+        this.winner = winner;
+        this.losser = losser;
+        this.creatureBattleOverData = creatureFinalData;
     }
 }

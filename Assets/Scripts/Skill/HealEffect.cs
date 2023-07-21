@@ -14,6 +14,6 @@ public class HealEffect : MonoBehaviour, IEffect
 
         int healed = receiver.Heal(pointsToHeal);
 
-        MessageManager.current.Send(new SkillHealthModMessage(parentSkill, receiver, healed, false));
+        MessageManager.current.Send(new SkillHealthModMessage(parentSkill, emitter, receiver, healed, false, DamageType.OTHER));
     }
 }

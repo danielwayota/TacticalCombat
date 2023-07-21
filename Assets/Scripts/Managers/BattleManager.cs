@@ -18,6 +18,8 @@ public class BattleManager : MonoBehaviour
 
     protected List<Creature> returnBuffer;
 
+    protected List<BattleOverCreatureData> creaturesBattleOverData = null;
+
     void Awake()
     {
         current = this;
@@ -49,23 +51,14 @@ public class BattleManager : MonoBehaviour
 
     public void EndBattle()
     {
-        List<CreatureData> humanCreatureData = new List<CreatureData>();
-        HumanMaster human = this.masters[0] as HumanMaster;
+        List<CreatureData> finalCreatureData = new List<CreatureData>();
 
-        foreach (var creature in human.creatures)
+        foreach (var battleOverCreatureData in this.GetCreaturesFinalData())
         {
-            humanCreatureData.Add(creature.innerData);
+            finalCreatureData.Add(battleOverCreatureData.final);
         }
 
-        foreach (var deadCreature in this.graveyard)
-        {
-            if (deadCreature.belongToHuman)
-            {
-                humanCreatureData.Add(deadCreature.innerData);
-            }
-        }
-
-        OverworldManager.current.StoreResultingCreatureData(humanCreatureData.ToArray());
+        OverworldManager.current.StoreResultingCreatureData(finalCreatureData.ToArray());
         OverworldManager.current.EndBattle();
     }
 
@@ -87,7 +80,9 @@ public class BattleManager : MonoBehaviour
 
         this.graveyard.Add(creature);
 
-        this.CheckForBattleOver();
+        // FIXME: Arreglo feo, no me gusta
+        // this.CheckForBattleOver();
+        Invoke("CheckForBattleOver", 0.2f);
     }
 
     public void NextTurn()
@@ -130,7 +125,7 @@ public class BattleManager : MonoBehaviour
         if (human.HasAliveCreatures() && ai.HasAliveCreatures() == false)
         {
             this.isBattleOver = true;
-            MessageManager.current.Send(new BattleOverMessage(human, ai));
+            MessageManager.current.Send(new BattleOverMessage(human, ai, this.GetCreaturesFinalData()));
         }
 
         if (ai.HasAliveCreatures() && human.HasAliveCreatures() == false)
@@ -315,5 +310,46 @@ public class BattleManager : MonoBehaviour
     {
         Master currentMaster = this.masters[this.turnIndex];
         return creature.master == currentMaster;
+    }
+
+    private List<BattleOverCreatureData> GetCreaturesFinalData()
+    {
+        if (this.creaturesBattleOverData != null)
+            return this.creaturesBattleOverData;
+
+        this.creaturesBattleOverData = new List<BattleOverCreatureData>();
+
+        HumanMaster human = this.masters[0] as HumanMaster;
+
+        foreach (var creature in human.creatures)
+        {
+            CreatureData startData = creature.innerData.Clone();
+
+            ShadowStats shadowExp = ExperienceManager.current.GetEffortExpFor(creature);
+            creature.innerData.AddExperience(shadowExp);
+
+            CreatureProfile profile = creature.innerData.profile;
+            CreatureData finalData = profile.LevelUpIfItShould(creature.innerData);
+
+            BattleOverCreatureData battleOverCreatureData = new BattleOverCreatureData(
+                creature, startData, finalData
+            );
+
+            this.creaturesBattleOverData.Add(battleOverCreatureData);
+        }
+
+        foreach (var deadCreature in this.graveyard)
+        {
+            if (deadCreature.belongToHuman)
+            {
+                BattleOverCreatureData battleOverCreatureData = new BattleOverCreatureData(
+                    deadCreature, deadCreature.innerData, deadCreature.innerData
+                );
+
+                this.creaturesBattleOverData.Add(battleOverCreatureData);
+            }
+        }
+
+        return this.creaturesBattleOverData;
     }
 }

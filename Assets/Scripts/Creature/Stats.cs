@@ -27,6 +27,9 @@ public class Stats
     [Header("Movement")]
     public int speed = 4;
 
+    public int experience { get => this.GetShadow().experience; }
+    public float experiencePercent { get => this.GetShadow().experience / 100f; }
+
     private ShadowStats shadow;
 
     public void Restore()
@@ -41,25 +44,13 @@ public class Stats
     {
         if (this.shadow == null)
         {
-            ShadowStats shadow = new ShadowStats();
-
-            shadow.level = this.level;
-            shadow.maxhp = this.maxhp;
-            shadow.attack = this.attack;
-            shadow.defense = this.defense;
-            shadow.accuracy = this.accuracy;
-            shadow.evasion = this.evasion;
-            shadow.elemAttack = this.elemAttack;
-            shadow.elemDefense = this.elemDefense;
-            shadow.speed = this.speed;
-
-            this.shadow = shadow;
+            this.shadow = new ShadowStats(this);
         }
 
         return this.shadow;
     }
 
-    public void SetShadow(ShadowStats newShadow)
+    public void ApplyShadow(ShadowStats newShadow)
     {
         this.level = newShadow.level;
 
@@ -97,6 +88,8 @@ public class Stats
         clone.elemAttack = this.elemAttack;
         clone.elemDefense = this.elemDefense;
         clone.speed = this.speed;
+
+        clone.shadow = this.GetShadow().Clone();
 
         return clone;
     }

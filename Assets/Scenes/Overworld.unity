@@ -2231,8 +2231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapData: {fileID: 4900000, guid: c69c284db2153224388cd0cdf57d5922, type: 3}
-  minLevel: 20
-  maxLevel: 30
+  minLevel: 2
+  maxLevel: 4
   aiCreatureProfiles:
   - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
   - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}

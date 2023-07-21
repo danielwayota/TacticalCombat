@@ -11,6 +11,8 @@ public class CreatureUI : MonoBehaviour, IMessageListener
     public Text elementalTypeLabel;
     public Text levelLabel;
 
+    public Slider expSlider;
+
     public DynamicItemUIList dynButtonList;
     public DynamicItemUIList dynStatList;
 
@@ -91,9 +93,13 @@ public class CreatureUI : MonoBehaviour, IMessageListener
             this.selectedCreature = csm.creature;
             if (this.selectedCreature != null)
             {
+                Stats baseStats = this.selectedCreature.GetBaseStats();
+
                 this.Show();
-                this.DisplayStats(this.selectedCreature.GetBaseStats(), this.selectedCreature.GetCurrentStats());
+                this.DisplayStats(baseStats, this.selectedCreature.GetCurrentStats());
                 this.statusConditionListUI.DisplayStatusConditions(this.selectedCreature.GetCurrentStatusConditions());
+
+                this.expSlider.value = baseStats.experiencePercent;
 
                 if (this.selectedCreature.master is HumanMaster)
                 {

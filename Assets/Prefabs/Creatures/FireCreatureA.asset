@@ -29,11 +29,11 @@ MonoBehaviour:
       elemAttack: 6
       elemDefense: 5
       speed: 3
-  maxhp: {x: 1, y: 2}
-  attack: {x: 1, y: 2}
-  defense: {x: 0.5, y: 1.5}
-  accuracy: {x: 1, y: 2}
-  evasion: {x: 1, y: 2}
-  elemAttack: {x: 1.5, y: 2.5}
-  elemDefense: {x: 1, y: 2}
+  maxhp: {x: 1, y: 1.4}
+  attack: {x: 1, y: 1.5}
+  defense: {x: 0.5, y: 1}
+  accuracy: {x: 1, y: 1.5}
+  evasion: {x: 1, y: 1.2}
+  elemAttack: {x: 1.5, y: 2}
+  elemDefense: {x: 1, y: 1}
   speed: {x: 0.2, y: 0.3}
