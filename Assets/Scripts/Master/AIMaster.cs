@@ -93,12 +93,17 @@ public class AIMaster : Master
 
             yield return new WaitForSeconds(0.5f);
 
-            if (this.lastTarget != null)
-            {
-                Skill[] skills = creature.GetSkills();
-                int rndIndex = Random.Range(0, skills.Length);
-                Skill selectedSkill = skills[rndIndex];
+            Skill[] skills = creature.GetSkills();
+            int rndIndex = Random.Range(0, skills.Length);
+            Skill selectedSkill = skills[rndIndex];
 
+            // Si tiene rango 0, es una habilidad que me puedo lanzar a mí mismo.
+            if (selectedSkill.range == 0)
+            {
+                BattleManager.current.TryToPerformSkillAtPoint(creature, selectedSkill, creature.transform.position);
+            }
+            else if (this.lastTarget != null)
+            {
                 BattleManager.current.TryToPerformSkillAtPoint(creature, selectedSkill, this.lastTarget.transform.position);
             }
 

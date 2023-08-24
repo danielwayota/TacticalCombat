@@ -2528,7 +2528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanCreatureProfiles:
   - {fileID: 11400000, guid: a9c387b6cf114fa4dbe9836910c795ea, type: 2}
-  humanCreatureLevels: 05000000
+  - {fileID: 11400000, guid: c37649b7c24b2a648aa79d6c06e639c1, type: 2}
+  humanCreatureLevels: 0500000005000000
   overworldSceneName: Overworld
   battleSceneName: Battle
 --- !u!1 &1517806838

@@ -15,11 +15,12 @@ public class CreatureData
 
     public int experience { get => this.stats.experience; }
 
-    public CreatureData(string id, GameObject prefab, Stats stats)
+    public CreatureData(string id, GameObject prefab, Stats stats, CreatureProfile profile)
     {
         this.id = id;
         this.prefab = prefab;
         this.stats = stats;
+        this.profile = profile;
     }
 
     public void SetParentProfile(CreatureProfile profile)
@@ -43,7 +44,8 @@ public class CreatureData
         return new CreatureData(
             this.id,
             this.prefab,
-            this.stats.Clone()
+            this.stats.Clone(),
+            this.profile
         );
     }
 }

@@ -61,18 +61,12 @@ public class OverworldManager : MonoBehaviour
 
     public void StoreResultingCreatureData(CreatureData[] afterBattleData)
     {
+        // NOTE: Las criaturas pueden venir en otro órden.
         foreach (var data in afterBattleData)
         {
-            CreatureData newData = data.Clone();
-            newData.stats.Restore();
-
-            foreach (var creatureData in this.humanCreatures)
-            {
-                if (creatureData.id == newData.id)
-                {
-                    creatureData.stats = newData.stats;
-                }
-            }
+            data.stats.Restore();
         }
+
+        this.humanCreatures = afterBattleData;
     }
 }

@@ -6,12 +6,13 @@ public class Creature : MonoBehaviour
 {
     public GameObject isHumanCreatureIndicator;
     public GameObject selectionIndicator;
+    private CreatureEnergyIndicator energyIndicator;
 
     public float movementSpeed = 4f;
 
     private bool isSelected = false;
 
-    public Master master;
+    public Master master { get; protected set; }
 
     public bool belongToHuman { get => this.master is HumanMaster; }
 
@@ -28,11 +29,23 @@ public class Creature : MonoBehaviour
     {
         this.isMoving = false;
         this.SetSelectionStatus(false);
+    }
+
+    public void SetMaster(Master otherMaster)
+    {
+        this.master = otherMaster;
 
         if (this.isHumanCreatureIndicator != null)
         {
             this.isHumanCreatureIndicator.SetActive(this.master is HumanMaster);
         }
+
+        if (this.energyIndicator == null)
+        {
+            this.energyIndicator = this.GetComponentInChildren<CreatureEnergyIndicator>();
+        }
+
+        this.energyIndicator.gameObject.SetActive(this.master is HumanMaster);
     }
 
     public void AddInnerData(CreatureData data)
@@ -131,6 +144,8 @@ public class Creature : MonoBehaviour
     {
         this.stats.energy = e;
         MessageManager.current.Send(new CreatureUpdatedMessage(this));
+
+        this.energyIndicator.Display(e);
     }
 
     public bool CanExecuteSkill(Skill skill)

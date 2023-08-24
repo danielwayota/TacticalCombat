@@ -19,6 +19,7 @@ public class ExperienceManager : MonoBehaviour, IMessageListener
         MessageManager.current.AddListener(MessageTag.CREATURE_MOVED, this);
         MessageManager.current.AddListener(MessageTag.SKILL_HEALTH_MOD, this);
         MessageManager.current.AddListener(MessageTag.CREATURE_DEFEATED, this);
+        MessageManager.current.AddListener(MessageTag.CREATURE_CAPTURED, this);
     }
 
     public void Receive(Message msg)
@@ -73,6 +74,13 @@ public class ExperienceManager : MonoBehaviour, IMessageListener
                 // Ignoramos a los enemigos
                 return;
             }
+
+            this.IncreaseExperience(cdm.emitter, cdm.receiver);
+        }
+
+        if (msg is CreatureCapturedMessage)
+        {
+            var cdm = msg as CreatureCapturedMessage;
 
             this.IncreaseExperience(cdm.emitter, cdm.receiver);
         }

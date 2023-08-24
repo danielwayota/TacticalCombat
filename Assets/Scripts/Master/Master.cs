@@ -38,22 +38,25 @@ public abstract class Master : MonoBehaviour
         creature.transform.position = worldPosition;
 
         creature.AddInnerData(creatureData);
+
         this.AdoptCreature(creature);
+        BattleManager.current.EmplaceCreature(creature);
     }
 
     public void AdoptCreature(Creature creature)
     {
-        creature.master = this;
+        creature.SetMaster(this);
         this.creatures.Add(creature);
+    }
 
-        BattleManager.current.EmplaceCreature(creature, creature.transform.position);
+    public void RemoveCreature(Creature creature)
+    {
+        this.creatures.Remove(creature);
     }
 
     public void OnCreatureDeath(Creature creature)
     {
         this.creatures.Remove(creature);
-
-        BattleManager.current.OnCreatureDeath(creature);
     }
 
     public bool HasAliveCreatures()

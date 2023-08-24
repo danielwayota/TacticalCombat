@@ -23,7 +23,9 @@ public class SpawnEffect : MonoBehaviour
         if (posibleNewCreature != null)
         {
             // Es una invocación.
+            // FIXME: Con el cambio de los CreatureData viniendo del perfil, esto no funciona.
             emitter.master.AdoptCreature(posibleNewCreature);
+            BattleManager.current.EmplaceCreature(posibleNewCreature);
         }
     }
 }

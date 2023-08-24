@@ -75,7 +75,7 @@ public class Skill : MonoBehaviour
         }
     }
 
-    private bool CalculateIfCanHit(Stats eStats, Stats rStats)
+    protected virtual bool CalculateIfCanHit(Stats eStats, Stats rStats)
     {
         float hitChance = 1f - Mathf.Max(rStats.evasion - eStats.accuracy, 0) / (float)rStats.evasion;
         hitChance += this.currentDistancePenalization;

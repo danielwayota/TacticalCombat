@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : MonoBehaviour, IMessageListener
 {
     public static BattleManager current;
 
@@ -47,6 +47,13 @@ public class BattleManager : MonoBehaviour
         this.isBattleOver = false;
 
         Invoke("NextTurn", .5f);
+
+        // NOTE: Esto depende del orden en el que se reciban los mensajes.
+        //       Ahora mismo, el ExperienceManager se registra primero, 
+        //       por lo tanto recibe el mensaje primero.
+        //       Si esto no fuera así, no arreglamos nada.
+        MessageManager.current.AddListener(MessageTag.CREATURE_DEFEATED, this);
+        MessageManager.current.AddListener(MessageTag.CREATURE_CAPTURED, this);
     }
 
     public void EndBattle()
@@ -62,8 +69,9 @@ public class BattleManager : MonoBehaviour
         OverworldManager.current.EndBattle();
     }
 
-    public void EmplaceCreature(Creature creature, Vector3 worldPosition)
+    public void EmplaceCreature(Creature creature)
     {
+        Vector3 worldPosition = creature.transform.position;
         if (this.mapManager.IsAGroundTile(worldPosition) == false)
         {
             throw new System.Exception("Invalid Creature emplacement!");
@@ -73,16 +81,30 @@ public class BattleManager : MonoBehaviour
         this.gameCreatures.Add(creature);
     }
 
-    public void OnCreatureDeath(Creature creature)
+    public void Receive(Message msg)
     {
-        this.gameCreatures.Remove(creature);
-        creature.gameObject.SetActive(false);
+        if (msg is CreatureDefeatedMessage)
+        {
+            CreatureDefeatedMessage cdm = msg as CreatureDefeatedMessage;
+            Creature creature = cdm.receiver;
 
-        this.graveyard.Add(creature);
+            this.gameCreatures.Remove(creature);
+            creature.gameObject.SetActive(false);
+            this.graveyard.Add(creature);
 
-        // FIXME: Arreglo feo, no me gusta
-        // this.CheckForBattleOver();
-        Invoke("CheckForBattleOver", 0.2f);
+            // Quitamos el obstáculo dinámico del path finding.
+            this.mapManager.dynamicObstacles.Remove(creature.transform.position);
+        }
+
+        if (msg is CreatureCapturedMessage)
+        {
+            CreatureCapturedMessage ccm = msg as CreatureCapturedMessage;
+
+            // Quitamos el obstáculo dinámico del path finding.
+            this.mapManager.dynamicObstacles.Remove(ccm.receiver.transform.position);
+        }
+
+        this.CheckForBattleOver();
     }
 
     public void NextTurn()

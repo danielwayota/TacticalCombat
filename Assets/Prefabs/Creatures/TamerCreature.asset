@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9fc55c402b4fd04c93f388b736c51f8, type: 3}
-  m_Name: FireCreatureA
+  m_Name: TamerCreature
   m_EditorClassIdentifier: 
   baseData:
-    id: FireCreatureA
-    prefab: {fileID: 2521753971046226797, guid: 8892353af3f8f7345bb60b2ec82574f0, type: 3}
+    id: Tamer
+    prefab: {fileID: 2521753971046226797, guid: 1bfb4c56d3d39064abefe9f4b669fefd, type: 3}
     stats:
-      elementalType: 1
+      elementalType: 0
       level: 1
-      hp: 15
-      maxhp: 15
+      hp: 12
+      maxhp: 12
       energy: 2
       maxEnergy: 2
-      attack: 6
-      defense: 5
+      attack: 5
+      defense: 6
       accuracy: 6
       evasion: 6
-      elemAttack: 6
-      elemDefense: 5
+      elemAttack: 5
+      elemDefense: 6
       speed: 3
-  maxhp: {x: 1, y: 1.4}
-  attack: {x: 1, y: 1.5}
-  defense: {x: 0.5, y: 1}
-  accuracy: {x: 1, y: 1.6}
-  evasion: {x: 1, y: 1.2}
-  elemAttack: {x: 1.5, y: 2}
-  elemDefense: {x: 1, y: 1}
-  speed: {x: 0.2, y: 0.3}
+  maxhp: {x: 1.7, y: 2.5}
+  attack: {x: 0.4, y: 0.8}
+  defense: {x: 0.7, y: 1.5}
+  accuracy: {x: 0.6, y: 1.5}
+  evasion: {x: 0.7, y: 1}
+  elemAttack: {x: 0.3, y: 0.8}
+  elemDefense: {x: 0.7, y: 1.5}
+  speed: {x: 0.25, y: 0.35}
