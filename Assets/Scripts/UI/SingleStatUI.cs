@@ -32,4 +32,10 @@ public class SingleStatUI : MonoBehaviour
             this.modValueLabel.gameObject.SetActive(false);
         }
     }
+
+    public void Configure(string text, int baseValue)
+    {
+        this.label.text = text;
+        this.baseValueLabel.text = baseValue.ToString();
+    }
 }

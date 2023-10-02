@@ -4,7 +4,7 @@ public class StatusConditionListUI : MonoBehaviour
 {
     public DynamicItemUIList singleStatusConditionList;
 
-    void Awake()
+    public void ConfigureAndHide()
     {
         this.singleStatusConditionList.ConfigureAndHide();
     }

@@ -880,7 +880,7 @@ TextureImporter:
         width: 5
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -901,7 +901,7 @@ TextureImporter:
         width: 7
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -909,6 +909,27 @@ TextureImporter:
       bones: []
       spriteID: a1052625382943d4882f160a3bef34f5
       internalID: 1501894050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grass_Creature_B
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 146
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc1ca78efd7da949803ba9ca324bf36
+      internalID: -1380970711
       vertices: []
       indices: 
       edges: []
@@ -924,7 +945,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Capture_Effect_1: 1501894050
       Map_Human_Creature_Energy_1: 709430773
       Heal_Effect_0: -1882081463
       Fire_Effect_2: 729194567
@@ -933,6 +953,7 @@ TextureImporter:
       Map_Selection_Indicator: 966391049
       Poison_Effect_0: -518378273
       Paralysis_Effect_0: -1965398188
+      Grass_Creature_B: -1380970711
       Map_Ground: 1311876232
       Map_Path_Marker_1: -935520337
       Water_Effect_0: 1886216809
@@ -942,6 +963,7 @@ TextureImporter:
       Poison_Creature_A: 1092251329
       Poison_Effect_2: -1485045095
       Map_Skill_Reach_Marker: -738626355
+      Capture_Effect_1: 1501894050
       Map_Cursor: -436354646
       Ground_Creature_A: -1085532961
       Paralysis_Effect_1: 1916171908

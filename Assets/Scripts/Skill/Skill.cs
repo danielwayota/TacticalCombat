@@ -41,7 +41,7 @@ public class Skill : MonoBehaviour
             return;
         }
 
-        bool canHit = this.CalculateIfCanHit(emitter.GetCurrentStats(), receiver.GetCurrentStats());
+        bool canHit = this.CalculateIfCanHit(emitter, receiver);
         if (canHit)
         {
             foreach (var effect in this.effects)
@@ -75,13 +75,22 @@ public class Skill : MonoBehaviour
         }
     }
 
-    protected virtual bool CalculateIfCanHit(Stats eStats, Stats rStats)
+    public virtual float CalculateHitChance(Creature emitter, Creature receiver)
     {
+        Stats eStats = emitter.GetCurrentStats();
+        Stats rStats = receiver.GetCurrentStats();
+
         float hitChance = 1f - Mathf.Max(rStats.evasion - eStats.accuracy, 0) / (float)rStats.evasion;
         hitChance += this.currentDistancePenalization;
 
-        float dice = Random.Range(0f, 1f);
+        return hitChance;
+    }
 
+    protected bool CalculateIfCanHit(Creature emitter, Creature receiver)
+    {
+        float hitChance = this.CalculateHitChance(emitter, receiver);
+
+        float dice = Random.Range(0f, 1f);
         return dice < hitChance;
     }
 }

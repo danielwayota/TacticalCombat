@@ -47,7 +47,7 @@ public class AIMaster : Master
 
         if (this.lastTarget != null)
         {
-            return this.GenerateRandomTargetInArea(creature, this.lastTarget.transform.position, 1f);
+            return this.GenerateNearestPointAroundTarget(creature, this.lastTarget.transform.position);
         }
 
         return this.GenerateRandomTargetInArea(creature, creature.transform.position, stats.speed);
@@ -78,8 +78,68 @@ public class AIMaster : Master
         return center;
     }
 
+    private Vector3 GenerateNearestPointAroundTarget(Creature creature, Vector3 targetCenter)
+    {
+        Vector3[] posibleTargets = new Vector3[] {
+            targetCenter + Vector3.up,
+            targetCenter + Vector3.left,
+            targetCenter + Vector3.down,
+            targetCenter + Vector3.right,
+        };
+
+        bool sorted = false;
+        while (!sorted)
+        {
+            sorted = true;
+
+            for (int i = 0; i < posibleTargets.Length - 1; i++)
+            {
+                float a = Vector3.SqrMagnitude(posibleTargets[i + 0] - creature.transform.position);
+                float b = Vector3.SqrMagnitude(posibleTargets[i + 1] - creature.transform.position);
+
+                // Ya estamos en uno de los destinos posibles.
+                if (a < 1f)
+                {
+                    // No moverse.
+                    return posibleTargets[i];
+                }
+
+                if (b < a)
+                {
+                    sorted = false;
+
+                    Vector3 tmp = posibleTargets[i + 0];
+                    posibleTargets[i + 0] = posibleTargets[i + 1];
+                    posibleTargets[i + 1] = tmp;
+                }
+            }
+        }
+
+        foreach (var targetPoint in posibleTargets)
+        {
+            if (BattleManager.current.CanMoveCreatureTo(creature, targetPoint))
+            {
+                return targetPoint;
+            }
+        }
+
+        // No nos movemos.
+        return creature.transform.position;
+    }
+
     private IEnumerator TurnRutine()
     {
+        // PRUEBA:
+        // Cambiamos el órden de las criaturas enemigas para generar comportamientos inesperados.
+        for (int i = 0; i < this.creatures.Count - 1; i++)
+        {
+            int index = Random.Range(i, this.creatures.Count);
+
+            Creature tmp = this.creatures[i];
+            this.creatures[i] = this.creatures[index];
+            this.creatures[index] = tmp;
+        }
+
         foreach (var creature in this.creatures)
         {
             Vector3 target = this.GenerateCreatureTarget(creature);

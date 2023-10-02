@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class CreatureUI : MonoBehaviour, IMessageListener
+public class CreatureBattleUI : MonoBehaviour, IMessageListener
 {
     public GameObject[] energyBlocks;
 
@@ -27,6 +27,9 @@ public class CreatureUI : MonoBehaviour, IMessageListener
 
         this.dynButtonList.ConfigureAndHide();
         this.dynStatList.ConfigureAndHide();
+
+        this.GetComponentInChildren<SkillHitChanceUI>().ConfigureAndHide();
+        this.GetComponentInChildren<StatusConditionListUI>().ConfigureAndHide();
 
         this.Hide();
     }

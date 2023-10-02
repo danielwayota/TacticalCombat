@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -29,6 +30,8 @@ public class Stats
 
     public int experience { get => this.GetShadow().experience; }
     public float experiencePercent { get => this.GetShadow().experience / 100f; }
+
+    public float healthPercent { get => this.hp / (float)(this.maxhp); }
 
     private ShadowStats shadow;
 

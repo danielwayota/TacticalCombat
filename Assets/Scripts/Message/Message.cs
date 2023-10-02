@@ -13,6 +13,8 @@ public enum MessageTag
     ACTION_CREATURE_MOVE,
     ACTION_CREATURE_SKILL,
 
+    REQUEST_SKILL_HIT_CHANCE,
+
     BATTLE_OVER
 }
 

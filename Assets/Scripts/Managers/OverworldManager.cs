@@ -1,6 +1,7 @@
 using System.Collections;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class OverworldManager : MonoBehaviour
@@ -17,6 +18,10 @@ public class OverworldManager : MonoBehaviour
     public string overworldSceneName = "Overworld";
     public string battleSceneName = "Battle";
 
+    private TeamUI teamUI;
+
+    private EventSystem overworldEventSystem;
+
     void Awake()
     {
         current = this;
@@ -27,6 +32,16 @@ public class OverworldManager : MonoBehaviour
             int targetLevel = this.humanCreatureLevels[i];
             this.humanCreatures[i] = this.humanCreatureProfiles[i].GenerateDataForLevel(targetLevel);
         }
+
+        this.teamUI = GameObject.FindObjectOfType<TeamUI>(true);
+
+        // NOTE: Esto es para el warning de que hay dos EventSystem activos.
+        this.overworldEventSystem = EventSystem.current;
+    }
+
+    public void ToggleTeamView()
+    {
+        this.teamUI.ToggleDisplay(this.humanCreatures);
     }
 
     private IEnumerator LoadBattle(string mapData, CreatureData[] aiCreatures)
@@ -47,6 +62,8 @@ public class OverworldManager : MonoBehaviour
 
     public void StartBattle(string mapData, CreatureData[] aiCreatures)
     {
+        this.overworldEventSystem.enabled = false;
+
         StartCoroutine(this.LoadBattle(mapData, aiCreatures));
     }
 
@@ -57,6 +74,8 @@ public class OverworldManager : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(this.battleSceneName);
         this.gameObject.SetActive(true);
+
+        this.overworldEventSystem.enabled = true;
     }
 
     public void StoreResultingCreatureData(CreatureData[] afterBattleData)

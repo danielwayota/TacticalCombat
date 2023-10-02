@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class CaptureSkill : Skill
 {
-    protected override bool CalculateIfCanHit(Stats eStats, Stats rStats)
+    public override float CalculateHitChance(Creature emitter, Creature receiver)
     {
+        Stats eStats = emitter.GetCurrentStats();
+        Stats rStats = receiver.GetCurrentStats();
+
         float accuracyEffect = 1f - Mathf.Max(rStats.evasion - eStats.accuracy, 0) / (float)rStats.evasion;
         float distanceEffect = this.currentDistancePenalization;
         float healthEffect = 1f - (rStats.hp / rStats.maxhp);
@@ -15,7 +18,6 @@ public class CaptureSkill : Skill
             (.15f * healthEffect) +
             (.05f * levelEffect);
 
-        float dice = Random.Range(0f, 1f);
-        return dice < captureChance;
+        return captureChance;
     }
 }

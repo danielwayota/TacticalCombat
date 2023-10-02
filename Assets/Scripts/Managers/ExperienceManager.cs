@@ -56,12 +56,14 @@ public class ExperienceManager : MonoBehaviour, IMessageListener
             {
                 // Hemos golpeado
                 this.IncreaseAttackEffortExp(shm.emitter, shm.damageType, shm.critical);
+                this.IncreaseExperience(shm.emitter, shm.receiver, 0.1f);
             }
 
             if (shm.receiver.belongToHuman)
             {
                 // Nos han golpeado
                 this.IncreaseDefenseEffortExp(shm.receiver, shm.damageType, shm.critical);
+                this.IncreaseExperience(shm.emitter, shm.receiver, 0.1f);
             }
         }
 
@@ -151,7 +153,7 @@ public class ExperienceManager : MonoBehaviour, IMessageListener
         this.creatureEffortExpDeltas[creature] = shadow;
     }
 
-    private void IncreaseExperience(Creature emitter, Creature receiver)
+    private void IncreaseExperience(Creature emitter, Creature receiver, float multiplier = 1f)
     {
         int levelDiff = receiver.innerData.level - emitter.innerData.level;
         // 3 - 5 = -2  50 - 16 = +34
@@ -162,7 +164,7 @@ public class ExperienceManager : MonoBehaviour, IMessageListener
         int exp = Mathf.Clamp(baseExpGain + levelDiff * 8, 10, 9999);
 
         ShadowStats shadow = this.GetEffortExpFor(emitter);
-        shadow.experience += exp;
+        shadow.experience += Mathf.RoundToInt(exp * multiplier);
 
         this.creatureEffortExpDeltas[emitter] = shadow;
     }

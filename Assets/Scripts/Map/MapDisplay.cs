@@ -26,6 +26,8 @@ public class MapDisplay : MonoBehaviour
 
     private HumanMaster humanMaster;
 
+    private Creature creatureUnderCursor = null;
+
     void Awake()
     {
         this.humanMaster = FindObjectOfType<HumanMaster>();
@@ -71,11 +73,12 @@ public class MapDisplay : MonoBehaviour
         if (InputManager.GetIfMouseHasMoved())
         {
             Vector3 world = this.gameCamera.ScreenToWorldPoint(Input.mousePosition);
+            world = BattleManager.current.mapManager.SnapToTile(world);
 
             if (BattleManager.current.mapManager.IsAGroundTile(world))
             {
                 this.cursor.gameObject.SetActive(true);
-                this.cursor.position = BattleManager.current.mapManager.SnapToTile(world);
+                this.cursor.position = world;
             }
             else
             {
@@ -106,7 +109,8 @@ public class MapDisplay : MonoBehaviour
 
                         this.DisplayPredictedArea(reachArea);
 
-                        if (BattleManager.current.mapManager.IsInsideArea(reachArea, world))
+                        bool targetInReachArea = BattleManager.current.mapManager.IsInsideArea(reachArea, world);
+                        if (targetInReachArea)
                         {
                             List<Vector3> skillEffectArea = BattleManager.current.mapManager.PredictAreaFor(
                                 world,
@@ -114,6 +118,20 @@ public class MapDisplay : MonoBehaviour
                             );
 
                             this.DisplayPredictedArea(skillEffectArea, true);
+                        }
+
+                        Creature posibleTargetCreature = BattleManager.current.GetCreatureAtPosition(world);
+
+                        // Si está fuera de alcance, no mostramos la probabilidad de acierto.
+                        if (!targetInReachArea)
+                        {
+                            posibleTargetCreature = null;
+                        }
+
+                        if (this.creatureUnderCursor != posibleTargetCreature)
+                        {
+                            this.creatureUnderCursor = posibleTargetCreature;
+                            this.humanMaster.RequestSkillHitChance(this.creatureUnderCursor);
                         }
 
                         break;

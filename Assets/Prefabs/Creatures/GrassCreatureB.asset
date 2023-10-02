@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9fc55c402b4fd04c93f388b736c51f8, type: 3}
+  m_Name: GrassCreatureB
+  m_EditorClassIdentifier: 
+  baseData:
+    id: GrassCreatureB
+    prefab: {fileID: 2521753971046226797, guid: 624ef9c2c9e30374f9d6e48cf5fec4fe, type: 3}
+    stats:
+      elementalType: 3
+      level: 1
+      hp: 17
+      maxhp: 17
+      energy: 2
+      maxEnergy: 2
+      attack: 5
+      defense: 6
+      accuracy: 5
+      evasion: 6
+      elemAttack: 5
+      elemDefense: 6
+      speed: 3
+  maxhp: {x: 1.6, y: 2.2}
+  attack: {x: 0.75, y: 1.5}
+  defense: {x: 1.2, y: 2}
+  accuracy: {x: 1.25, y: 1.8}
+  evasion: {x: 0.85, y: 1.25}
+  elemAttack: {x: 0.75, y: 1.5}
+  elemDefense: {x: 1.5, y: 2}
+  speed: {x: 0.1, y: 0.25}
