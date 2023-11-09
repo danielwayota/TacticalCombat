@@ -69,6 +69,15 @@ public class BattleManager : MonoBehaviour, IMessageListener
         OverworldManager.current.EndBattle();
     }
 
+    public void FleeBattle()
+    {
+        this.isBattleOver = true;
+
+        MessageManager.current.Send(
+            BattleOverMessage.CreateForFlee(this.GetCreaturesFinalData())
+        );
+    }
+
     public void EmplaceCreature(Creature creature)
     {
         Vector3 worldPosition = creature.transform.position;
@@ -147,13 +156,14 @@ public class BattleManager : MonoBehaviour, IMessageListener
         if (human.HasAliveCreatures() && ai.HasAliveCreatures() == false)
         {
             this.isBattleOver = true;
-            MessageManager.current.Send(new BattleOverMessage(human, ai, this.GetCreaturesFinalData()));
+            MessageManager.current.Send(BattleOverMessage.CreateForWinner(human, this.GetCreaturesFinalData()));
+
         }
 
         if (ai.HasAliveCreatures() && human.HasAliveCreatures() == false)
         {
             this.isBattleOver = true;
-            MessageManager.current.Send(new BattleOverMessage(ai, human));
+            MessageManager.current.Send(BattleOverMessage.CreateForWinner(ai));
         }
     }
 

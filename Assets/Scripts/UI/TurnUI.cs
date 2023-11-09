@@ -6,10 +6,14 @@ public class TurnUI : MonoBehaviour, IMessageListener
     public Text currentTurnLabel;
 
     public GameObject nextTurnBtn;
+    public GameObject fleeBtn;
 
     void Start()
     {
         MessageManager.current.AddListener(MessageTag.NEXT_TURN, this);
+
+        this.nextTurnBtn.SetActive(false);
+        this.fleeBtn.SetActive(false);
     }
 
     public void Receive(Message msg)
@@ -20,10 +24,12 @@ public class TurnUI : MonoBehaviour, IMessageListener
         if (ntm.currentTurnMaster is HumanMaster)
         {
             this.nextTurnBtn.SetActive(true);
+            this.fleeBtn.SetActive(true);
         }
         else
         {
             this.nextTurnBtn.SetActive(false);
+            this.fleeBtn.SetActive(false);
         }
     }
 }

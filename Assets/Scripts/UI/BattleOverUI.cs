@@ -28,7 +28,10 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
         yield return new WaitForSeconds(1.2f);
 
         this.uiPanel.SetActive(true);
-        this.winnerLabel.text = bom.winner.masterName + " wins!";
+        if (bom.hasWinner)
+            this.winnerLabel.text = bom.winner.masterName + " wins!";
+        else
+            this.winnerLabel.text = "Flee!";
 
         this.experienceGainSummaryUI.ConfigureAndHide();
         foreach (var data in bom.creatureBattleOverData)

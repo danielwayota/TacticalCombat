@@ -23,6 +23,8 @@ public class Creature : MonoBehaviour
 
     private List<StatusCondition> conditions = new List<StatusCondition>();
 
+    private Skill[] skills;
+
     public bool isMoving { get; protected set; }
 
     void Start()
@@ -51,6 +53,23 @@ public class Creature : MonoBehaviour
     public void AddInnerData(CreatureData data)
     {
         this.innerData = data;
+
+        int skillCount = Mathf.Min(3, this.innerData.skillPrefabs.Count);
+        this.skills = new Skill[skillCount];
+
+        for (int i = 0; i < skillCount; i++)
+        {
+            GameObject prfb = this.innerData.skillPrefabs[i];
+            GameObject skillObj = Instantiate(
+                prfb,
+                this.transform.position,
+                Quaternion.identity
+            );
+
+            skillObj.transform.parent = this.transform;
+
+            this.skills[i] = skillObj.GetComponentInChildren<Skill>();
+        }
     }
 
     public Stats GetBaseStats()
@@ -215,6 +234,13 @@ public class Creature : MonoBehaviour
 
     public Skill[] GetSkills()
     {
-        return this.GetComponentsInChildren<Skill>();
+        // FIXME: Quítame.
+        //        Esto es necesario hasta que todas las criaturas tengan las CreatureProfile.skillsToLearn
+        if (this.skills.Length == 0)
+        {
+            this.skills = this.GetComponentsInChildren<Skill>();
+        }
+
+        return this.skills;
     }
 }

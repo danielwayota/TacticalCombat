@@ -5,10 +5,22 @@ public class SkillHitChanceRequest : Message
     public Skill skill { get; protected set; }
     public float chance { get; protected set; }
 
-    // NOTE: Si la 'skill' es nula, la idea es ocultar el cuadro.
-    public SkillHitChanceRequest(Skill skill, float chance)
+    public bool isAHideRequest { get => this.skill == null; }
+
+    private SkillHitChanceRequest(Skill skill, float chance)
     {
         this.skill = skill;
         this.chance = chance;
+    }
+
+    public static SkillHitChanceRequest CreateForShow(Skill skill, float chance)
+    {
+        return new SkillHitChanceRequest(skill, chance);
+    }
+
+    private static SkillHitChanceRequest hideMsg = new SkillHitChanceRequest(null, 0);
+    public static SkillHitChanceRequest CreateForHide()
+    {
+        return hideMsg;
     }
 }

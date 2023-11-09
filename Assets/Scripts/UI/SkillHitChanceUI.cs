@@ -16,7 +16,7 @@ public class SkillHitChanceUI : MonoBehaviour, IMessageListener
     {
         SkillHitChanceRequest shcr = msg as SkillHitChanceRequest;
 
-        if (shcr.skill == null)
+        if (shcr.isAHideRequest)
         {
             // Nada que mostrar, ocultamos.
             this.gameObject.SetActive(false);

@@ -1,15 +1,21 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct BattleEnemyGroup
+{
+    [Header("Level ranges")]
+    public int minLevel;
+    public int maxLevel;
+
+    [Header("Profiles")]
+    public CreatureProfile[] creatureProfiles;
+}
+
 public class BattleArea : MonoBehaviour
 {
     public TextAsset mapData;
 
-    [Header("Level ranges")]
-    public int minLevel = 3;
-    public int maxLevel = 5;
-
-    [Header("Profiles")]
-    public CreatureProfile[] aiCreatureProfiles;
+    public BattleEnemyGroup[] enemyGroups;
 
     private float coolDownTime = 0;
 
@@ -29,11 +35,20 @@ public class BattleArea : MonoBehaviour
             return;
         }
 
-        CreatureData[] aiCreatures = new CreatureData[this.aiCreatureProfiles.Length];
-        for (int i = 0; i < this.aiCreatureProfiles.Length; i++)
+        if (this.enemyGroups.Length == 0)
         {
-            int targetLevel = Random.Range(this.minLevel, this.maxLevel);
-            aiCreatures[i] = this.aiCreatureProfiles[i].GenerateDataForLevel(targetLevel);
+            Debug.LogError("Este área no tiene grupos definidos!");
+            return;
+        }
+
+        int index = Random.Range(0, this.enemyGroups.Length);
+        BattleEnemyGroup group = this.enemyGroups[index];
+
+        CreatureData[] aiCreatures = new CreatureData[group.creatureProfiles.Length];
+        for (int i = 0; i < group.creatureProfiles.Length; i++)
+        {
+            int targetLevel = Random.Range(group.minLevel, group.maxLevel);
+            aiCreatures[i] = group.creatureProfiles[i].GenerateDataForLevel(targetLevel);
         }
 
         // Desactivamos durante 1 segundo.

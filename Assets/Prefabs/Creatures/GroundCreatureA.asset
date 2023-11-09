@@ -37,3 +37,10 @@ MonoBehaviour:
   elemAttack: {x: 0.5, y: 1}
   elemDefense: {x: 1.5, y: 2}
   speed: {x: 0.1, y: 0.2}
+  skillsToLearn:
+  - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
+    level: 1
+  - skillPrfb: {fileID: 7924366649789933806, guid: 6323b4ac58c028c4b988792cabc9bb57, type: 3}
+    level: 5
+  - skillPrfb: {fileID: 7924366649789933806, guid: dbdb9617946faef41b2d95117de80239, type: 3}
+    level: 12

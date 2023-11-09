@@ -10,12 +10,14 @@ public class TeamCreatureDetailsUI : MonoBehaviour
     public Slider expSlider;
 
     public DynamicItemUIList dynStatsList;
+    public DynamicItemUIList dynSkillList;
 
     public bool isVisible { get => this.gameObject.activeSelf; }
 
     public void ConfigureAndHide()
     {
         this.dynStatsList.ConfigureAndHide();
+        this.dynSkillList.ConfigureAndHide();
         this.Hide();
     }
 
@@ -49,5 +51,35 @@ public class TeamCreatureDetailsUI : MonoBehaviour
         this.dynStatsList.GetNextItemAndActivate<SingleStatUI>().Configure("EDef", baseStats.elemDefense);
         this.dynStatsList.GetNextItemAndActivate<SingleStatUI>().Configure("Acc", baseStats.accuracy);
         this.dynStatsList.GetNextItemAndActivate<SingleStatUI>().Configure("Eva", baseStats.evasion);
+
+        this.DisplaySkills(creatureData);
+    }
+
+    private void DisplaySkills(CreatureData creatureData)
+    {
+        this.dynSkillList.HideAll();
+
+        for (int i = 0; i < creatureData.skillPrefabs.Count; i++)
+        {
+            GameObject skillPrefab = creatureData.skillPrefabs[i];
+
+            Skill skill = skillPrefab.GetComponentInChildren<Skill>();
+            var skillItemUI = this.dynSkillList.GetNextItemAndActivate<TeamCreatureDetailsSkillItemUI>();
+
+            skillItemUI.Configure(skill, i < 3);
+
+            int skillIndex = i;
+            skillItemUI.AddClickUpEvent(() =>
+            {
+                creatureData.ChangeSkillOrderByIndex(skillIndex, skillIndex - 1);
+                this.DisplaySkills(creatureData);
+            });
+
+            skillItemUI.AddClickDownEvent(() =>
+            {
+                creatureData.ChangeSkillOrderByIndex(skillIndex, skillIndex + 1);
+                this.DisplaySkills(creatureData);
+            });
+        }
     }
 }

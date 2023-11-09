@@ -7,6 +7,8 @@ public class ExperienceGainUI : MonoBehaviour
     public Text levelGainLabel;
     public Text expGainLabel;
 
+    public Text newSkillLabel;
+
     public void Display(BattleOverCreatureData data)
     {
         this.idLabel.text = data.start.id;
@@ -22,5 +24,7 @@ public class ExperienceGainUI : MonoBehaviour
         }
 
         this.expGainLabel.text = $"+{data.experienceGain} EXP";
+
+        this.newSkillLabel.gameObject.SetActive(data.hasNewSkill);
     }
 }

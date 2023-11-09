@@ -1,5 +1,12 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct SkillToLearn
+{
+    public GameObject skillPrfb;
+    public int level;
+}
+
 [CreateAssetMenu(fileName = "Creature profile", menuName = "Creatures/Profile", order = 0)]
 public class CreatureProfile : ScriptableObject
 {
@@ -15,6 +22,8 @@ public class CreatureProfile : ScriptableObject
     public Vector2 elemDefense = Vector2.zero;
     public Vector2 speed = Vector2.zero;
 
+    public SkillToLearn[] skillsToLearn;
+
     public CreatureData GenerateDataForLevel(int targetLevel)
     {
         CreatureData data = this.baseData.Clone();
@@ -25,6 +34,14 @@ public class CreatureProfile : ScriptableObject
         }
 
         data.SetParentProfile(this);
+
+        foreach (var stl in this.skillsToLearn)
+        {
+            if (stl.level <= data.level)
+            {
+                data.skillPrefabs.Add(stl.skillPrfb);
+            }
+        }
 
         return data;
     }
@@ -59,6 +76,15 @@ public class CreatureProfile : ScriptableObject
         while (result.experience > 100)
         {
             this.LevelUp(result);
+
+            foreach (var stl in this.skillsToLearn)
+            {
+                if (result.level == stl.level)
+                {
+                    result.skillPrefabs.Add(stl.skillPrfb);
+                }
+
+            }
         }
 
         return result;

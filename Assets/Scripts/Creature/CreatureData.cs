@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -15,12 +16,20 @@ public class CreatureData
 
     public int experience { get => this.stats.experience; }
 
-    public CreatureData(string id, GameObject prefab, Stats stats, CreatureProfile profile)
+    public List<GameObject> skillPrefabs { get; protected set; }
+
+    public CreatureData(
+        string id,
+        GameObject prefab,
+        Stats stats,
+        CreatureProfile profile,
+        List<GameObject> skillPrefabs)
     {
         this.id = id;
         this.prefab = prefab;
         this.stats = stats;
         this.profile = profile;
+        this.skillPrefabs = skillPrefabs;
     }
 
     public void SetParentProfile(CreatureProfile profile)
@@ -34,6 +43,19 @@ public class CreatureData
         this.profile = profile;
     }
 
+    public void ChangeSkillOrderByIndex(int startIndex, int endIndex)
+    {
+        if (endIndex < 0 || startIndex < 0)
+            return;
+
+        if (endIndex >= this.skillPrefabs.Count || startIndex >= this.skillPrefabs.Count)
+            return;
+
+        GameObject tmp = this.skillPrefabs[startIndex];
+        this.skillPrefabs[startIndex] = this.skillPrefabs[endIndex];
+        this.skillPrefabs[endIndex] = tmp;
+    }
+
     public void AddExperience(ShadowStats shadowExp)
     {
         this.stats.GetShadow().Sum(shadowExp);
@@ -41,11 +63,21 @@ public class CreatureData
 
     public CreatureData Clone()
     {
+        List<GameObject> skillPrefabCopy = new List<GameObject>();
+        if (this.skillPrefabs != null)
+        {
+            foreach (var prfb in this.skillPrefabs)
+            {
+                skillPrefabCopy.Add(prfb);
+            }
+        }
+
         return new CreatureData(
             this.id,
             this.prefab,
             this.stats.Clone(),
-            this.profile
+            this.profile,
+            skillPrefabCopy
         );
     }
 }

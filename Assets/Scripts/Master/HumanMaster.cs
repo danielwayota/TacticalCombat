@@ -84,9 +84,7 @@ public class HumanMaster : Master, IMessageListener
         this.selectedSkill = null;
         this.status = HumanCombatStatus.MOVE;
 
-        // FIXME: ¿Quizás podríamos mandar un mensaje específico para ocultarlo?
-        // NOTE: Ocultamos el cuadro con el porcentaje de acierto
-        MessageManager.current.Send(new SkillHitChanceRequest(null, 0));
+        MessageManager.current.Send(SkillHitChanceRequest.CreateForHide());
     }
 
     public void GoToSkillMode(Skill skill)
@@ -95,20 +93,18 @@ public class HumanMaster : Master, IMessageListener
 
         this.status = HumanCombatStatus.SKILL;
 
-        // NOTE: Ocultamos el cuadro con el porcentaje de acierto
-        MessageManager.current.Send(new SkillHitChanceRequest(null, 0));
+        MessageManager.current.Send(SkillHitChanceRequest.CreateForHide());
     }
 
     public void RequestSkillHitChance(Creature targetCreature)
     {
         if (targetCreature == null)
         {
-            // NOTE: Ocultamos el cuadro con el porcentaje de acierto
-            MessageManager.current.Send(new SkillHitChanceRequest(null, 0));
+            MessageManager.current.Send(SkillHitChanceRequest.CreateForHide());
             return;
         }
 
         float chance = this.selectedSkill.CalculateHitChance(this.selectedCreature, targetCreature);
-        MessageManager.current.Send(new SkillHitChanceRequest(this.selectedSkill, chance));
+        MessageManager.current.Send(SkillHitChanceRequest.CreateForShow(this.selectedSkill, chance));
     }
 }
