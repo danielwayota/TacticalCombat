@@ -9,7 +9,7 @@ public class ExperienceGainUI : MonoBehaviour
 
     public Text newSkillLabel;
 
-    public void Display(BattleOverCreatureData data)
+    public void Configure(BattleOverCreatureData data)
     {
         this.idLabel.text = data.start.id;
 

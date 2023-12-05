@@ -8,10 +8,14 @@ public class DynamicItemUIList : MonoBehaviour
     protected List<GameObject> items;
     protected int visibleItemCount;
 
+    protected float itemBaseHeight;
+
     public void ConfigureAndHide()
     {
         this.itemsHolder = this.GetComponent<RectTransform>();
         this.items = new List<GameObject>();
+
+        this.itemBaseHeight = this.itemsHolder.sizeDelta.y;
 
         int childCount = this.itemsHolder.childCount;
         for (int i = 0; i < childCount; i++)
@@ -51,12 +55,9 @@ public class DynamicItemUIList : MonoBehaviour
 
     protected void ResizeContainer()
     {
-        GameObject sample = this.items[0];
-        RectTransform rect = sample.GetComponent<RectTransform>();
-
         this.itemsHolder.sizeDelta = new Vector2(
             this.itemsHolder.sizeDelta.x,
-            this.visibleItemCount * rect.sizeDelta.y
+            this.visibleItemCount * this.itemBaseHeight
         );
     }
 

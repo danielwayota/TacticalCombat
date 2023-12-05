@@ -1,6 +1,17 @@
 using UnityEngine;
 
 [System.Serializable]
+public struct BattleReward
+{
+    public Item item;
+    public int minAmount;
+    public int maxAmount;
+
+    [Range(0f, 1f)]
+    public float chance;
+}
+
+[System.Serializable]
 public struct BattleEnemyGroup
 {
     [Header("Level ranges")]
@@ -9,6 +20,9 @@ public struct BattleEnemyGroup
 
     [Header("Profiles")]
     public CreatureProfile[] creatureProfiles;
+
+    [Header("Rewards")]
+    public BattleReward[] posibleRewards;
 }
 
 public class BattleArea : MonoBehaviour
@@ -53,6 +67,6 @@ public class BattleArea : MonoBehaviour
 
         // Desactivamos durante 1 segundo.
         this.coolDownTime = 1f;
-        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures);
+        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures, group.posibleRewards);
     }
 }

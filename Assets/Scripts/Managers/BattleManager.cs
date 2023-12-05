@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System.Data;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour, IMessageListener
@@ -20,12 +20,20 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
     protected List<BattleOverCreatureData> creaturesBattleOverData = null;
 
+    protected BattleReward[] posibleRewards;
+    protected List<ItemStack> battleOverRewards = null;
+
     void Awake()
     {
         current = this;
     }
 
-    public void StartBattle(string mapData, CreatureData[] humanCreatures, CreatureData[] aiCreatures)
+    public void StartBattle(
+        string mapData,
+        CreatureData[] humanCreatures,
+        CreatureData[] aiCreatures,
+        BattleReward[] posibleRewards
+    )
     {
         this.gameCreatures = new List<Creature>();
         this.graveyard = new List<Creature>();
@@ -46,16 +54,19 @@ public class BattleManager : MonoBehaviour, IMessageListener
         this.turnIndex = -1;
         this.isBattleOver = false;
 
+        this.posibleRewards = posibleRewards;
+
         Invoke("NextTurn", .5f);
 
         // NOTE: Esto depende del orden en el que se reciban los mensajes.
-        //       Ahora mismo, el ExperienceManager se registra primero, 
+        //       Ahora mismo, el ExperienceManager se registra primero,
         //       por lo tanto recibe el mensaje primero.
         //       Si esto no fuera así, no arreglamos nada.
         MessageManager.current.AddListener(MessageTag.CREATURE_DEFEATED, this);
         MessageManager.current.AddListener(MessageTag.CREATURE_CAPTURED, this);
     }
 
+    // Se ejecuta desde el BattleOverUI
     public void EndBattle()
     {
         List<CreatureData> finalCreatureData = new List<CreatureData>();
@@ -66,9 +77,14 @@ public class BattleManager : MonoBehaviour, IMessageListener
         }
 
         OverworldManager.current.StoreResultingCreatureData(finalCreatureData.ToArray());
+
+        List<ItemStack> rewards = this.GetBattleOverRewards();
+        OverworldManager.current.StoreItemRewards(rewards.ToArray());
+
         OverworldManager.current.EndBattle();
     }
 
+    // Se ejecuta desde el BattleOverUI
     public void FleeBattle()
     {
         this.isBattleOver = true;
@@ -156,14 +172,18 @@ public class BattleManager : MonoBehaviour, IMessageListener
         if (human.HasAliveCreatures() && ai.HasAliveCreatures() == false)
         {
             this.isBattleOver = true;
-            MessageManager.current.Send(BattleOverMessage.CreateForWinner(human, this.GetCreaturesFinalData()));
+            MessageManager.current.Send(BattleOverMessage.CreateForWin(
+                human,
+                this.GetCreaturesFinalData(),
+                this.GetBattleOverRewards()
+            ));
 
         }
 
         if (ai.HasAliveCreatures() && human.HasAliveCreatures() == false)
         {
             this.isBattleOver = true;
-            MessageManager.current.Send(BattleOverMessage.CreateForWinner(ai));
+            MessageManager.current.Send(BattleOverMessage.CreateForLoss(ai));
         }
     }
 
@@ -383,5 +403,36 @@ public class BattleManager : MonoBehaviour, IMessageListener
         }
 
         return this.creaturesBattleOverData;
+    }
+
+    private List<ItemStack> GetBattleOverRewards()
+    {
+        if (this.battleOverRewards != null)
+            return this.battleOverRewards;
+
+        this.battleOverRewards = new List<ItemStack>();
+
+        foreach (var posibleReward in this.posibleRewards)
+        {
+            float dice = Random.Range(0f, 1f);
+            if (dice > posibleReward.chance)
+            {
+                continue;
+            }
+
+            int amount = Random.Range(
+                posibleReward.minAmount,
+                posibleReward.maxAmount
+            );
+
+            if (amount == 0)
+                continue;
+
+            this.battleOverRewards.Add(
+                new ItemStack(posibleReward.item, amount)
+            );
+        }
+
+        return this.battleOverRewards;
     }
 }

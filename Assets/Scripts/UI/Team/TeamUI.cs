@@ -5,6 +5,8 @@ public class TeamUI : MonoBehaviour
     public TeamCreatureListUI creatureListUI;
     public TeamCreatureDetailsUI creatureDetailsUI;
 
+    public bool isVisible { get => this.creatureListUI.isVisible || this.creatureDetailsUI.isVisible; }
+
     void Start()
     {
         this.creatureListUI.ConfigureAndHide();
@@ -13,10 +15,9 @@ public class TeamUI : MonoBehaviour
 
     public void ToggleDisplay(CreatureData[] creatureDataList)
     {
-        if (this.creatureListUI.isVisible)
+        if (this.isVisible)
         {
-            this.creatureListUI.Hide();
-            this.creatureDetailsUI.Hide();
+            this.Hide();
         }
         else
         {
@@ -30,6 +31,12 @@ public class TeamUI : MonoBehaviour
                 });
             }
         }
+    }
+
+    public void Hide()
+    {
+        this.creatureListUI.Hide();
+        this.creatureDetailsUI.Hide();
     }
 
     public void DisplayDetails(CreatureData data)

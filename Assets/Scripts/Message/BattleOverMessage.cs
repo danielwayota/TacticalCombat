@@ -8,27 +8,32 @@ public class BattleOverMessage : Message
 
     public List<BattleOverCreatureData> creatureBattleOverData { get; protected set; }
 
+    public List<ItemStack> itemRewards { get; protected set; }
+
     public bool hasWinner { get => this.winner != null; }
 
-    private BattleOverMessage(Master winner, List<BattleOverCreatureData> creatureFinalData)
+    private BattleOverMessage(Master winner, List<BattleOverCreatureData> creatureFinalData, List<ItemStack> itemRewards)
     {
         this.winner = winner;
 
         this.creatureBattleOverData = creatureFinalData;
+        this.itemRewards = itemRewards;
     }
 
-    public static BattleOverMessage CreateForWinner(Master winner, List<BattleOverCreatureData> creatureFinalData = null)
+    public static BattleOverMessage CreateForWin(
+        Master winner, List<BattleOverCreatureData> creatureFinalData, List<ItemStack> itemRewards
+    )
     {
-        if (creatureFinalData == null)
-        {
-            return new BattleOverMessage(winner, new List<BattleOverCreatureData>());
-        }
+        return new BattleOverMessage(winner, creatureFinalData, itemRewards);
+    }
 
-        return new BattleOverMessage(winner, creatureFinalData);
+    public static BattleOverMessage CreateForLoss(Master winner)
+    {
+        return new BattleOverMessage(winner, new List<BattleOverCreatureData>(), new List<ItemStack>());
     }
 
     public static BattleOverMessage CreateForFlee(List<BattleOverCreatureData> creatureFinalData)
     {
-        return new BattleOverMessage(null, creatureFinalData);
+        return new BattleOverMessage(null, creatureFinalData, new List<ItemStack>());
     }
 }

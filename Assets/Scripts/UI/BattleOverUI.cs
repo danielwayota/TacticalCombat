@@ -9,6 +9,7 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
     public GameObject uiPanel;
 
     public DynamicItemUIList experienceGainSummaryUI;
+    public DynamicItemUIList itemGainSummaryUI;
 
     void Start()
     {
@@ -36,7 +37,13 @@ public class BattleOverUI : MonoBehaviour, IMessageListener
         this.experienceGainSummaryUI.ConfigureAndHide();
         foreach (var data in bom.creatureBattleOverData)
         {
-            this.experienceGainSummaryUI.GetNextItemAndActivate<ExperienceGainUI>().Display(data);
+            this.experienceGainSummaryUI.GetNextItemAndActivate<ExperienceGainUI>().Configure(data);
+        }
+
+        this.itemGainSummaryUI.ConfigureAndHide();
+        foreach (var itemStack in bom.itemRewards)
+        {
+            this.itemGainSummaryUI.GetNextItemAndActivate<ItemGainUI>().Configure(itemStack);
         }
     }
 }
