@@ -17,6 +17,8 @@ public class ShadowStats
 
     public int experience;
 
+    public float loyalty;
+
     public ShadowStats()
     {
         this.level = 0;
@@ -29,6 +31,7 @@ public class ShadowStats
         this.elemDefense = 0;
         this.speed = 0;
         this.experience = 0;
+        this.loyalty = 0;
     }
 
     public ShadowStats(Stats stats)
@@ -43,6 +46,7 @@ public class ShadowStats
         this.elemDefense = stats.elemDefense;
         this.speed = stats.speed;
         this.experience = 0;
+        this.loyalty = 0;
     }
 
     public ShadowStats(ShadowStats shadow)
@@ -57,6 +61,7 @@ public class ShadowStats
         this.elemDefense = shadow.elemDefense;
         this.speed = shadow.speed;
         this.experience = shadow.experience;
+        this.loyalty = shadow.loyalty;
     }
 
     public void Sum(ShadowStats shadowDelta)
@@ -72,6 +77,9 @@ public class ShadowStats
         this.elemDefense += shadowDelta.elemDefense;
         this.speed += shadowDelta.speed;
         this.experience += shadowDelta.experience;
+
+        // La lealtad no se suma
+        // this.loyalty
     }
 
     public ShadowStats Clone()

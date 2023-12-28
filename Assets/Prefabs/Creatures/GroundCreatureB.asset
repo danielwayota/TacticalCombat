@@ -10,38 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9fc55c402b4fd04c93f388b736c51f8, type: 3}
-  m_Name: TamerCreature
+  m_Name: GroundCreatureB
   m_EditorClassIdentifier: 
   baseData:
-    id: Tamer
-    prefab: {fileID: 2521753971046226797, guid: 1bfb4c56d3d39064abefe9f4b669fefd, type: 3}
-    isMinion: 0
+    id: GroundCreatureB
+    prefab: {fileID: 2521753971046226797, guid: b138dbf0f86a7c742886efaf01583fd6, type: 3}
     stats:
-      elementalType: 0
+      elementalType: 4
       level: 1
-      hp: 12
-      maxhp: 12
+      hp: 17
+      maxhp: 17
       energy: 2
       maxEnergy: 2
       attack: 5
       defense: 6
       accuracy: 6
-      evasion: 6
+      evasion: 5
       elemAttack: 5
       elemDefense: 6
       speed: 3
-  maxhp: {x: 1.7, y: 2.5}
-  attack: {x: 0.4, y: 0.8}
-  defense: {x: 0.7, y: 1.5}
-  accuracy: {x: 0.6, y: 1.5}
-  evasion: {x: 0.7, y: 1}
-  elemAttack: {x: 0.3, y: 0.8}
-  elemDefense: {x: 0.7, y: 1.5}
-  speed: {x: 0.25, y: 0.35}
+  maxhp: {x: 1.5, y: 2.2}
+  attack: {x: 1.4, y: 2}
+  defense: {x: 1.4, y: 2}
+  accuracy: {x: 1, y: 2}
+  evasion: {x: 0.5, y: 0.8}
+  elemAttack: {x: 0.45, y: 1}
+  elemDefense: {x: 0.45, y: 1}
+  speed: {x: 0.1, y: 0.2}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1
-  - skillPrfb: {fileID: 8770329184610311441, guid: 6770a810ea106c54980bab2be3723376, type: 3}
-    level: 1
-  - skillPrfb: {fileID: 4564959583570407863, guid: 7f26893de8361e84985fe83899b3f30b, type: 3}
-    level: 1
+  - skillPrfb: {fileID: 7924366649789933806, guid: 6323b4ac58c028c4b988792cabc9bb57, type: 3}
+    level: 5
+  - skillPrfb: {fileID: 7924366649789933806, guid: dbdb9617946faef41b2d95117de80239, type: 3}
+    level: 12

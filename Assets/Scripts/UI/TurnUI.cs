@@ -24,7 +24,7 @@ public class TurnUI : MonoBehaviour, IMessageListener
         if (ntm.currentTurnMaster is HumanMaster)
         {
             this.nextTurnBtn.SetActive(true);
-            this.fleeBtn.SetActive(true);
+            this.fleeBtn.SetActive(BattleManager.current.CanFleeBattle);
         }
         else
         {

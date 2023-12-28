@@ -71,7 +71,12 @@ public class OverworldManager : MonoBehaviour
         this.inventoryUI.ToggleDisplay(this.inventory, this.humanCreatures);
     }
 
-    private IEnumerator LoadBattle(string mapData, CreatureData[] aiCreatures, BattleReward[] posibleRewards)
+    private IEnumerator LoadBattle(
+        string mapData,
+        CreatureData[] aiCreatures,
+        BattleReward[] posibleRewards,
+        BattleCategory battleCategory
+    )
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(this.battleSceneName, LoadSceneMode.Additive);
 
@@ -83,15 +88,15 @@ public class OverworldManager : MonoBehaviour
         Scene battleScene = SceneManager.GetSceneByName(this.battleSceneName);
         SceneManager.SetActiveScene(battleScene);
 
-        BattleManager.current.StartBattle(mapData, this.humanCreatures, aiCreatures, posibleRewards);
+        BattleManager.current.StartBattle(mapData, this.humanCreatures, aiCreatures, posibleRewards, battleCategory);
         this.gameObject.SetActive(false);
     }
 
-    public void StartBattle(string mapData, CreatureData[] aiCreatures, BattleReward[] posibleRewards)
+    public void StartBattle(string mapData, CreatureData[] aiCreatures, BattleReward[] posibleRewards, BattleCategory battleCategory)
     {
         this.overworldEventSystem.enabled = false;
 
-        StartCoroutine(this.LoadBattle(mapData, aiCreatures, posibleRewards));
+        StartCoroutine(this.LoadBattle(mapData, aiCreatures, posibleRewards, battleCategory));
     }
 
     public void EndBattle()

@@ -21,13 +21,13 @@ public class Skill : MonoBehaviour
 
     public float currentDistancePenalization { get; protected set; }
 
-    protected SpawnEffect spawnEffect;
+    protected ISpawner spawnEffect;
     public bool isSpawner = false;
 
     void Awake()
     {
         this.effects = this.GetComponents<IEffect>();
-        this.spawnEffect = this.GetComponent<SpawnEffect>();
+        this.spawnEffect = this.GetComponent<ISpawner>();
     }
 
     public void ResolveForReceiver(Creature emitter, Creature receiver)

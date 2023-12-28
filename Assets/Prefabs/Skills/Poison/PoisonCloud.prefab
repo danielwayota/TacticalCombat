@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7809642421219710833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7809642421219710838}
+  - component: {fileID: 7809642421219710839}
+  - component: {fileID: 7809642421219710832}
+  m_Layer: 0
+  m_Name: PoisonCloud
+  m_TagString: Untagged
+  m_Icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7809642421219710838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809642421219710833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7809642421219710839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809642421219710833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4571f4a647033284a852b3698e84f58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementalType: 5
+  range: 0.5
+  area: 1.5
+  cost: 1
+  distancePenalizationMultiplier: 0
+  skillName: Poison Cloud
+  vfx: {fileID: 576664365158181325, guid: 7afa20536e6c5254aae74a2b7fe67979, type: 3}
+  isSpawner: 1
+--- !u!114 &7809642421219710832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809642421219710833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc353b286a35a7469b33bf186b64830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prfb: {fileID: 3953789540180544829, guid: 2b773125516236848a48e6d80c411753, type: 3}
+  requiresEmptySpace: 0

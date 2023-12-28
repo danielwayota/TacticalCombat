@@ -10,6 +10,7 @@ public class CaptureEffect : MonoBehaviour, IEffect
             return;
         }
 
+        receiver.ResetLoyalty();
         receiver.master.RemoveCreature(receiver);
         emitter.master.AdoptCreature(receiver);
 

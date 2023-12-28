@@ -1,6 +1,12 @@
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
+
+public enum BattleCategory
+{
+    RANDOM_ENCOUNTER,
+    VS_MASTER,
+    BOSS
+}
 
 public class BattleManager : MonoBehaviour, IMessageListener
 {
@@ -15,6 +21,25 @@ public class BattleManager : MonoBehaviour, IMessageListener
     protected List<Creature> graveyard;
 
     protected bool isBattleOver;
+    public BattleCategory battleCategory { get; protected set; }
+
+    public bool CanFleeBattle
+    {
+        get
+        {
+            if (this.battleCategory == BattleCategory.VS_MASTER)
+            {
+                return false;
+            }
+
+            if (this.battleCategory == BattleCategory.BOSS)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
 
     protected List<Creature> returnBuffer;
 
@@ -32,7 +57,8 @@ public class BattleManager : MonoBehaviour, IMessageListener
         string mapData,
         CreatureData[] humanCreatures,
         CreatureData[] aiCreatures,
-        BattleReward[] posibleRewards
+        BattleReward[] posibleRewards,
+        BattleCategory battleCategory
     )
     {
         this.gameCreatures = new List<Creature>();
@@ -53,6 +79,7 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
         this.turnIndex = -1;
         this.isBattleOver = false;
+        this.battleCategory = battleCategory;
 
         this.posibleRewards = posibleRewards;
 
@@ -84,9 +111,15 @@ public class BattleManager : MonoBehaviour, IMessageListener
         OverworldManager.current.EndBattle();
     }
 
-    // Se ejecuta desde el BattleOverUI
+    // Se ejecuta desde el TurnsUI
     public void FleeBattle()
     {
+        if (this.CanFleeBattle == false)
+        {
+            Debug.LogWarning("Cannot flee from a battle against another master");
+            return;
+        }
+
         this.isBattleOver = true;
 
         MessageManager.current.Send(
@@ -314,7 +347,7 @@ public class BattleManager : MonoBehaviour, IMessageListener
         this.TryToPerformSkillInArea(emitter, skill, effectArea);
     }
 
-    public void TryToPerformSkillInArea(Creature emitter, Skill skill, List<Vector3> area)
+    protected void TryToPerformSkillInArea(Creature emitter, Skill skill, List<Vector3> area)
     {
         if (this.isBattleOver)
         {
@@ -364,6 +397,12 @@ public class BattleManager : MonoBehaviour, IMessageListener
         return creature.master == currentMaster;
     }
 
+    public bool IsMasterOnTurn(Master master)
+    {
+        Master currentMaster = this.masters[this.turnIndex];
+        return currentMaster == master;
+    }
+
     private List<BattleOverCreatureData> GetCreaturesFinalData()
     {
         if (this.creaturesBattleOverData != null)
@@ -375,6 +414,11 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
         foreach (var creature in human.creatures)
         {
+            if (creature.innerData.isMinion)
+            {
+                continue;
+            }
+
             CreatureData startData = creature.innerData.Clone();
 
             ShadowStats shadowExp = ExperienceManager.current.GetEffortExpFor(creature);
@@ -382,6 +426,12 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
             CreatureProfile profile = creature.innerData.profile;
             CreatureData finalData = profile.LevelUpIfItShould(creature.innerData);
+
+            // Aumentamos la lealtad al terminar una batalla
+            finalData.stats.ModifyLoyalty(0.02f);
+            // Aumentamos la lealtad por cada nivel adquirido
+            int levelDiff = finalData.level - startData.level;
+            finalData.stats.ModifyLoyalty(0.05f * levelDiff);
 
             BattleOverCreatureData battleOverCreatureData = new BattleOverCreatureData(
                 creature, startData, finalData
@@ -392,14 +442,23 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
         foreach (var deadCreature in this.graveyard)
         {
-            if (deadCreature.belongToHuman)
+            if (deadCreature.innerData.isMinion)
             {
-                BattleOverCreatureData battleOverCreatureData = new BattleOverCreatureData(
-                    deadCreature, deadCreature.innerData, deadCreature.innerData
-                );
-
-                this.creaturesBattleOverData.Add(battleOverCreatureData);
+                continue;
             }
+
+            if (!deadCreature.belongToHuman)
+            {
+                continue;
+            }
+
+            deadCreature.innerData.stats.ModifyLoyalty(-0.01f);
+
+            BattleOverCreatureData battleOverCreatureData = new BattleOverCreatureData(
+                deadCreature, deadCreature.innerData, deadCreature.innerData
+            );
+
+            this.creaturesBattleOverData.Add(battleOverCreatureData);
         }
 
         return this.creaturesBattleOverData;

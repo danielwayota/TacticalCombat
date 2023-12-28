@@ -8,6 +8,9 @@ public class CreatureData
 
     public GameObject prefab;
 
+    // Indica si una criatura es invocable o no.
+    public bool isMinion = false;
+
     public Stats stats;
 
     public int level { get => this.stats.level; }
@@ -20,12 +23,14 @@ public class CreatureData
 
     public CreatureData(
         string id,
+        bool isMinion,
         GameObject prefab,
         Stats stats,
         CreatureProfile profile,
         List<GameObject> skillPrefabs)
     {
         this.id = id;
+        this.isMinion = isMinion;
         this.prefab = prefab;
         this.stats = stats;
         this.profile = profile;
@@ -74,6 +79,7 @@ public class CreatureData
 
         return new CreatureData(
             this.id,
+            this.isMinion,
             this.prefab,
             this.stats.Clone(),
             this.profile,

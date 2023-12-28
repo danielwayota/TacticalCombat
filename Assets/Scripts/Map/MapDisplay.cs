@@ -85,10 +85,7 @@ public class MapDisplay : MonoBehaviour
                 this.cursor.gameObject.SetActive(false);
             }
 
-            if (
-                this.humanMaster.hasCreatureSelected &&
-                BattleManager.current.IsOwnerOnTurn(this.humanMaster.selectedCreature)
-            )
+            if (this.humanMaster.CanGiveOrderToCreature)
             {
                 this.HideAllPathMarkers();
 
@@ -148,7 +145,7 @@ public class MapDisplay : MonoBehaviour
             this.humanMaster.OnSelectionRequested(world);
         }
 
-        if (InputManager.GetRightClickDown() && this.humanMaster.hasCreatureSelected)
+        if (InputManager.GetRightClickDown() && this.humanMaster.CanGiveOrderToCreature)
         {
             this.HideAllPathMarkers();
 

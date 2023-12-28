@@ -15,6 +15,7 @@ public class Creature : MonoBehaviour
     public Master master { get; protected set; }
 
     public bool belongToHuman { get => this.master is HumanMaster; }
+    public virtual bool isMasterCreature { get => false; }
 
     public CreatureData innerData { get; protected set; }
     private Stats stats { get => this.innerData.stats; }
@@ -70,6 +71,11 @@ public class Creature : MonoBehaviour
 
             this.skills[i] = skillObj.GetComponentInChildren<Skill>();
         }
+    }
+
+    public void ResetLoyalty()
+    {
+        this.innerData.stats.ResetLoyalty();
     }
 
     public Stats GetBaseStats()
@@ -234,13 +240,6 @@ public class Creature : MonoBehaviour
 
     public Skill[] GetSkills()
     {
-        // FIXME: Quítame.
-        //        Esto es necesario hasta que todas las criaturas tengan las CreatureProfile.skillsToLearn
-        if (this.skills.Length == 0)
-        {
-            this.skills = this.GetComponentsInChildren<Skill>();
-        }
-
         return this.skills;
     }
 }

@@ -40,3 +40,5 @@ MonoBehaviour:
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 88e8bb075db879a42aa90e1a23ece4c9, type: 3}
     level: 1
+  - skillPrfb: {fileID: 7809642421219710833, guid: bc6dffe3fb601854b84dd125ba50006d, type: 3}
+    level: 2

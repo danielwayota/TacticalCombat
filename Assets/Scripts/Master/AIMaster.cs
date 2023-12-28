@@ -140,8 +140,11 @@ public class AIMaster : Master
             this.creatures[index] = tmp;
         }
 
-        foreach (var creature in this.creatures)
+        // foreach (var creature in this.creatures)
+        for (int i = 0; i < this.creatures.Count; i++)
         {
+            var creature = this.creatures[i];
+
             Vector3 target = this.GenerateCreatureTarget(creature);
 
             BattleManager.current.MoveCreatureTo(creature, target);

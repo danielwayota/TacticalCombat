@@ -30,7 +30,7 @@ public abstract class Master : MonoBehaviour
         }
     }
 
-    protected void CreateCreature(CreatureData creatureData, Vector3 worldPosition)
+    public void CreateCreature(CreatureData creatureData, Vector3 worldPosition)
     {
         GameObject go = Instantiate(creatureData.prefab);
         Creature creature = go.GetComponent<Creature>();

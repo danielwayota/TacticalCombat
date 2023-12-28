@@ -29,6 +29,8 @@ public class BattleArea : MonoBehaviour
 {
     public TextAsset mapData;
 
+    public BattleCategory battleCategory = BattleCategory.RANDOM_ENCOUNTER;
+
     public BattleEnemyGroup[] enemyGroups;
 
     private float coolDownTime = 0;
@@ -63,10 +65,15 @@ public class BattleArea : MonoBehaviour
         {
             int targetLevel = Random.Range(group.minLevel, group.maxLevel);
             aiCreatures[i] = group.creatureProfiles[i].GenerateDataForLevel(targetLevel);
+
+            if (this.battleCategory == BattleCategory.BOSS || this.battleCategory == BattleCategory.VS_MASTER)
+            {
+                aiCreatures[i].stats.ModifyLoyalty(0.9f);
+            }
         }
 
         // Desactivamos durante 1 segundo.
         this.coolDownTime = 1f;
-        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures, group.posibleRewards);
+        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures, group.posibleRewards, this.battleCategory);
     }
 }

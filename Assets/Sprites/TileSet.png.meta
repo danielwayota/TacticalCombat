@@ -791,8 +791,8 @@ TextureImporter:
       name: Tamer_0
       rect:
         serializedVersion: 2
-        x: 124
-        y: 146
+        x: 76
+        y: 50
         width: 16
         height: 20
       alignment: 0
@@ -922,7 +922,7 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -930,6 +930,90 @@ TextureImporter:
       bones: []
       spriteID: 0dc1ca78efd7da949803ba9ca324bf36
       internalID: -1380970711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_Creature_B
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 121
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6d53b51dbcd9d24dbc96d3099f5c143
+      internalID: -963284890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_Creature_B
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 121
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f07689fcdd57f824782b92aba3ce8c94
+      internalID: 1239010871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall_Minion_A
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 97
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10b1d9f523c76dc478abba915e1368bd
+      internalID: 2145180865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tamer_Boss_A
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 48
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b366e39990eea94a98162cec4fb78f5
+      internalID: -360484974
       vertices: []
       indices: 
       edges: []
@@ -945,44 +1029,48 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_Human_Creature_Energy_1: 709430773
       Heal_Effect_0: -1882081463
-      Fire_Effect_2: 729194567
-      Map_Human_Creature_Marker: 829516846
       Fire_Effect_1: 1840709306
       Map_Selection_Indicator: 966391049
-      Poison_Effect_0: -518378273
-      Paralysis_Effect_0: -1965398188
       Grass_Creature_B: -1380970711
-      Map_Ground: 1311876232
       Map_Path_Marker_1: -935520337
-      Water_Effect_0: 1886216809
-      Attack_Regular_Effect: 414148711
       Fire_Creature_A: 2022233178
       Map_Human_Creature_Energy_2: -857796339
       Poison_Creature_A: 1092251329
       Poison_Effect_2: -1485045095
-      Map_Skill_Reach_Marker: -738626355
-      Capture_Effect_1: 1501894050
       Map_Cursor: -436354646
-      Ground_Creature_A: -1085532961
       Paralysis_Effect_1: 1916171908
-      Ground_Mud_Effect_1: -614858812
+      Tamer_0: -1771912119
+      Wall_Minion_A: 2145180865
       Map_Path_Marker_2: -1433900510
       Stat_Drop_Effect_0: -535064638
-      Fire_Effect_0: 1924430277
-      Stat_Inc_Effect_0: -605296881
       Capture_Effect_0: -1051804092
-      Water_Effect_1: -251472075
-      Tamer_0: -1771912119
       Map_Ground_Cursed: -1219491266
       Map_Human_Creature_Energy_0: 1354398776
+      Map_Human_Creature_Energy_1: 709430773
+      Fire_Effect_2: 729194567
+      Map_Human_Creature_Marker: 829516846
+      Poison_Effect_0: -518378273
+      Paralysis_Effect_0: -1965398188
+      Map_Ground: 1311876232
+      Water_Effect_0: 1886216809
+      Attack_Regular_Effect: 414148711
+      Map_Skill_Reach_Marker: -738626355
+      Ground_Creature_B: -963284890
+      Capture_Effect_1: 1501894050
+      Ground_Creature_A: -1085532961
+      Ground_Mud_Effect_1: -614858812
+      Tamer_Boss_A: -360484974
+      Fire_Effect_0: 1924430277
+      Stat_Inc_Effect_0: -605296881
+      Water_Effect_1: -251472075
       Map_Skill_Action_Marker: 178800744
       Poison_Effect_1: 601573819
       Map_Wall: 1843638455
-      Ground_Mud_Effect_2: 1127751502
       Grass_Creature_A: -1219563924
+      Ground_Mud_Effect_2: 1127751502
       Water_Creature_B: 889410742
+      Fire_Creature_B: 1239010871
       Ground_Mud_Effect_0: -1750824474
   spritePackingTag: 
   pSDRemoveMatte: 0

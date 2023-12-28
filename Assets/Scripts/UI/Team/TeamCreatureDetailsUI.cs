@@ -6,6 +6,8 @@ public class TeamCreatureDetailsUI : MonoBehaviour
     public Text creatureNameLabel;
     public Text creatureLevelLabel;
 
+    public Slider loyaltySlider;
+
     public HealthBarUI healthBarUI;
     public Slider expSlider;
 
@@ -35,6 +37,8 @@ public class TeamCreatureDetailsUI : MonoBehaviour
     {
         this.creatureNameLabel.text = creatureData.id;
         this.creatureLevelLabel.text = "Lvl " + creatureData.level;
+
+        this.loyaltySlider.value = creatureData.stats.loyalty;
 
         this.healthBarUI.SetHealth(creatureData.stats.hp, creatureData.stats.maxhp);
         this.expSlider.value = creatureData.stats.experiencePercent;

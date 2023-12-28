@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementalType: 1
-  range: 0
+  range: 0.5
   area: 1.5
   cost: 1
   distancePenalizationMultiplier: 0.1

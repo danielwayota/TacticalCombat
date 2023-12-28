@@ -33,6 +33,8 @@ public class Stats
 
     public float healthPercent { get => this.hp / (float)(this.maxhp); }
 
+    public float loyalty { get => this.shadow.loyalty; }
+
     private ShadowStats shadow;
 
     public void Restore()
@@ -41,6 +43,16 @@ public class Stats
         {
             this.hp = 1;
         }
+    }
+
+    public void ResetLoyalty()
+    {
+        this.shadow.loyalty = 0;
+    }
+
+    public void ModifyLoyalty(float amount)
+    {
+        this.shadow.loyalty = Mathf.Clamp01(this.shadow.loyalty + amount);
     }
 
     public ShadowStats GetShadow()

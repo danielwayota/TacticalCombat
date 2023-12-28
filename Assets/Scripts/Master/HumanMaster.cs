@@ -19,6 +19,29 @@ public class HumanMaster : Master, IMessageListener
 
     public Skill selectedSkill { get; protected set; }
 
+    public bool CanGiveOrderToCreature
+    {
+        get
+        {
+            if (this.hasCreatureSelected == false)
+            {
+                return false;
+            }
+
+            if (this.selectedCreature.master != this)
+            {
+                return false;
+            }
+
+            if (BattleManager.current.IsMasterOnTurn(this) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     void Start()
     {
         MessageManager.current.AddListener(MessageTag.ACTION_CREATURE_MOVE, this);

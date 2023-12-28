@@ -4,6 +4,17 @@ public class CaptureSkill : Skill
 {
     public override float CalculateHitChance(Creature emitter, Creature receiver)
     {
+        if (emitter.master == receiver.master)
+        {
+            return 0;
+        }
+
+        if (receiver.isMasterCreature)
+        {
+            // Las criaturas que representan al maestro no pueden ser capturadas
+            return 0;
+        }
+
         Stats eStats = emitter.GetCurrentStats();
         Stats rStats = receiver.GetCurrentStats();
 
@@ -18,6 +29,9 @@ public class CaptureSkill : Skill
             (.15f * healthEffect) +
             (.05f * levelEffect);
 
-        return captureChance;
+        float roundedLoyalty = Mathf.Ceil(rStats.loyalty * 100f) / 100f;
+        float inverseLoyalty = 1 - roundedLoyalty;
+
+        return Mathf.Clamp01(captureChance) * inverseLoyalty;
     }
 }
