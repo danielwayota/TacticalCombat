@@ -1,10 +1,4 @@
 
-public enum TileType
-{
-    WALL,
-    GROUND,
-}
-
 public class Map
 {
     public int width { get; protected set; }

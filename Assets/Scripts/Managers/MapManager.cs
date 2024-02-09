@@ -17,7 +17,9 @@ public class MapManager : MonoBehaviour
 
     public List<Vector3> dynamicObstacles;
 
-    public void Configure(string mapData)
+    private Vector3 mapOffset;
+
+    private void PreConfigure()
     {
         this.humanSpawnPoints = new List<Vector3>();
         this.aiSpawnPoints = new List<Vector3>();
@@ -28,12 +30,43 @@ public class MapManager : MonoBehaviour
         this.dynamicObstacles = new List<Vector3>();
 
         this.display = GameObject.FindObjectOfType<MapDisplay>();
+    }
+
+    public void ConfigureWithStringData(string mapData)
+    {
+        this.PreConfigure();
 
         this.map = this.CreateMapWithStringData(mapData);
         this.display.RenderMapData(this.map);
 
         this.pathFinder = new MapPathFinder();
         this.pathFinder.ConfigureForMap(this.map);
+
+        this.mapOffset = this.display.transform.position;
+    }
+
+    public void ConfigureWithTiledMap(TiledMap tiledMap)
+    {
+        this.PreConfigure();
+
+        this.map = tiledMap.GenerateMapData();
+
+        this.pathFinder = new MapPathFinder();
+        this.pathFinder.ConfigureForMap(this.map);
+
+        this.mapOffset = tiledMap.GetMapOffset();
+
+        foreach (var transf in tiledMap.humanSpawnPoints)
+        {
+            this.humanSpawnPoints.Add(transf.position);
+        }
+
+        foreach (var transf in tiledMap.aiSpawnPoints)
+        {
+            this.aiSpawnPoints.Add(transf.position);
+        }
+
+        this.display.FocusOnMap(this.map, this.mapOffset);
     }
 
     public Map CreateMapWithStringData(string mapData)
@@ -86,13 +119,29 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        // Invertimos la coordenada Y de los puntos de Spawn
+        for (int i = 0; i < this.humanSpawnPoints.Count; i++)
+        {
+            Vector3 point = this.humanSpawnPoints[i];
+            point.y = (mapHeight - 1) - point.y;
+            this.humanSpawnPoints[i] = point;
+        }
+
+        for (int i = 0; i < this.aiSpawnPoints.Count; i++)
+        {
+            Vector3 point = this.aiSpawnPoints[i];
+            point.y = (mapHeight - 1) - point.y;
+            this.aiSpawnPoints[i] = point;
+        }
+
         TileType[,] finalMapTiles = new TileType[mapWidth, mapHeight];
 
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                finalMapTiles[x, y] = flatTilesData[y * mapWidth + x];
+                int invertedY = (mapHeight - 1) - y;
+                finalMapTiles[x, y] = flatTilesData[invertedY * mapWidth + x];
             }
         }
 
@@ -158,19 +207,19 @@ public class MapManager : MonoBehaviour
 
     public Vector2Int WorldToLocal(Vector3 world)
     {
-        Vector3 local = world - this.display.transform.position;
+        Vector3 local = world - this.mapOffset;
 
         int mapX = Mathf.FloorToInt(local.x);
         int mapY = Mathf.FloorToInt(local.y);
 
-        return new Vector2Int(mapX, -mapY);
+        return new Vector2Int(mapX, mapY);
     }
 
     public Vector3 LocalToWorld(Vector2Int local)
     {
-        Vector3 localF = new Vector3(local.x, -local.y, 0);
+        Vector3 localF = new Vector3(local.x, local.y, 0);
 
-        return this.display.transform.position + localF + (Vector3.one * 0.5f);
+        return this.mapOffset + localF + (Vector3.one * 0.5f);
     }
 
     public bool IsAGroundTile(Vector3 worldPoint)

@@ -43,15 +43,22 @@ public class MapDisplay : MonoBehaviour
 
                 Tile tile = this.GetTileForType(type);
 
-                this.targetTilemap.SetTile(new Vector3Int(x, -y, 0), tile);
+                this.targetTilemap.SetTile(new Vector3Int(x, y, 0), tile);
             }
         }
 
-        this.gameCamera.transform.position = new Vector3(
+        this.FocusOnMap(mapdata, this.transform.position);
+    }
+
+    public void FocusOnMap(Map mapdata, Vector3 offset)
+    {
+        Vector3 basePos = new Vector3(
             this.transform.position.x + (mapdata.width / 2f),
-            this.transform.position.y - (mapdata.height / 2f - 1),
+            this.transform.position.y + (mapdata.height / 2f),
             this.gameCamera.transform.position.z
         );
+
+        this.gameCamera.transform.position = offset + basePos;
 
         this.gameCamera.GetComponent<CameraMove>().SetZoom(mapdata.width / 3f);
     }

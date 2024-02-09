@@ -48,18 +48,14 @@ public class BattleManager : MonoBehaviour, IMessageListener
     protected BattleReward[] posibleRewards;
     protected List<ItemStack> battleOverRewards = null;
 
+    protected BattleOverMessage battleOverMessage;
+
     void Awake()
     {
         current = this;
     }
 
-    public void StartBattle(
-        string mapData,
-        CreatureData[] humanCreatures,
-        CreatureData[] aiCreatures,
-        BattleReward[] posibleRewards,
-        BattleCategory battleCategory
-    )
+    public void StartBattle(BattleDescriptor descriptor)
     {
         this.gameCreatures = new List<Creature>();
         this.graveyard = new List<Creature>();
@@ -67,21 +63,31 @@ public class BattleManager : MonoBehaviour, IMessageListener
         this.returnBuffer = new List<Creature>();
 
         this.mapManager = GetComponent<MapManager>();
-        this.mapManager.Configure(mapData);
+        if (descriptor.HasMapPrefab)
+        {
+            GameObject mapInstance = Instantiate(descriptor.mapPrefab, Vector3.zero, Quaternion.identity);
+            TiledMap tiledMap = mapInstance.GetComponent<TiledMap>();
+
+            this.mapManager.ConfigureWithTiledMap(tiledMap);
+        }
+        else if (descriptor.HasMapStringData)
+        {
+            this.mapManager.ConfigureWithStringData(descriptor.mapStringData);
+        }
 
         Master human = this.GetComponentInChildren<HumanMaster>();
         Master ai = this.GetComponentInChildren<AIMaster>();
 
         this.masters = new Master[] { human, ai };
 
-        human.SpawnCreatures(this.mapManager.humanSpawnPoints, humanCreatures);
-        ai.SpawnCreatures(this.mapManager.aiSpawnPoints, aiCreatures);
+        human.SpawnCreatures(this.mapManager.humanSpawnPoints, descriptor.humanCreatures);
+        ai.SpawnCreatures(this.mapManager.aiSpawnPoints, descriptor.aiCreatures);
 
         this.turnIndex = -1;
         this.isBattleOver = false;
-        this.battleCategory = battleCategory;
+        this.battleCategory = descriptor.category;
 
-        this.posibleRewards = posibleRewards;
+        this.posibleRewards = descriptor.posibleRewards;
 
         Invoke("NextTurn", .5f);
 
@@ -96,19 +102,7 @@ public class BattleManager : MonoBehaviour, IMessageListener
     // Se ejecuta desde el BattleOverUI
     public void EndBattle()
     {
-        List<CreatureData> finalCreatureData = new List<CreatureData>();
-
-        foreach (var battleOverCreatureData in this.GetCreaturesFinalData())
-        {
-            finalCreatureData.Add(battleOverCreatureData.final);
-        }
-
-        OverworldManager.current.StoreResultingCreatureData(finalCreatureData.ToArray());
-
-        List<ItemStack> rewards = this.GetBattleOverRewards();
-        OverworldManager.current.StoreItemRewards(rewards.ToArray());
-
-        OverworldManager.current.EndBattle();
+        OverworldManager.current.EndBattle(this.battleOverMessage);
     }
 
     // Se ejecuta desde el TurnsUI
@@ -120,9 +114,7 @@ public class BattleManager : MonoBehaviour, IMessageListener
             return;
         }
 
-        this.isBattleOver = true;
-
-        MessageManager.current.Send(
+        this.FinishBattleAndNotificate(
             BattleOverMessage.CreateForFlee(this.GetCreaturesFinalData())
         );
     }
@@ -204,20 +196,32 @@ public class BattleManager : MonoBehaviour, IMessageListener
 
         if (human.HasAliveCreatures() && ai.HasAliveCreatures() == false)
         {
-            this.isBattleOver = true;
-            MessageManager.current.Send(BattleOverMessage.CreateForWin(
-                human,
-                this.GetCreaturesFinalData(),
-                this.GetBattleOverRewards()
-            ));
+            this.FinishBattleAndNotificate(
+                BattleOverMessage.CreateForWin(
+                    human,
+                    this.GetCreaturesFinalData(),
+                    this.GetBattleOverRewards()
+                )
+            );
 
         }
 
         if (ai.HasAliveCreatures() && human.HasAliveCreatures() == false)
         {
-            this.isBattleOver = true;
-            MessageManager.current.Send(BattleOverMessage.CreateForLoss(ai));
+            this.FinishBattleAndNotificate(
+                BattleOverMessage.CreateForLoss(
+                    ai,
+                    this.GetCreaturesFinalData()
+                )
+            );
         }
+    }
+
+    protected void FinishBattleAndNotificate(BattleOverMessage message)
+    {
+        this.isBattleOver = true;
+        this.battleOverMessage = message;
+        MessageManager.current.Send(message);
     }
 
     public Creature GetCreatureAtPosition(Vector3 worldPosition)

@@ -1006,7 +1006,7 @@ TextureImporter:
         width: 21
         height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1014,6 +1014,111 @@ TextureImporter:
       bones: []
       spriteID: 9b366e39990eea94a98162cec4fb78f5
       internalID: -360484974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adventure_Item_Node_A
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 25
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2826af28e74645f4a9e9684112e704eb
+      internalID: -1249341033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adventure_Item_Node_B
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c19ead65fd3889143ba903d51c8eba77
+      internalID: 837602581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adventure_Enemy_Node_A
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 25
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d89eb75ca5dec4e9beefdf6640b1cd
+      internalID: 512006677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adventure_Enemy_Node_B
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 1
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74c5973e41b6e2b4a93cca9b35e5a0e8
+      internalID: 457057750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adventure_Boss_Node_A
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 25
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efd99a1ce79073746bb6e1fe0d21936f
+      internalID: -63053722
       vertices: []
       indices: 
       edges: []
@@ -1036,6 +1141,7 @@ TextureImporter:
       Map_Path_Marker_1: -935520337
       Fire_Creature_A: 2022233178
       Map_Human_Creature_Energy_2: -857796339
+      Adventure_Enemy_Node_A: 512006677
       Poison_Creature_A: 1092251329
       Poison_Effect_2: -1485045095
       Map_Cursor: -436354646
@@ -1044,9 +1150,11 @@ TextureImporter:
       Wall_Minion_A: 2145180865
       Map_Path_Marker_2: -1433900510
       Stat_Drop_Effect_0: -535064638
+      Adventure_Item_Node_B: 837602581
       Capture_Effect_0: -1051804092
       Map_Ground_Cursed: -1219491266
       Map_Human_Creature_Energy_0: 1354398776
+      Adventure_Enemy_Node_B: 457057750
       Map_Human_Creature_Energy_1: 709430773
       Fire_Effect_2: 729194567
       Map_Human_Creature_Marker: 829516846
@@ -1055,11 +1163,13 @@ TextureImporter:
       Map_Ground: 1311876232
       Water_Effect_0: 1886216809
       Attack_Regular_Effect: 414148711
+      Adventure_Boss_Node_A: -63053722
       Map_Skill_Reach_Marker: -738626355
       Ground_Creature_B: -963284890
-      Capture_Effect_1: 1501894050
       Ground_Creature_A: -1085532961
+      Capture_Effect_1: 1501894050
       Ground_Mud_Effect_1: -614858812
+      Adventure_Item_Node_A: -1249341033
       Tamer_Boss_A: -360484974
       Fire_Effect_0: 1924430277
       Stat_Inc_Effect_0: -605296881

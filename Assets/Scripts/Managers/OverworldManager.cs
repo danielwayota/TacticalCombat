@@ -16,8 +16,9 @@ public class OverworldManager : MonoBehaviour
     public List<Item> startUpItems = new List<Item>();
 
     [Header("Scene names")]
-    public string overworldSceneName = "Overworld";
     public string battleSceneName = "Battle";
+
+    private Scene currentScene;
 
     private TeamUI teamUI;
     private InventoryUI inventoryUI;
@@ -25,6 +26,8 @@ public class OverworldManager : MonoBehaviour
     private List<ItemStack> inventory;
 
     private EventSystem overworldEventSystem;
+
+    private BattleDescriptor currentBattleDescriptor = null;
 
     void Awake()
     {
@@ -49,6 +52,8 @@ public class OverworldManager : MonoBehaviour
 
         // NOTE: Esto es para el warning de que hay dos EventSystem activos.
         this.overworldEventSystem = EventSystem.current;
+
+        this.currentScene = SceneManager.GetActiveScene();
     }
 
     public void ToggleTeamView()
@@ -71,12 +76,7 @@ public class OverworldManager : MonoBehaviour
         this.inventoryUI.ToggleDisplay(this.inventory, this.humanCreatures);
     }
 
-    private IEnumerator LoadBattle(
-        string mapData,
-        CreatureData[] aiCreatures,
-        BattleReward[] posibleRewards,
-        BattleCategory battleCategory
-    )
+    private IEnumerator LoadBattle()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(this.battleSceneName, LoadSceneMode.Additive);
 
@@ -88,40 +88,65 @@ public class OverworldManager : MonoBehaviour
         Scene battleScene = SceneManager.GetSceneByName(this.battleSceneName);
         SceneManager.SetActiveScene(battleScene);
 
-        BattleManager.current.StartBattle(mapData, this.humanCreatures, aiCreatures, posibleRewards, battleCategory);
+        BattleManager.current.StartBattle(this.currentBattleDescriptor);
         this.gameObject.SetActive(false);
     }
 
-    public void StartBattle(string mapData, CreatureData[] aiCreatures, BattleReward[] posibleRewards, BattleCategory battleCategory)
+    public void StartBattle(BattleDescriptor descriptor)
     {
+        this.currentBattleDescriptor = descriptor;
+        this.currentBattleDescriptor.humanCreatures = this.humanCreatures;
+        this.currentBattleDescriptor.Validate();
+
         this.overworldEventSystem.enabled = false;
 
-        StartCoroutine(this.LoadBattle(mapData, aiCreatures, posibleRewards, battleCategory));
+        StartCoroutine(this.LoadBattle());
     }
 
-    public void EndBattle()
+    public void EndBattle(BattleOverMessage message)
     {
-        Scene overworldScene = SceneManager.GetSceneByName(this.overworldSceneName);
-        SceneManager.SetActiveScene(overworldScene);
-
         SceneManager.UnloadSceneAsync(this.battleSceneName);
+
+        SceneManager.SetActiveScene(this.currentScene);
         this.gameObject.SetActive(true);
 
         this.overworldEventSystem.enabled = true;
+
+        this.StoreResultingCreatureData(message.creatureBattleOverData.ToArray());
+        this.StoreItemRewards(message.itemRewards.ToArray());
+
+        if (message.isHumanWin)
+        {
+            this.currentBattleDescriptor.onHumanWin();
+        }
+        else if (message.isHumanLoss)
+        {
+            this.currentBattleDescriptor.onHumanLoss();
+        }
+        else if (message.isFlee)
+        {
+            // Ignoramos huidas de momento
+        }
     }
 
-    public void StoreResultingCreatureData(CreatureData[] afterBattleData)
+    protected void StoreResultingCreatureData(BattleOverCreatureData[] creatureBattleOverData)
     {
+        List<CreatureData> afterBattleData = new List<CreatureData>();
+        foreach (var battleOverCreatureData in creatureBattleOverData)
+        {
+            afterBattleData.Add(battleOverCreatureData.final);
+        }
+
         // NOTE: Las criaturas pueden venir en otro órden.
         foreach (var data in afterBattleData)
         {
             data.stats.Restore();
         }
 
-        this.humanCreatures = afterBattleData;
+        this.humanCreatures = afterBattleData.ToArray();
     }
 
-    public void StoreItemRewards(ItemStack[] itemRewards)
+    protected void StoreItemRewards(ItemStack[] itemRewards)
     {
         foreach (var stack in itemRewards)
         {

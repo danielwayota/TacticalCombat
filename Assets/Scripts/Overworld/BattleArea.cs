@@ -29,6 +29,8 @@ public class BattleArea : MonoBehaviour
 {
     public TextAsset mapData;
 
+    public GameObject mapPreab;
+
     public BattleCategory battleCategory = BattleCategory.RANDOM_ENCOUNTER;
 
     public BattleEnemyGroup[] enemyGroups;
@@ -72,8 +74,25 @@ public class BattleArea : MonoBehaviour
             }
         }
 
+        BattleDescriptor descriptor = new BattleDescriptor
+        {
+            category = this.battleCategory,
+
+            aiCreatures = aiCreatures,
+            posibleRewards = group.posibleRewards
+        };
+
+        if (this.mapPreab != null)
+        {
+            descriptor.mapPrefab = this.mapPreab;
+        }
+        else if (this.mapData != null)
+        {
+            descriptor.mapStringData = this.mapData.text;
+        }
+
         // Desactivamos durante 1 segundo.
         this.coolDownTime = 1f;
-        OverworldManager.current.StartBattle(this.mapData.text, aiCreatures, group.posibleRewards, this.battleCategory);
+        OverworldManager.current.StartBattle(descriptor);
     }
 }

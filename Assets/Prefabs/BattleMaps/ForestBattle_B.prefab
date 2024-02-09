@@ -3638,6 +3638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8367011806883360005}
+  - component: {fileID: 8212469613431801585}
   m_Layer: 0
   m_Name: ForestBattle_B
   m_TagString: Untagged
@@ -3663,6 +3664,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8212469613431801585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112557911185800733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ddd3be1f424de14face783b63b895c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemapToUse: {fileID: 4593093655287254176}
+  humanSpawnPoints:
+  - {fileID: 1696623505010754722}
+  - {fileID: 1125841111119863518}
+  - {fileID: 7723403754884766857}
+  - {fileID: 529487100551392896}
+  - {fileID: 5626282983866467999}
+  - {fileID: 3393083180196218671}
+  - {fileID: 6338116040137113067}
+  aiSpawnPoints:
+  - {fileID: 3276437645256740578}
+  - {fileID: 2977053723076402304}
+  - {fileID: 5712343408435694180}
+  - {fileID: 4203834214074036341}
+  - {fileID: 6576681969663579629}
+  - {fileID: 2343457768652892012}
+  - {fileID: 5351117404641126094}
 --- !u!1 &9127155779407181363
 GameObject:
   m_ObjectHideFlags: 0
