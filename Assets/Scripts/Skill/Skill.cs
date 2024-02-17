@@ -57,6 +57,7 @@ public class Skill : MonoBehaviour
         if (this.vfx != null)
         {
             GameObject go = Instantiate(this.vfx, receiver.transform.position, Quaternion.identity);
+            go.SetActive(true);
             Destroy(go, 2f);
         }
     }
@@ -70,6 +71,7 @@ public class Skill : MonoBehaviour
             if (this.vfx != null)
             {
                 GameObject go = Instantiate(this.vfx, point, Quaternion.identity);
+                go.SetActive(true);
                 Destroy(go, 2f);
             }
         }

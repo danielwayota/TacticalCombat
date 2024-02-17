@@ -1,30 +1,5 @@
 using UnityEngine;
 
-[System.Serializable]
-public struct BattleReward
-{
-    public Item item;
-    public int minAmount;
-    public int maxAmount;
-
-    [Range(0f, 1f)]
-    public float chance;
-}
-
-[System.Serializable]
-public struct BattleEnemyGroup
-{
-    [Header("Level ranges")]
-    public int minLevel;
-    public int maxLevel;
-
-    [Header("Profiles")]
-    public CreatureProfile[] creatureProfiles;
-
-    [Header("Rewards")]
-    public BattleReward[] posibleRewards;
-}
-
 public class BattleArea : MonoBehaviour
 {
     public TextAsset mapData;
@@ -45,7 +20,7 @@ public class BattleArea : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (this.coolDownTime > 0)
         {
@@ -62,15 +37,12 @@ public class BattleArea : MonoBehaviour
         int index = Random.Range(0, this.enemyGroups.Length);
         BattleEnemyGroup group = this.enemyGroups[index];
 
-        CreatureData[] aiCreatures = new CreatureData[group.creatureProfiles.Length];
-        for (int i = 0; i < group.creatureProfiles.Length; i++)
+        CreatureData[] aiCreatures = group.GenerateCreatureData();
+        if (this.battleCategory == BattleCategory.BOSS || this.battleCategory == BattleCategory.VS_MASTER)
         {
-            int targetLevel = Random.Range(group.minLevel, group.maxLevel);
-            aiCreatures[i] = group.creatureProfiles[i].GenerateDataForLevel(targetLevel);
-
-            if (this.battleCategory == BattleCategory.BOSS || this.battleCategory == BattleCategory.VS_MASTER)
+            foreach (var creature in aiCreatures)
             {
-                aiCreatures[i].stats.ModifyLoyalty(0.9f);
+                creature.stats.ModifyLoyalty(0.9f);
             }
         }
 

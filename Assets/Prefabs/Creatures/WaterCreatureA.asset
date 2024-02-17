@@ -15,6 +15,7 @@ MonoBehaviour:
   baseData:
     id: WaterCreatureA
     prefab: {fileID: 2521753971046226797, guid: e3a5a3943fe2831459e94d3d982141f5, type: 3}
+    isMinion: 0
     stats:
       elementalType: 2
       level: 1
@@ -34,11 +35,13 @@ MonoBehaviour:
   defense: {x: 1.25, y: 1.7}
   accuracy: {x: 1.25, y: 1.5}
   evasion: {x: 0.7, y: 1}
-  elemAttack: {x: 1, y: 1.5}
-  elemDefense: {x: 1.25, y: 2}
+  elemAttack: {x: 0.6, y: 1.25}
+  elemDefense: {x: 1.25, y: 1.6}
   speed: {x: 0.15, y: 0.25}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1
+  - skillPrfb: {fileID: 7298306454432661046, guid: 1c1fd5ba2b633b94f8962ae019b5954d, type: 3}
+    level: 5
   - skillPrfb: {fileID: 7924366649789933806, guid: 12fb2ed7b39cfc64695120356cea9670, type: 3}
-    level: 7
+    level: 15

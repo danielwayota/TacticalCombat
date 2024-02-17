@@ -37,7 +37,7 @@ MonoBehaviour:
   evasion: {x: 0.9, y: 1}
   elemAttack: {x: 1, y: 2}
   elemDefense: {x: 0.7, y: 1.5}
-  speed: {x: 0.25, y: 0.35}
+  speed: {x: 0.1, y: 0.2}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1

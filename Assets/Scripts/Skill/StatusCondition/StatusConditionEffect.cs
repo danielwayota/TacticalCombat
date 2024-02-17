@@ -31,6 +31,7 @@ public class StatusConditionEffect : MonoBehaviour, IEffect
         {
             // Clonamos el objeto con la condicion de estado
             GameObject parasiteObj = Instantiate(cond.gameObject);
+            parasiteObj.SetActive(true);
 
             StatusCondition condition = parasiteObj.GetComponent<StatusCondition>();
             condition.Configure(receiver);

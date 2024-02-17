@@ -1027,7 +1027,7 @@ TextureImporter:
         width: 22
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1048,7 +1048,7 @@ TextureImporter:
         width: 22
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1069,7 +1069,7 @@ TextureImporter:
         width: 22
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1090,7 +1090,7 @@ TextureImporter:
         width: 22
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1111,7 +1111,7 @@ TextureImporter:
         width: 22
         height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1119,6 +1119,174 @@ TextureImporter:
       bones: []
       spriteID: efd99a1ce79073746bb6e1fe0d21936f
       internalID: -63053722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_Effect_4
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1de2c3b34f8d3f418dd8a3e82be32cb
+      internalID: 5148927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_Effect_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73e364a5eea0fe844b81f4bd809499f1
+      internalID: 261824217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_Effect_2
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36ab22aca2d6f654cbe97f4ba6edea24
+      internalID: -1609756261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_Effect_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 319508ef02b71cf48ac171bbda1d9293
+      internalID: 382288714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_Effect_0
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a74c5466506509d47a3c02f801e52ae4
+      internalID: -365200660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bubble_Effect_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 136
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d166d6705c818643b5556cd364eca07
+      internalID: -346601188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bubble_Effect_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 129
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 820721a40394a304bb338632ab8b76aa
+      internalID: 34286397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bubble_Effect_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 124
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c515f339fa6c09847b34b4c0e0609811
+      internalID: -576485154
       vertices: []
       indices: 
       edges: []
@@ -1134,6 +1302,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Bubble_Effect_2: -346601188
       Heal_Effect_0: -1882081463
       Fire_Effect_1: 1840709306
       Map_Selection_Indicator: 966391049
@@ -1152,18 +1321,23 @@ TextureImporter:
       Stat_Drop_Effect_0: -535064638
       Adventure_Item_Node_B: 837602581
       Capture_Effect_0: -1051804092
+      Bubble_Effect_0: -576485154
       Map_Ground_Cursed: -1219491266
       Map_Human_Creature_Energy_0: 1354398776
       Adventure_Enemy_Node_B: 457057750
       Map_Human_Creature_Energy_1: 709430773
       Fire_Effect_2: 729194567
+      Bubble_Effect_1: 34286397
       Map_Human_Creature_Marker: 829516846
+      Slash_Effect_1: 382288714
       Poison_Effect_0: -518378273
       Paralysis_Effect_0: -1965398188
+      Slash_Effect_2: -1609756261
       Map_Ground: 1311876232
       Water_Effect_0: 1886216809
       Attack_Regular_Effect: 414148711
       Adventure_Boss_Node_A: -63053722
+      Slash_Effect_0: -365200660
       Map_Skill_Reach_Marker: -738626355
       Ground_Creature_B: -963284890
       Ground_Creature_A: -1085532961
@@ -1173,7 +1347,9 @@ TextureImporter:
       Tamer_Boss_A: -360484974
       Fire_Effect_0: 1924430277
       Stat_Inc_Effect_0: -605296881
+      Slash_Effect_3: 261824217
       Water_Effect_1: -251472075
+      Slash_Effect_4: 5148927
       Map_Skill_Action_Marker: 178800744
       Poison_Effect_1: 601573819
       Map_Wall: 1843638455

@@ -10,16 +10,10 @@ public class AdventureBossNode : AdventureMapNode
     {
         this.mapPrefab = mapPrfb;
 
-        this.creatures = new CreatureData[group.creatureProfiles.Length];
-        for (int i = 0; i < group.creatureProfiles.Length; i++)
+        this.creatures = group.GenerateCreatureData();
+        foreach (var creature in this.creatures)
         {
-            int targetLevel = Random.Range(group.minLevel, group.maxLevel);
-
-            CreatureProfile profile = group.creatureProfiles[i];
-            this.creatures[i] = profile.GenerateDataForLevel(targetLevel);
-
-            float loyalty = Random.Range(0.9f, 1f);
-            this.creatures[i].stats.ModifyLoyalty(loyalty);
+            creature.stats.ModifyLoyalty(0.9f);
         }
 
         this.posibleRewards = group.posibleRewards;

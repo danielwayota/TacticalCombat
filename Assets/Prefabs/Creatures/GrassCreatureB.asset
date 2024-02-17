@@ -15,6 +15,7 @@ MonoBehaviour:
   baseData:
     id: GrassCreatureB
     prefab: {fileID: 2521753971046226797, guid: 624ef9c2c9e30374f9d6e48cf5fec4fe, type: 3}
+    isMinion: 0
     stats:
       elementalType: 3
       level: 1
@@ -25,22 +26,20 @@ MonoBehaviour:
       attack: 5
       defense: 6
       accuracy: 5
-      evasion: 6
+      evasion: 5
       elemAttack: 5
       elemDefense: 6
       speed: 3
   maxhp: {x: 1.6, y: 2.2}
-  attack: {x: 0.75, y: 1.5}
-  defense: {x: 1.2, y: 2}
+  attack: {x: 0.6, y: 1.2}
+  defense: {x: 1, y: 2}
   accuracy: {x: 1.25, y: 1.8}
-  evasion: {x: 0.85, y: 1.25}
+  evasion: {x: 0.6, y: 1.25}
   elemAttack: {x: 0.75, y: 1.5}
-  elemDefense: {x: 1.5, y: 2}
-  speed: {x: 0.1, y: 0.25}
+  elemDefense: {x: 1.25, y: 2}
+  speed: {x: 0.1, y: 0.15}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1
-  - skillPrfb: {fileID: 7924366649789933806, guid: 88e8bb075db879a42aa90e1a23ece4c9, type: 3}
-    level: 6
   - skillPrfb: {fileID: 239239289556536846, guid: 9def6c7b2d87fd5488d460d394e0caff, type: 3}
-    level: 12
+    level: 8

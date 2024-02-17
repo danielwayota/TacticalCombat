@@ -10,15 +10,7 @@ public class AdventureBattleNode : AdventureMapNode
     {
         this.mapPrefab = mapPrfb;
 
-        this.creatures = new CreatureData[group.creatureProfiles.Length];
-        for (int i = 0; i < group.creatureProfiles.Length; i++)
-        {
-            int targetLevel = Random.Range(group.minLevel, group.maxLevel);
-
-            CreatureProfile profile = group.creatureProfiles[i];
-            this.creatures[i] = profile.GenerateDataForLevel(targetLevel);
-        }
-
+        this.creatures = group.GenerateCreatureData();
         this.posibleRewards = group.posibleRewards;
     }
 

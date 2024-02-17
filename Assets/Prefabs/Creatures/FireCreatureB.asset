@@ -15,6 +15,7 @@ MonoBehaviour:
   baseData:
     id: FireCreatureB
     prefab: {fileID: 2521753971046226797, guid: 74bbfff6e0c6f2046b868de0d5ce61ff, type: 3}
+    isMinion: 0
     stats:
       elementalType: 1
       level: 1
@@ -29,14 +30,14 @@ MonoBehaviour:
       elemAttack: 6
       elemDefense: 5
       speed: 3
-  maxhp: {x: 1, y: 1.6}
+  maxhp: {x: 1.1, y: 1.6}
   attack: {x: 1.2, y: 1.7}
   defense: {x: 1, y: 1.4}
   accuracy: {x: 1, y: 1.6}
-  evasion: {x: 1, y: 1.2}
+  evasion: {x: 0.8, y: 1}
   elemAttack: {x: 1, y: 1.5}
   elemDefense: {x: 1, y: 1}
-  speed: {x: 0.2, y: 0.3}
+  speed: {x: 0.1, y: 0.2}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1
