@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f98b73eea7fcb445bd3ee9699f6e15b, type: 3}
+  m_Name: Level_1
+  m_EditorClassIdentifier: 
+  mapNodeWidth: 5
+  mapNodeHeight: 4
+  extraBranchChance: 0.1
+  posibleEnemyGroups:
+  - minLevel: 2
+    maxLevel: 4
+    creatureProfiles:
+    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
+    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
+    posibleRewards: []
+  - minLevel: 2
+    maxLevel: 3
+    creatureProfiles:
+    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
+    - {fileID: 11400000, guid: 679efd3c0845c9a438d55ec7d0934b42, type: 2}
+    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
+    posibleRewards: []
+  posibleMapPrfbs:
+  - {fileID: 9112557911185800733, guid: 53c95f943b120a0489b822c3f9c075e8, type: 3}
+  - {fileID: 9112557911185800733, guid: b8ae536454433d340bbe0a5f59f10d81, type: 3}
+  posibleTreasures:
+  - item: {fileID: 11400000, guid: e44b044f925b66049b178d8e148b9388, type: 2}
+    amount: 5
+  - item: {fileID: 11400000, guid: ee556dfa846a4754ba2669d18254e67e, type: 2}
+    amount: 1
+  bossGroup:
+    minLevel: 12
+    maxLevel: 12
+    creatureProfiles:
+    - {fileID: 11400000, guid: fec44b9d5f3f7424e8237f8fcd3d105f, type: 2}
+    - {fileID: 11400000, guid: 054f734c176293b49b63e35da65f634b, type: 2}
+    - {fileID: 11400000, guid: bdd571320826d2048a75a0277a112d89, type: 2}
+    - {fileID: 11400000, guid: a9c387b6cf114fa4dbe9836910c795ea, type: 2}
+    - {fileID: 11400000, guid: 054f734c176293b49b63e35da65f634b, type: 2}
+    posibleRewards:
+    - item: {fileID: 11400000, guid: ee556dfa846a4754ba2669d18254e67e, type: 2}
+      minAmount: 4
+      maxAmount: 5
+      chance: 1
+  bossMapPrfb: {fileID: 9112557911185800733, guid: b0b5367677a663745a5af69e299a2392, type: 3}

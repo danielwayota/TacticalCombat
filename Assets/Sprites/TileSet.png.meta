@@ -792,9 +792,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 76
-        y: 50
+        y: 48
         width: 16
-        height: 20
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1004,7 +1004,7 @@ TextureImporter:
         x: 98
         y: 48
         width: 21
-        height: 22
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1237,7 +1237,7 @@ TextureImporter:
         width: 7
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1258,7 +1258,7 @@ TextureImporter:
         width: 6
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1279,7 +1279,7 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1287,6 +1287,27 @@ TextureImporter:
       bones: []
       spriteID: c515f339fa6c09847b34b4c0e0609811
       internalID: -576485154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tamer_Boss_B
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 48
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e275ab2982a06a41b6a398e5d594e4d
+      internalID: -579498855
       vertices: []
       indices: 
       edges: []
@@ -1302,7 +1323,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Bubble_Effect_2: -346601188
       Heal_Effect_0: -1882081463
       Fire_Effect_1: 1840709306
       Map_Selection_Indicator: 966391049
@@ -1316,6 +1336,7 @@ TextureImporter:
       Map_Cursor: -436354646
       Paralysis_Effect_1: 1916171908
       Tamer_0: -1771912119
+      Tamer_Boss_B: -579498855
       Wall_Minion_A: 2145180865
       Map_Path_Marker_2: -1433900510
       Stat_Drop_Effect_0: -535064638
@@ -1352,9 +1373,10 @@ TextureImporter:
       Slash_Effect_4: 5148927
       Map_Skill_Action_Marker: 178800744
       Poison_Effect_1: 601573819
+      Bubble_Effect_2: -346601188
       Map_Wall: 1843638455
-      Grass_Creature_A: -1219563924
       Ground_Mud_Effect_2: 1127751502
+      Grass_Creature_A: -1219563924
       Water_Creature_B: 889410742
       Fire_Creature_B: 1239010871
       Ground_Mud_Effect_0: -1750824474

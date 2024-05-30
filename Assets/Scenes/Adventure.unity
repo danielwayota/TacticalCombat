@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 84513821}
   - component: {fileID: 84513823}
   - component: {fileID: 84513822}
+  - component: {fileID: 84513824}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -478,6 +479,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &84513824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84513820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7dcec901427e24daca9df877db0d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 12
+  zoomSpeed: 16
+  maxZoom: 48
+  minZoom: 4
 --- !u!1 &85595307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3274,7 +3291,7 @@ MonoBehaviour:
   humanCreatureProfiles:
   - {fileID: 11400000, guid: c37649b7c24b2a648aa79d6c06e639c1, type: 2}
   - {fileID: 11400000, guid: a9c387b6cf114fa4dbe9836910c795ea, type: 2}
-  humanCreatureLevels: 0500000005000000
+  humanCreatureLevels: 2d00000005000000
   startUpItems: []
   battleSceneName: Battle
 --- !u!1 &1145017744
@@ -4893,43 +4910,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c432c60e1ab774a91c703d67b64f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posibleEnemyGroups:
-  - minLevel: 2
-    maxLevel: 4
-    creatureProfiles:
-    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
-    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
-    posibleRewards: []
-  - minLevel: 2
-    maxLevel: 3
-    creatureProfiles:
-    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
-    - {fileID: 11400000, guid: 679efd3c0845c9a438d55ec7d0934b42, type: 2}
-    - {fileID: 11400000, guid: f5cdf6c049ac63e468bd29619621c3c5, type: 2}
-    posibleRewards: []
-  posibleMapPrfbs:
-  - {fileID: 9112557911185800733, guid: 53c95f943b120a0489b822c3f9c075e8, type: 3}
-  - {fileID: 9112557911185800733, guid: b8ae536454433d340bbe0a5f59f10d81, type: 3}
-  posibleTreasures:
-  - item: {fileID: 11400000, guid: e44b044f925b66049b178d8e148b9388, type: 2}
-    amount: 5
-  - item: {fileID: 11400000, guid: ee556dfa846a4754ba2669d18254e67e, type: 2}
-    amount: 1
-  bossGroup:
-    minLevel: 12
-    maxLevel: 12
-    creatureProfiles:
-    - {fileID: 11400000, guid: fec44b9d5f3f7424e8237f8fcd3d105f, type: 2}
-    - {fileID: 11400000, guid: 054f734c176293b49b63e35da65f634b, type: 2}
-    - {fileID: 11400000, guid: bdd571320826d2048a75a0277a112d89, type: 2}
-    - {fileID: 11400000, guid: a9c387b6cf114fa4dbe9836910c795ea, type: 2}
-    - {fileID: 11400000, guid: 054f734c176293b49b63e35da65f634b, type: 2}
-    posibleRewards:
-    - item: {fileID: 11400000, guid: ee556dfa846a4754ba2669d18254e67e, type: 2}
-      minAmount: 4
-      maxAmount: 5
-      chance: 1
-  bossMapPrfb: {fileID: 9112557911185800733, guid: b8ae536454433d340bbe0a5f59f10d81, type: 3}
+  levels:
+  - {fileID: 11400000, guid: cfc9dfa1e5b16a54ca88e7a340b155a3, type: 2}
+  - {fileID: 11400000, guid: a27bfe58a08990340bfedca1ef4c01a9, type: 2}
   treasureNodePrfb: {fileID: 5571448645785951814, guid: 049e2cbe72bbe284e9b649fd373c9d30, type: 3}
   battleNodePrfb: {fileID: 1288948899233824763, guid: ffc69e58b0c2abb46aff03135cde7e51, type: 3}
   bossNodePrfb: {fileID: 3739928917225997373, guid: 8b65b2778c9238e428c184e3a4542cfc, type: 3}

@@ -29,8 +29,7 @@ public class AdventureBossNode : AdventureMapNode
 
             onHumanWin = () =>
             {
-                Debug.LogWarning("Hemos ganado pero no hay más niveles!");
-                Debug.Break();
+                AdventureManager.current.OnLevelFinished();
             },
             onHumanLoss = () =>
             {

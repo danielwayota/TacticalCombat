@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using System.Collections.Generic;
+
 public abstract class AdventureMapNode : MonoBehaviour
 {
     public Sprite notVisitedGfx;
@@ -10,9 +12,12 @@ public abstract class AdventureMapNode : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    public List<AdventureMapNode> forwardConnections = new();
+
     public void Start()
     {
         this.OnStatusChanged();
+        this.DisplayConnections();
     }
 
     // Require un collider.
@@ -53,6 +58,14 @@ public abstract class AdventureMapNode : MonoBehaviour
         this.OnStatusChanged();
     }
 
+    public void DenyVisit()
+    {
+        this.hasBeenVisited = false;
+        this.canBeVisited = false;
+
+        this.OnStatusChanged();
+    }
+
     public void MarkAsVisited()
     {
         this.hasBeenVisited = true;
@@ -84,6 +97,29 @@ public abstract class AdventureMapNode : MonoBehaviour
         else
         {
             this.spriteRenderer.sprite = this.notVisitedGfx;
+        }
+    }
+
+    public void DisplayConnections()
+    {
+        foreach (var node in this.forwardConnections)
+        {
+            GameObject obj = new GameObject("node-line");
+            LineRenderer line = obj.AddComponent<LineRenderer>();
+
+            Vector3 offset = (node.transform.position - this.transform.position).normalized * 0.5f;
+
+            line.SetPositions(new Vector3[] {
+                this.transform.position + offset,
+                node.transform.position - offset
+            });
+
+            line.widthMultiplier = 0.1f;
+            line.startColor = Color.gray;
+            line.endColor = Color.gray;
+            line.material = new Material(Shader.Find("Sprites/Default"));
+
+            obj.transform.parent = this.transform;
         }
     }
 

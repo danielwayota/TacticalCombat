@@ -1,136 +1,196 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AdventureManager : MonoBehaviour
 {
     public static AdventureManager current;
 
-    public BattleEnemyGroup[] posibleEnemyGroups;
-    public GameObject[] posibleMapPrfbs;
+    public AdventureLevel[] levels;
 
-    public ItemStack[] posibleTreasures;
+    private int currentLevelIndex = 0;
+    private AdventureLevel CurrentLevel { get => this.levels[this.currentLevelIndex]; }
 
-    [Header("Boss")]
-    public BattleEnemyGroup bossGroup;
-    public GameObject bossMapPrfb;
+    private List<AdventureMapNode> currentLevelMapNodes;
 
     [Header("Nodes")]
     public GameObject treasureNodePrfb;
     public GameObject battleNodePrfb;
     public GameObject bossNodePrfb;
 
-    [Header("Node count")]
-    public int minNodes = 0;
-    public int maxNodes = 0;
-
-    private int currentNodeIndex = 0;
-    private int currentMapSize = 0;
-
-    private AdventureMapNode[] mapNodes;
-
-    private AdventureMapNode currentNode { get => this.mapNodes[this.currentNodeIndex]; }
-
-    void Awake()
+    public void Awake()
     {
         current = this;
     }
 
-    void Start()
+    public void Start()
     {
-        this.GenerateMap();
+        this.currentLevelMapNodes = new List<AdventureMapNode>();
+
+        this.currentLevelIndex = 0;
+        this.GenerateCurrentLevelMap();
     }
 
-    protected void GenerateMap()
+    protected void GenerateCurrentLevelMap()
     {
-        float padding = 1.4f;
+        float padding = 1.6f;
 
-        this.currentMapSize = Random.Range(this.minNodes, this.maxNodes);
-        this.mapNodes = new AdventureMapNode[this.currentMapSize];
+        int mapWidth = this.CurrentLevel.mapNodeWidth;
+        int mapHeight = this.CurrentLevel.mapNodeHeight;
 
-        Vector3 position = Vector3.left * padding * (this.currentMapSize / 2f);
+        AdventureMapNode[,] map = new AdventureMapNode[mapWidth, mapHeight];
 
-        float treasureNodeChance = 0.05f;
-        bool treasureNodeSpawned = false;
-
-        for (int i = 0; i < this.currentMapSize - 1; i++)
+        for (int i = 0; i < mapWidth; i++)
         {
-            if (treasureNodeSpawned == false && this.posibleTreasures.Length != 0)
-            {
-                float dice = Random.Range(0f, 1f);
-                if (dice < treasureNodeChance)
-                {
-                    this.mapNodes[i] = this.PlaceTreasureNode(position);
-                    treasureNodeSpawned = true;
-                    position += Vector3.right * padding;
-                    continue;
-                }
+            if (i % 2 != 0) continue;
 
-                // No creamos nodo de item, incrementamos probabilidad.
-                treasureNodeChance += 0.05f;
-            }
+            Vector3 position = Vector3.right * padding * i;
+            AdventureMapNode newNode = this.PlaceBattleNode(position);
 
-            this.mapNodes[i] = this.PlaceBattleNode(position);
-            position += Vector3.right * padding;
+            newNode.AllowVisit();
+            map[i, 0] = newNode;
         }
 
-        // El nodo del jefe
-        int lastNodeIndex = this.currentMapSize - 1;
-        this.mapNodes[lastNodeIndex] = this.PlaceBossNode(position);
+        // Interconexiones
+        for (int y = 0; y < mapHeight - 1; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                var currentNode = map[x, y];
+                if (currentNode == null) continue;
 
-        this.currentNodeIndex = 0;
-        this.currentNode.AllowVisit();
+                int branchCount = 1;
+                float dice = Random.Range(0f, 1f);
+
+                if (dice < this.CurrentLevel.extraBranchChance)
+                {
+                    branchCount = 2;
+                }
+
+                for (int z = 0; z < branchCount; z++)
+                {
+                    int indexToConnect = Mathf.Clamp(Random.Range(x - 1, x + 2), 0, mapWidth - 1);
+
+                    AdventureMapNode nodeToConnect = map[indexToConnect, y + 1];
+                    if (nodeToConnect == null)
+                    {
+                        var position = new Vector3(padding * indexToConnect, padding * (y + 1), 0);
+
+                        if (y != (mapHeight / 2) - 1)
+                        {
+                            nodeToConnect = this.PlaceBattleNode(position);
+                        }
+                        else
+                        {
+                            nodeToConnect = this.PlaceTreasureNode(position);
+                        }
+
+                        map[indexToConnect, y + 1] = nodeToConnect;
+                    }
+
+                    if (currentNode.forwardConnections.Contains(nodeToConnect) == false)
+                    {
+                        currentNode.forwardConnections.Add(nodeToConnect);
+                    }
+                }
+            }
+        }
+
+        // Nodo del jefe
+        var bossPos = new Vector3(mapWidth / 2f, (mapHeight) * padding, 0);
+        AdventureMapNode bossNode = this.PlaceBossNode(bossPos);
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            int y = mapHeight - 1;
+            var currentNode = map[x, y];
+            if (currentNode == null) continue;
+
+            currentNode.forwardConnections.Add(bossNode);
+        }
     }
 
-    private AdventureMapNode PlaceTreasureNode(Vector3 position)
+    private AdventureMapNode MakeNode(GameObject prefab, Vector3 position)
     {
-        GameObject nodeGO = Instantiate(this.treasureNodePrfb, position, Quaternion.identity);
+        float vibration = 0.25f;
+        Vector3 offset = new Vector3(
+            Random.Range(-vibration, vibration),
+            Random.Range(-vibration, vibration),
+            0
+        );
+
+        GameObject nodeGO = Instantiate(prefab, position + offset, Quaternion.identity);
         nodeGO.transform.parent = this.transform;
 
-        AdventureTreasureNode node = nodeGO.GetComponent<AdventureTreasureNode>();
+        AdventureMapNode node = nodeGO.GetComponent<AdventureMapNode>();
 
-        int itemIndex = Random.Range(0, this.posibleTreasures.Length);
-        node.Configure(this.posibleTreasures[itemIndex]);
+        this.currentLevelMapNodes.Add(node);
 
         return node;
     }
 
-    private AdventureMapNode PlaceBattleNode(Vector3 position)
+    private AdventureTreasureNode PlaceTreasureNode(Vector3 position)
     {
-        GameObject nodeGO = Instantiate(this.battleNodePrfb, position, Quaternion.identity);
-        nodeGO.transform.parent = this.transform;
+        AdventureTreasureNode node = this.MakeNode(this.treasureNodePrfb, position) as AdventureTreasureNode;
 
-        AdventureBattleNode node = nodeGO.GetComponent<AdventureBattleNode>();
+        int itemIndex = Random.Range(0, this.CurrentLevel.posibleTreasures.Length);
+        node.Configure(this.CurrentLevel.posibleTreasures[itemIndex]);
 
-        int enemyGroupIndex = Random.Range(0, this.posibleEnemyGroups.Length);
-        BattleEnemyGroup group = this.posibleEnemyGroups[enemyGroupIndex];
+        return node;
+    }
 
-        int mapIndex = Random.Range(0, this.posibleMapPrfbs.Length);
-        GameObject map = this.posibleMapPrfbs[mapIndex];
+    private AdventureBattleNode PlaceBattleNode(Vector3 position)
+    {
+        AdventureBattleNode node = this.MakeNode(this.battleNodePrfb, position) as AdventureBattleNode;
+
+        int enemyGroupIndex = Random.Range(0, this.CurrentLevel.posibleEnemyGroups.Length);
+        BattleEnemyGroup group = this.CurrentLevel.posibleEnemyGroups[enemyGroupIndex];
+
+        int mapIndex = Random.Range(0, this.CurrentLevel.posibleMapPrfbs.Length);
+        GameObject map = this.CurrentLevel.posibleMapPrfbs[mapIndex];
 
         node.Configure(group, map);
         return node;
     }
 
-    private AdventureMapNode PlaceBossNode(Vector3 position)
+    private AdventureBossNode PlaceBossNode(Vector3 position)
     {
-        GameObject nodeGO = Instantiate(this.bossNodePrfb, position, Quaternion.identity);
-        nodeGO.transform.parent = this.transform;
+        AdventureBossNode node = this.MakeNode(this.bossNodePrfb, position) as AdventureBossNode;
 
-        AdventureBossNode node = nodeGO.GetComponent<AdventureBossNode>();
-
-        node.Configure(this.bossGroup, this.bossMapPrfb);
+        node.Configure(this.CurrentLevel.bossGroup, this.CurrentLevel.bossMapPrfb);
         return node;
     }
 
     public void OnNodeVisited(AdventureMapNode node)
     {
-        if (node == this.currentNode)
+        foreach (var cnode in this.currentLevelMapNodes)
         {
-            this.currentNodeIndex++;
+            if (cnode.canBeVisited && !cnode.hasBeenVisited)
+            {
+                cnode.DenyVisit();
+            }
         }
 
-        if (this.currentNodeIndex < this.currentMapSize)
+        foreach (var next in node.forwardConnections)
         {
-            this.currentNode.AllowVisit();
+            next.AllowVisit();
         }
+
+    }
+
+    public void OnLevelFinished()
+    {
+        foreach (var node in this.currentLevelMapNodes)
+        {
+            Destroy(node.gameObject);
+        }
+        this.currentLevelMapNodes.Clear();
+
+        this.currentLevelIndex++;
+        if (this.currentLevelIndex >= this.levels.Length)
+        {
+            this.currentLevelIndex = 0;
+        }
+
+        this.GenerateCurrentLevelMap();
     }
 }

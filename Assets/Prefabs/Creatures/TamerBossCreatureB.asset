@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9fc55c402b4fd04c93f388b736c51f8, type: 3}
-  m_Name: TamerBossCreatureA
+  m_Name: TamerBossCreatureB
   m_EditorClassIdentifier: 
   baseData:
     id: Tamer
-    prefab: {fileID: 2521753971046226797, guid: dfb43e5a951dc1646a85df2027e3e04b, type: 3}
+    prefab: {fileID: 2521753971046226797, guid: 4015b560f7299814390413a04aff9281, type: 3}
     isMinion: 0
     stats:
       elementalType: 0
@@ -31,17 +31,15 @@ MonoBehaviour:
       elemDefense: 6
       speed: 3
   maxhp: {x: 2.5, y: 3.2}
-  attack: {x: 1, y: 2}
-  defense: {x: 0.7, y: 1.5}
-  accuracy: {x: 1, y: 1.5}
+  attack: {x: 1.25, y: 2}
+  defense: {x: 0.5, y: 1.2}
+  accuracy: {x: 1.1, y: 1.5}
   evasion: {x: 0.9, y: 1}
-  elemAttack: {x: 1, y: 2}
-  elemDefense: {x: 0.7, y: 1.5}
+  elemAttack: {x: 1.25, y: 2}
+  elemDefense: {x: 0.5, y: 0.2}
   speed: {x: 0.05, y: 0.1}
   skillsToLearn:
   - skillPrfb: {fileID: 7924366649789933806, guid: 68118751fb4350649af19f71fe9a468c, type: 3}
     level: 1
   - skillPrfb: {fileID: 8770329184610311441, guid: 6770a810ea106c54980bab2be3723376, type: 3}
-    level: 1
-  - skillPrfb: {fileID: 7924366649789933806, guid: dbdb9617946faef41b2d95117de80239, type: 3}
     level: 1
